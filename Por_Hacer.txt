@@ -1,0 +1,73 @@
+Usuarios 
+	- Log In
+	- XML configurable
+		- Archivos
+		
+Pagina Web		
+	- Tree Node
+		- Ir a cualquier directorio
+	- Navegar carpetas
+	- Mostrar Ruta actual en todo momento
+	- Avisar si el usuario llegó al máximo de almacenamiento
+	- Permitir modificar un archivo 
+	- Mostrar archivos y directorios de la carpeta actual 
+	- Ver propiedades de un archivo 
+	- Mostrar contenido del archivo 
+	- Copiar archivos 
+	- Mover un archivo 
+
+	
+Back-end
+	- Creacion de archivos
+		- No crear archivos o directorios en el mismo nivel con el mismo nombre
+		- Preguntar si sobreescribir
+		- Verificar si hay espacio disponible
+		
+		- Definir contenidos
+		- Nombre
+		- Extension
+	
+	- Usuarios 
+		- Crear Drive 
+			- Cantidad de bytes
+			- Nombre usuario 
+			- Contraseña
+			- Crear dos carpetas:
+				- Raiz
+					- Archivos compartidos
+		- Log In
+		
+		- Crear Directorio
+			- En el directorio actual 
+			- Nombre 
+			- Verificar que no se repita
+		
+		- Listar archivos y directorios dentro del directorio actual 
+		- Modificar Archivos 
+			- Cambiar el contenido 
+		- Ver propiedades del archivo 
+			- Nombre 
+			- Fecha creacion
+			- Fecha Modificacion
+			- Tamanho
+			- Extension
+		- Ver contenido del archivo 
+		
+		- Copias de archivos 
+			- Subir de pc a drive 
+			- Descargar de drive a pc 
+			- Copiar de drive a drive  
+		
+		- Mover un archivo 
+		- Eliminar archivos 
+			- Uno 
+			- Varios archivos 
+			- Recursiva si se elimina todo el directorio
+		
+		- Compartir archivos o directorio
+			- Nombre de usuario 
+			- Establecerlo visible al otro usuario 
+		
+	- XML Configurable
+	
+	
