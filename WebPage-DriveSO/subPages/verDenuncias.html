@@ -1,0 +1,42 @@
+<div class="marginArriba aIzq">
+    <div class="f24 marginArribaSuper marginAbajoSuper aCentro">Denuncias</div>
+    <div class="marginArriba"> <span class="f24">Comentarios denunciados:</span>
+        <table class="marginArriba">
+            <tr>
+                <td class="cCeleste">Comentario</td>
+                <td class="cCeleste">Denuncias</td>
+                <td class="cCeleste">Eliminar Comentario</td>
+                <td class="cCeleste">Ver Foro</td>
+            </tr>
+            <tr ng-repeat="d in comentariosDenunciados">
+                <td class="f18 w500 break">{{d.Comentario}}</td>
+                <td class="f18 aCentro">{{d.Denuncias}}</td>
+                <td class="aCentro">
+                    <button class="bgCeleste f18 fff fullPadding brAll" ng-click="eliminarComentario(d.ComentarioID)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                </td>
+                <td class="cCeleste aCentro"><a target="_blank" href="#!/verInfo/{{d.foroID}}" class="bgCeleste pointer f18 fff fullPadding brAll"><i class="fa fa-external-link" aria-hidden="true"></i></a></td>
+            </tr>
+        </table>
+    </div>
+    <div class="marginArriba"> <span class="f24">Foros denunciados:</span>
+        <table class="marginArriba">
+            <tr>
+                <td class="cCeleste">Título del foro</td>
+                <td class="cCeleste">Tipo Foro</td>
+                <td class="cCeleste">Denuncias</td>
+                <td class="cCeleste">Eliminar Foro</td>
+                <td class="cCeleste">Ver Foro</td>
+            </tr>
+            <tr ng-repeat="d in forosDenunciados">
+                <td class="f18 w500 break">{{d.Titulo}} </td>
+                <td class="f18">{{d.Tipo}}</td>
+                <td class="f18 aCentro">{{d.Denuncias}}</td>
+                <td class="aCentro">
+                    <button class="bgCeleste f18 fff fullPadding brAll" ng-click="eliminarForo(d.ForoID)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                </td>
+                <td class="cCeleste aCentro"><a target="_blank" href="#!/verInfo/{{d.ForoID}}" class="bgCeleste pointer f18 fff fullPadding brAll"><i class="fa fa-external-link" aria-hidden="true"></i></a></td>
+            </tr>
+        </table>
+    </div>
+
+</div>

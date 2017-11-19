@@ -1,0 +1,16 @@
+<div class="contenedor aFlexCentro">
+    <div>
+        <div class="title">Iniciar Sesión</div>
+        <div class="fullPaddingSuper aCentro">
+            <form ng-submit="ingresar(user,pass)">
+                <input class="fullPadding fullWidth f18 marginAbajo block sombra" title="Ingresar el usuario" placeholder="Nombre de Usuario" ng-model="user" required>
+                <input class="fullPadding fullWidth sombra marginArriba block marginAbajo f18" title="Ingresar la contraseña" placeholder="***********" type="password" ng-model="pass" required>
+                <button class="fullPadding f20 marginArriba" type="submit">Ingresar</button>
+                <div class="marginArriba">
+                    <span class="f16">¿No tienes cuenta?</span><br>
+                    <button type="button" class="fullPadding f16 inline cCeleste bgfff marginArriba" ng-click="irA('registro')"><i class="fa fa-user-plus" aria-hidden="true"></i> Registrarse</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

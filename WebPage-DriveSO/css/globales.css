@@ -1,0 +1,342 @@
+/* colores */
+
+.cCeleste {
+    color: rgb(25, 112, 194);
+}
+
+.cCelesteClaro {
+    color: rgb(27, 121, 209);
+}
+
+.cGrisClaro {
+    color: #eee;
+}
+
+.cGrisOscuro {
+    color: #333;
+}
+
+.bgGrisClaro {
+    background: #eee;
+}
+
+.bgGrisOscuro {
+    background: #333;
+}
+
+.cAzulOscuro {
+    color: #2a4044;
+}
+
+.cRojo {
+    color: brown;
+}
+
+.fff {
+    color: #fff;
+}
+
+.cRojoClaro {
+    color: #f00;
+}
+
+.bgTra {
+    background: transparent;
+}
+
+.bgCeleste {
+    background: rgb(25, 112, 194)
+}
+
+.bgCelesteClaro {
+    background: rgb(59, 145, 224);
+}
+
+.bgTransparente {
+    background: transparent;
+}
+
+.bgfff {
+    background: #fff;
+}
+
+
+/* Colores Hover */
+
+.cRCH:hover {
+    color: #f00;
+}
+
+
+/* Más */
+
+.sombra {
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.22);
+}
+
+.absolute {
+    position: absolute;
+}
+
+.pDer {
+    right: 0;
+}
+
+.pArriba {
+    top: 0;
+}
+
+.relative {
+    position: relative;
+}
+
+.brTLR {
+    border-radius: 5px 5px 0px 0px;
+}
+
+.brAll {
+    border-radius: 5px 5px 5px 5px;
+}
+
+.bordeClaro {
+    border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.bordefff {
+    border: 1px solid #fff;
+}
+
+.bordeCeleste {
+    border: 1px solid rgb(25, 112, 194);
+}
+
+.ocultarA {
+    visibility: hidden;
+}
+
+.w500 {
+    width: 500px;
+}
+
+.w300 {
+    width: 300px;
+}
+
+
+/* alineación */
+
+.aDer {
+    text-align: right;
+}
+
+.aIzq {
+    text-align: left;
+}
+
+.aCentro {
+    text-align: center;
+}
+
+
+/* flex vox */
+
+.flexColumna {
+    display: flex;
+    flex-direction: column;
+}
+
+.flexJCenter {
+    justify-content: center;
+}
+
+.flexFila {
+    display: flex;
+    flex-direction: row;
+}
+
+.flexCenter {
+    align-items: center;
+}
+
+.flexExpandir {
+    align-self: stretch;
+}
+
+.aFlexCentro {
+    align-self: center;
+}
+
+.flexG1 {
+    flex-grow: 1;
+}
+
+.spaceBetwen {
+    justify-content: space-between;
+}
+
+
+/* tamaño letra */
+
+.f50 {
+    font-size: 50px;
+}
+
+.f40 {
+    font-size: 40px;
+}
+
+.f30 {
+    font-size: 30px;
+}
+
+.f26 {
+    font-size: 26px;
+}
+
+.f24 {
+    font-size: 24px;
+}
+
+.f22 {
+    font-size: 22px;
+}
+
+.f20 {
+    font-size: 20px;
+}
+
+.f18 {
+    font-size: 18px;
+}
+
+.f16 {
+    font-size: 16px;
+}
+
+.f14 {
+    font-size: 14px;
+}
+
+.f12 {
+    font-size: 12px;
+}
+
+
+/* Tipo de Letra */
+
+.roboto {
+    font-family: roboto
+}
+
+.openS {
+    font-family: "Open Sans"
+}
+
+
+/* Espaciado */
+
+.fullWidth {
+    width: 100%;
+}
+
+.fullPadding {
+    padding: 5px 10px 5px 10px;
+}
+
+.fullPaddingSuper {
+    padding: 15px 20px 15px 20px;
+}
+
+.fullMargin {
+    margin: 10px 10px 10px 10px;
+}
+
+.marginIzq {
+    margin-left: 10px;
+}
+
+.marginDer {
+    margin-right: 10px;
+}
+
+.marginArriba {
+    margin-top: 10px;
+}
+
+.marginArribaSuper {
+    margin-top: 20px;
+}
+
+.marginAbajo {
+    margin-bottom: 10px;
+}
+
+.marginAbajoSuper {
+    margin-bottom: 20px;
+}
+
+.paddingIzq {
+    padding-left: 10px;
+}
+
+.paddingDer {
+    padding-right: 10px;
+}
+
+.paddingDerSuper {
+    padding-right: 70px;
+}
+
+.paddingArriba {
+    padding-top: 10px;
+}
+
+.paddingAbajo {
+    padding-bottom: 10px;
+}
+
+
+/* Otros */
+
+.inline {
+    display: inline-block;
+}
+
+.block {
+    display: block;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.break {
+    word-break: break-all;
+}
+
+.truncate {
+    width: 600px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.marginAuto {
+    margin: auto;
+}
+
+
+/* Tamanho */
+
+.width150 {
+    width: 150px;
+}
+
+.width80p {
+    width: 80%;
+}
+
+.height300 {
+    max-height: 300px;
+    overflow-y: auto;
+}

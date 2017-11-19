@@ -1,0 +1,45 @@
+<div class="marginArriba  fullWidth aCentro" ng-show="op">
+    <div class="bgCeleste w500 inline fff fullPadding brAll relative">
+       <div class="absolute pDer pArriba fullPadding ">
+           <div class="f14" ng-show="op.TipoUsuario == 'candidato'"><i class="fa fa-sun-o" aria-hidden="true"></i> Candidato</div>
+           <div class="f14" ng-show="op.TipoUsuario == 'admin'"><i class="fa fa-sun-o" aria-hidden="true"></i> Administrador</div>
+       </div>
+        <div class="fullMargin break aIzq">
+            <div class="aCentro paddingAbajo flexFila flexCenter flexJCenter f26"><i class="fa fa-user-circle f50 fullMargin" aria-hidden="true"></i> {{op.Nombre}} {{op.Apellido1}} {{op.Apellido2}}</div>
+            <div class="fullPaddingSuper f18">
+                <div>Usuario: {{op.Usuario}}</div>
+                <div class="marginArriba">Correo: {{op.Correo}}</div>
+                <div ng-show="op.Descripcion" class="marginArriba">Descripción: {{op.Descripcion}}</div>
+                <div class="marginArriba" ng-show="op.Calificacion">Calificación: {{op.Calificacion}} estrellas</div>
+                <div class="marginArriba pointer" ng-show="!calificado && idUsuario != idUsuarioActivo">Calificar
+                    <div class="inline" ng-mouseleave="calificar = null" ng-click="calificarPersona(calificar)"><i class="fa fa-star" ng-mouseleave="calificar = null" ng-mouseover="calificar = 1" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true" ng-mouseover="calificar = 2"></i><i ng-mouseover="calificar = 3" class="fa fa-star" aria-hidden="true"></i><i ng-mouseover="calificar = 4" class="fa fa-star" aria-hidden="true"></i><i ng-mouseover="calificar = 5" class="fa fa-star" aria-hidden="true"></i> <span ng-show="calificar">{{calificar}} estrellas</span> </div>
+                </div>
+                <div class="marginArriba" ng-show="calificado">Has calificado a {{op.Nombre}}!</div>
+            </div>
+            <div class="aDer" ng-show="idUsuario == idUsuarioActivo">
+                <button class="bgfff cCeleste fullPadding f18" ng-click="editarPerfil()"><i class="fa fa-pencil" aria-hidden="true"></i> Editar Información</button>
+            </div>
+            <div class="aDer fullPadding bordefff" ng-show="tipoUsuarioActivo == 'admin' && idUsuario != idUsuarioActivo">
+                <div class="aIzq marginAbajo">Cambiar tipo de usuario:</div>
+                <div class="aIzq marginAbajo">Tipo de usuario actual: {{op.TipoUsuario}}</div>
+                <button class="bgfff cCeleste fullPadding f18" ng-click="cambiarTipoUsuario('candidato')"> Candidato</button>
+                <button class="bgfff cCeleste fullPadding f18" ng-click="cambiarTipoUsuario('admin')"> Administrador</button>
+                <button class="bgfff cCeleste fullPadding f18" ng-click="cambiarTipoUsuario('regular')"> Usuario Normal</button>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="w500 inline marginArriba bordeCeleste fullPadding" ng-show="editarInformacion">
+            <div>Editar información personal:</div>
+            <div class="aIzq f18 fullPadding">Descripcion del perfil:
+                <textarea class="bordeCeleste marginArriba fullWidth fullPadding f18" ng-model="objEditar.Descripcion" name="" id="" rows="5"></textarea> Correo:
+                <input class="bordeCeleste marginArriba fullWidth fullPadding f18" type="text" ng-model="objEditar.Correo">
+                <div class="aDer">
+                    <button class="marginArriba bgCelesteClaro fullPadding" ng-click="editarInformacion = false"> <i class="fa fa-times" aria-hidden="true"></i> Cancelar</button>
+                    <button class=" marginArriba bgCelesteClaro fullPadding" ng-click="ActualizarPersona(objEditar)"> <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar Cambios</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>

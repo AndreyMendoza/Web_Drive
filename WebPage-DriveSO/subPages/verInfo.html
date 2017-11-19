@@ -1,0 +1,57 @@
+<div class="aIzq verPagina" ng-show="of.Titulo">
+    <div class="f20 marginArribaSuper marginAbajoSuper aCentro">{{of.Titulo}}</div>
+    <div class="aIzq contPrincipal paddingAbajo">
+        <div class=" fondoAzul aIzq fullPadding flexFila spaceBetwen flexCenter brTLR"><span class="f18"><i class="fa fa-user" aria-hidden="true"></i> {{of.Tipo}} publicado por {{of.Creador}} el {{(of.FechaPublicacion).split(" ")[0]}} a las {{(of.FechaPublicacion).split(" ")[1]}}
+           </span>
+            <button class=" bgTra fff cRCH f16" ng-click="denunciarForo()" title="¿Contenido inadecuado? Denunciar"><i class="fa fa-flag" aria-hidden="true"></i> </button>
+        </div>
+        <div class="f16 fullPadding break bordeClaro"> {{of.Contenido}}</div>
+        <dv class="archivos f16 aIzq block marginArriba bordeClaro fullPadding break" ng-show="of.encuestas.length > 0"> <span class="f20">Encuesta:</span>
+            <div class=" marginIzq archivo marginArriba f16" ng-repeat="e in of.encuestas">{{e.Descripcion}}
+                <div>
+                    <button class="bgfff" ng-click="votarEncuesta(e.EncuestaID,1)"><i class="fa f16 cCeleste fa-thumbs-o-up" aria-hidden="true"></i></button> <span class="cCeleste f16">{{e.likes}}</span>
+                    <button class="bgfff" ng-click="votarEncuesta(e.EncuestaID,0)"><i class="fa f16 fa-thumbs-o-down cCeleste" aria-hidden="true"></i></button> <span class="cCeleste f16">{{e.disLikes}}</span></div>
+            </div>
+        </dv>
+        <dv class="archivos f16 marginArriba aIzq block fullPadding bordeClaro" ng-show="of.archivos.length > 0"> <span class="f20">Enlaces Adjuntos:</span>
+            <div class="archivo marginArriba f14" ng-repeat="a in of.archivos"><i class="fa fa-external-link" aria-hidden="true"></i> {{a.NombreArchivo}} <a href="{{a.ArchivoURL}}" class="f14 cCelesteClaro" target="_blank"><i class="fa fa-eye" aria-hidden="true"></i> Ver</a></div>
+        </dv>
+        <div class="aCentro" ng-show="of.Tipo == 'Evento'">
+            <button class="bgCeleste marginArriba fullPadding f18" ng-click="varVerEvento()"><i class="fa fa-map-marker" aria-hidden="true"></i> Ver ubicación en el mapa</button>
+        </div>
+        <div class="aDer marginArriba">
+            <button class="fullPadding f14 bgTra cCeleste bordeClaro marginIzq" ng-click="meGustarForo(c.ComentarioID)"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Me gusta</button> <span class="f14 cCeleste">A {{of.Likes}} personas le gusta esto</span> </div>
+    </div>
+    <div ng-show="of.Tipo == 'Foro' || of.Tipo == 'Evento'">
+        <div class="publicarComentario paddingAbajo">
+            <div class="f16 fullMargin"><i class="fa fa-pencil" aria-hidden="true"></i> Agregar comentario: </div>
+            <textarea ng-init="txtComentario=''" ng-model="txtComentario" class="f14 bordeClaro fullPadding fullWidth" placeholder="Escriba un comentario" rows="4"></textarea>
+            <div class="aDer">
+                <button class="boton f16 fullPadding" ng-click="agregarComentario(txtComentario)"><i class="fa fa-share-square-o" aria-hidden="true"></i> Publicar Comentario</button>
+            </div>
+        </div>
+        <div class="comentarios marginAbajo marginArriba">Comentarios <i class="fa fa-commenting-o" aria-hidden="true"></i>
+            <div class="comentario marginArriba paddingAbajo" ng-repeat="c in of.comentarios">
+                <div class="f16 bgCelesteClaro fff aIzq fullPadding flexFila spaceBetwen flexCenter brTLR"> <span><i class="fa fa-commenting-o" aria-hidden="true"></i> <span class="f16"> El {{(c.Fecha).split(" ")[0]}} a las {{(c.Fecha).split(" ")[1]}} {{c.Persona}} comentó:</span></span>
+                    <div class="inline">
+                        <button ng-show="c.PersonaID == idUsuarioActivo" class=" bgTra fff cRCH f16" ng-click="eliminarComentario(c.ComentarioID)" title="Eliminar Comentario"><i class="fa fa-trash" aria-hidden="true"></i> </button>
+                        <button class=" bgTra fff cRCH f16" ng-click="denunciarComentario(c.ComentarioID)" title="¿Contenido inadecuado? Denunciar"><i class="fa fa-flag" aria-hidden="true"></i> </button>
+                    </div>
+                </div>
+                <div class="f16 fullMargin">{{c.Comentario}}</div>
+                <div class="aDer">
+                    <button class="fullPadding f14 bgTra cCeleste bordeClaro marginIzq" ng-click="meGustarComentario(c.ComentarioID)"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Me gusta</button> <span class="f14 cCeleste">A {{c.Likes}} personas le gusta esto
+                </div>
+            </div>
+        </div>
+        <div class="aCentro" ng-show="of.comentarios == null && of.Tipo != 'Proyecto' && of.Tipo != 'Articulo'">
+            <button ng-click="cargarComentarios()" class="bgCeleste f18 fullPadding"><i class="fa fa-refresh" aria-hidden="true"></i> Cargar Comentarios</button> <span class="cCeleste fff0 f16" ng-show="of.comentarios.length === 0">No hay comentarios todavia, sé el primero en publicar uno!</span> </div>
+            </div>
+            <div class="contenedorFlotante" ng-class="controlVerEvento">
+                <div>
+                    <div class="fondo" ng-click="varVerEvento()"></div>
+                    <div class="title">Ubicación del evento<span ng-click="varVerEvento()">X</span></div>
+                    <div class="marginArriba" id="mapVer"></div>
+                </div>
+            </div>
+        </div>

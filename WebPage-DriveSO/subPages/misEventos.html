@@ -1,0 +1,74 @@
+<div class="aCentro">
+    <div class=" f30 marginArribaSuper marginAbajoSuper aCentro cAzulOscuro">Eventos Personales</div>
+
+    <div class="contenedorCrear pointer" ng-click="varAgregarEvento()">
+        <div class="title fullPadding"></div>
+        <div class="fullPadding f20"><i class="fa fa-plus" aria-hidden="true"></i> Crear Nuevo Evento</div>
+    </div>
+
+    <div class="contenedorGeneral" ng-repeat="evento in arrayEventos">
+        <div class="title fullPadding f18">{{evento.Titulo}}</div>
+        <div class="contenido ">
+            <div class="inline aFlexCentro fullPadding"><i class="fa fa-users f50" aria-hidden="true"></i> </div>
+            <div class="inline fullPadding aIzq">
+                <div class="f16">Creador: {{evento.Creador}}</div>
+                <div class="f16">Fecha de Publicación: {{evento.FechaPublicacion}}</div>
+                <div class="f16 truncate">Contenido: {{evento.Contenido}}</div>
+                <div class="botones">
+                    <boton><i class="fa fa-eye" ng-click="verDetalles(evento.ForoID)" aria-hidden="true"></i></boton>
+                    <boton><i class="fa fa-pencil" ng-click="varEditarEvento(evento)" aria-hidden="true"></i></boton>
+                    <boton><i class="fa fa-trash" ng-click="eliminarEvento(evento.ForoID)" aria-hidden="true"></i></boton>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="contenedorFlotante" ng-class="controlAgregarEvento">
+        <div>
+            <div class="fondo" ng-click="varAgregarEvento()"></div>
+            <div class="title">Creación del Evento<span ng-click="varAgregarEvento()">X</span></div>
+            <div class="cuerpo fullPadding">
+                <form ng-submit="crearEvento(Evento)">
+                    <textarea class="fullWidth fullPadding f16 sombra" placeholder="Nombre del Evento" rows="2" required ng-model="Evento.Titulo"></textarea>
+                    <textarea class="fullWidth fullPadding f16 sombra" placeholder="Contenido del Evento (Descripción)" rows="5" ng-model="Evento.Contenido"></textarea>
+
+                    <div class="aCentro marginAbajo">
+                        <span class="marginDer cGrisOscuro">Localización del Evento:</span>
+                        <div class="marginArriba" id="map"></div>
+                    </div>
+                    <div>
+                        <span class="marginDer cGrisOscuro">Fecha del Evento:</span>
+                        <input class="cGrisOscuro sombra" type="datetime-local" name="fechaEvento" required ng-model="Evento.Date">
+                    </div>
+                    <div class="aDer">
+                        <button class="fullPadding f20 marginArriba" type="submit">Crear Evento</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="contenedorFlotante" ng-class="controlEditarEvento">
+    <div>
+        <div class="fondo" ng-click="varEditarEvento()"></div>
+        <div class="title">Edición del Evento<span ng-click="varEditarEvento()">X</span></div>
+        <div class="cuerpo fullPadding">
+            <form ng-submit="editarEvento(Evento)">
+                <textarea class="fullWidth fullPadding f16 sombra" placeholder="Nombre del Evento" rows="2" required ng-model="Evento.Titulo"></textarea>
+                <textarea class="fullWidth fullPadding f16 sombra" placeholder="Contenido del Evento (Descripción)" rows="5" ng-model="Evento.Contenido"></textarea>
+                <div class="aCentro marginAbajo"> <span class="marginDer cGrisOscuro">Localización del Evento:</span>
+                    <div class="marginArriba" id="mapEdit"></div>
+                </div>
+                <div> <span class="marginDer cGrisOscuro">Fecha del Evento:</span>
+                    <input class="cGrisOscuro sombra" type="datetime-local" name="fechaEvento" required ng-model="Evento.Date"> </div>
+                <div class="aDer">
+                    <button class="fullPadding f20 marginArriba" type="submit">Editar Evento</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+</div>

@@ -1,0 +1,37 @@
+:root {
+    /* elementos de la master page */
+    --fondoHeader: #2a4044;
+    --fondoHeaderSubMenus: #2a4044;
+    --colorHeaderSubMenus: #fff;
+    --fondoHeaderSubMenusHover: rgb(25, 112, 194);
+    --colorHeaderSubMenusHover: #fff;
+    --colorHeader: #fff;
+    --fondoHeaderAHover: rgb(25, 112, 194);
+    /* -footer */
+    --colorFooter: #ccc;
+    --fondoFooter: #2a4044;
+    /* menu perfil usuario */
+    --fondoInfoUsuario: transparent;
+    --colorInfoUsuario: #fff;
+    --fondoInfoUsuarioHover: rgb(25, 112, 194);
+    --colorInfoUsuarioHover: #fff;
+    --fondoInfoUsuarioSubMenus: #2a4044;
+    --colorInfoUsuarioSubMenus: #fff;
+    --fondoInfoUsuarioSubMenusHover: rgb(25, 112, 194);
+    --colorInfoUsuarioSubMenusHover: #fff;
+    /* input, botones, etc */
+    --colorBoton: #fff;
+    --fondoBoton: #677684;
+    --fondoBotonHover: #00ACC1;
+    --fondoInput: rgba(0, 0, 0, 0.1);
+    --fondoOption: rgba(0, 0, 0, 0.1);
+    /* contenedores */
+    --fondoContenedor: #ececec;
+    --colorContenedor: #000;
+    --fondoTituloContenedor: rgb(25, 112, 194);
+    --colorTituloContenedor: #fff;
+    --fondoTituloTabla: #607D8B;
+    /* colores*/
+    --cCeleste: rgb(25, 112, 194);
+    /* no se incluye nada del panel de facturacion */
+}

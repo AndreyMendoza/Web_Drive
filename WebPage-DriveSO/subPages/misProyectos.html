@@ -1,0 +1,59 @@
+<div class="aCentro">
+    <div class=" f30 marginArribaSuper marginAbajoSuper aCentro cAzulOscuro">Proyectos Personales</div>
+
+    <div class="contenedorCrear pointer" ng-click="varAgregarProyecto()">
+        <div class="title fullPadding"></div>
+        <div class="fullPadding f20"><i class="fa fa-plus" aria-hidden="true"></i> Crear Nuevo Proyecto</div>
+    </div>
+
+    <div class="contenedorGeneral" ng-repeat="proyecto in arrayProyectos">
+        <div class="title fullPadding f18">{{proyecto.Titulo}}</div>
+        <div class="contenido ">
+            <div class="inline aFlexCentro fullPadding"><i class="fa fa-briefcase f50" aria-hidden="true"></i> </div>
+            <div class="inline fullPadding aIzq">
+                <div class="f16">Creador: {{proyecto.Creador}}</div>
+                <div class="f16">Fecha de Publicación: {{proyecto.FechaPublicacion}}</div>
+                <div class="f16 truncate">Contenido: {{proyecto.Contenido}}</div>
+                <div class="botones">
+                    <boton><i class="fa fa-eye" ng-click="verDetalles(proyecto.ForoID)" aria-hidden="true"></i></boton>
+                    <boton><i class="fa fa-pencil" ng-click="varEditarProyecto(proyecto)" aria-hidden="true"></i></boton>
+                    <boton><i class="fa fa-trash" ng-click="eliminarProyecto(proyecto.ForoID)" aria-hidden="true"></i></boton>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="contenedorFlotante" ng-show="controlAgregarProyecto">
+        <div>
+            <div class="fondo" ng-click="varAgregarProyecto()"></div>
+            <div class="title">Creación del Proyecto<span ng-click="varAgregarProyecto()">X</span></div>
+            <div class="cuerpo fullPadding">
+                <form ng-submit="crearProyecto(Proyecto)">
+                    <textarea class="fullWidth fullPadding f16 sombra" placeholder="Nombre del Proyecto" rows="2" ng-model="Proyecto.Titulo"></textarea>
+                    <textarea class="fullWidth fullPadding f16 sombra" placeholder="Contenido del Proyecto (Descripción)" rows="5" ng-model="Proyecto.Contenido"></textarea>
+                    <div class="aDer">
+                        <button class="fullPadding f20 marginArriba" type="submit">Crear Proyecto</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="contenedorFlotante" ng-show="controlEditarProyecto">
+        <div>
+            <div class="fondo" ng-click="varEditarProyecto()"></div>
+            <div class="title">Edición del Proyecto<span ng-click="varEditarProyecto()">X</span></div>
+            <div class="cuerpo fullPadding">
+                <form ng-submit="editarProyecto(Proyecto)">
+                    <textarea class="fullWidth fullPadding f16 sombra" placeholder="Nombre del Proyecto" rows="2" ng-model="Proyecto.Titulo"></textarea>
+                    <textarea class="fullWidth fullPadding f16 sombra" placeholder="Contenido del Proyecto (Descripción)" rows="5" ng-model="Proyecto.Contenido"></textarea>
+                    <div class="aDer">
+                        <button class="fullPadding f20 marginArriba" type="submit">Editar Proyecto</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+</div>

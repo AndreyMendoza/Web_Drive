@@ -1,0 +1,62 @@
+<div class="aCentro">
+    <div class=" f30 marginArribaSuper marginAbajoSuper aCentro cAzulOscuro">Artículos Personales</div>
+
+    <div class="contenedorCrear pointer" ng-click="varAgregarArticulo()">
+        <div class="title fullPadding"></div>
+        <div class="fullPadding f20"><i class="fa fa-plus" aria-hidden="true"></i> Crear Nuevo Artículo</div>
+    </div>
+
+    <div class="contenedorGeneral" ng-repeat="articulo in arrayArticulos">
+        <div class="title fullPadding f18">{{articulo.Titulo}}</div>
+        <div class="contenido ">
+            <div class="inline aFlexCentro fullPadding"><i class="fa fa-bookmark f50" aria-hidden="true"></i> </div>
+            <div class="inline fullPadding aIzq">
+                <div class="f16">Creador: {{articulo.Creador}}</div>
+                <div class="f16">Fecha de Publicación: {{articulo.FechaPublicacion}}</div>
+                <div class="f16 truncate">Contenido: {{articulo.Contenido}}</div>
+                <div class="botones">
+                    <boton><i class="fa fa-eye" aria-hidden="true" ng-click="verDetalles(articulo.ForoID)"></i></boton>
+                    <boton><i class="fa fa-pencil" aria-hidden="true" ng-click="varEditarArticulo(articulo)"></i></boton>
+                    <boton><i class="fa fa-trash" aria-hidden="true" ng-click="eliminarArticulo(articulo.ForoID)"></i></boton>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="contenedorFlotante" ng-show="controlAgregarArticulo">
+        <div>
+            <div class="fondo" ng-click="varAgregarArticulo()"></div>
+            <div class="title">Creación del Artículo<span ng-click="varAgregarArticulo()">X</span></div>
+            <div class="cuerpo fullPadding">
+                <form ng-submit="crearArticulo(Articulo)">
+                    <textarea class="fullWidth fullPadding f16 sombra" placeholder="Nombre del artículo" rows="2" ng-model="Articulo.Titulo"></textarea>
+                    <textarea class="fullWidth fullPadding f16 sombra" placeholder="Contenido del artículo (Descripción)" rows="5" ng-model="Articulo.Contenido"></textarea>
+                    <div class="aDer">
+                        <button class="fullPadding f20 marginArriba" type="submit">Crear Artículo</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="contenedorFlotante" ng-show="controlEditarArticulo">
+        <div>
+            <div class="fondo" ng-click="varEditarArticulo()"></div>
+            <div class="title">Edición del Artículo<span ng-click="varEditarArticulo()">X</span></div>
+            <div class="cuerpo fullPadding">
+                <form ng-submit="editarArticulo(Articulo)">
+                    <textarea class="fullWidth fullPadding f16 sombra" placeholder="Nombre del artículo" rows="2" ng-model="Articulo.Titulo"></textarea>
+                    <textarea class="fullWidth fullPadding f16 sombra" placeholder="Contenido del artículo (Descripción)" rows="5" ng-model="Articulo.Contenido"></textarea>
+                    <div class="aDer">
+                        <button class="fullPadding f20 marginArriba" type="submit">Editar Artículo</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+
+</div>

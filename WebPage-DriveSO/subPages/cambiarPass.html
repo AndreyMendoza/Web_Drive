@@ -1,0 +1,15 @@
+<div class="contenedor aFlexCentro">
+    <div>
+        <div class="title">Actualizar Contraseña</div>
+        <div class="fullPaddingSuper aCentro">
+            <form ng-submit="cambiarPass(objPass)">
+                <input class="fullPadding fullWidth sombra marginArriba block marginAbajo f18" title="Ingresar la contraseña vieja" placeholder="Contraseña Vieja" type="password" ng-model="objPass.pContrasenha" required>
+                <input class="fullPadding fullWidth sombra marginArriba block marginAbajo f18" title="Nueva contraseña" placeholder="Nueva Contraseña" type="password" ng-model="objPass.pNuevaContrasenha" required>
+                <input class="fullPadding fullWidth sombra marginArriba block marginAbajo f18" title="Repetir contraseña" placeholder="Confirmar Contraseña" type="password" ng-model="objPass.passNuevaConf" required>
+                <button class="fullPadding f20 marginArriba" ng-show="verificarContrasenha(objPass.pNuevaContrasenha, objPass.passNuevaConf)" type="submit">Cambiar</button>
+                <span class="fullPadding f14" ng-hide="verificarContrasenha(objPass.pNuevaContrasenha, objPass.passNuevaConf)">Ingrese una nueva contraseña</span>
+                <div class="fullPadding f14" id="resp">{{msjRespuesta}}</div>
+            </form>
+        </div>
+    </div>
+</div>
