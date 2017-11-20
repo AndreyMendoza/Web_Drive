@@ -21,36 +21,9 @@ app.config(function ($routeProvider) {
     }).when("/registro", {
         templateUrl: "subPages/registro.html"
         , controller: "registro"
-    }).when("/misForos", {
-        templateUrl: "subPages/misForos.html"
-        , controller: "misForos"
-    }).when("/verForos", {
-        templateUrl: "subPages/verForos.html"
-        , controller: "verForos"
-    }).when("/misEventos", {
-        templateUrl: "subPages/misEventos.html"
-        , controller: "misEventos"
-    }).when("/verEventos", {
-        templateUrl: "subPages/verEventos.html"
-        , controller: "verEventos"
-    }).when("/misArticulos", {
-        templateUrl: "subPages/misArticulos.html"
-        , controller: "misArticulos"
-    }).when("/verArticulos", {
-        templateUrl: "subPages/verArticulos.html"
-        , controller: "verArticulos"
-    }).when("/administrarElecciones", {
-        templateUrl: "subPages/administrarElecciones.html"
-        , controller: "administrarElecciones"
-    }).when("/verElecciones", {
-        templateUrl: "subPages/verElecciones.html"
-        , controller: "verElecciones"
-    }).when("/misProyectos", {
-        templateUrl: "subPages/misProyectos.html"
-        , controller: "misProyectos"
-    }).when("/verProyectos", {
-        templateUrl: "subPages/verProyectos.html"
-        , controller: "verProyectos"
+    }).when("/verArchivos", {
+        templateUrl: "subPages/misArchivos.html"
+        , controller: "misArchivos"
     }).when("/busqueda", {
         templateUrl: "subPages/busqueda.html"
         , controller: "busqueda"
@@ -63,19 +36,14 @@ app.config(function ($routeProvider) {
     }).when("/verPerfil/:idUsuario", {
         templateUrl: "subPages/verPerfil.html"
         , controller: "verPerfil"
-    }).when("/verDenuncias", {
-        templateUrl: "subPages/verDenuncias.html"
-        , controller: "verDenuncias"
-    }).when("/administrarElecciones", {
-        templateUrl: "subPages/administrarElecciones.html"
-        , controller: "administrarElecciones"
     }).when("/", {
-        templateUrl: "subPages/noticias.html"
-        , controller: "noticias"
+        templateUrl: "subPages/misArchivos.html"
+        , controller: "misArchivos"
     }).otherwise({
         redirectTo: "/login"
     });
 });
+
 /* CONTROLADOR PRINCIPAL */
 app.controller("mainController", function ($scope, $rootScope, $location, $http, $cookies, $interval, $filter, $log) {
     $rootScope.verDetalles = function (ForoID) {
@@ -217,6 +185,7 @@ app.controller("login", function ($scope, $rootScope, $location, $http, $cookies
         }
     }
 });
+
 /* REGISTRAR USUARIO */
 app.controller("registro", function ($scope, $rootScope, $location, $http, $cookies, $interval, $filter, $log) {
     if ($rootScope.sesionActiva()) { // verificamos si una sesion ya fue iniciada
@@ -300,215 +269,9 @@ app.controller("cambiarPass", function ($scope, $rootScope, $location, $http, $c
         };
     }
 });
-/* Popup Miembros Foro */
-app.controller("popupMiembrosForo", function ($scope, $rootScope, $location, $http, $cookies, $interval, $filter, $log) {
-    if (!$rootScope.sesionActiva()) { // verificamos si una sesion ya fue iniciada
-        $location.path("login");
-    }
-    else {
-        $scope.Foro = $rootScope.ForoSeleccionado;
-        $scope.buscarUsuarios = function (obj) {
-            $log.log("Buscando Usuarios");
-            $log.log(obj);
-            var fd = new FormData();
-            fd.append("obj", JSON.stringify(obj));
-            $http.post(host + "api/buscarUsuario.php", fd, {
-                headers: {
-                    "Content-Type": undefined
-                }
-            }).then(function (respuesta) {
-                var data = respuesta.data;
-                $log.log("Datos");
-                $log.log(data);
-                if (data.message == "OK") {
-                    $scope.arrayUsuarios = data.PersonasEncontradas;
-                    $log.log("Usuarios consultados correctamente");
-                }
-                else {
-                    $log.log(data.message);
-                }
-            }).catch(function (data) {
-                $log.log("Error de conexion, intente de nuevo");
-            })
-        }
-        $scope.agregarMiembro = function (PersonaID) {
-            $log.log("Añadiendo miembro al foro");
-            var obj = {};
-            obj.pForoID = $scope.Foro.ForoID;
-            obj.pPersonaID = PersonaID;
-            $log.log(obj);
-            var fd = new FormData();
-            fd.append("obj", JSON.stringify(obj));
-            $http.post(host + "api/AgregarAccesoXForo.php", fd, {
-                headers: {
-                    "Content-Type": undefined
-                }
-            }).then(function (respuesta) {
-                var data = respuesta.data;
-                $log.log("Datos");
-                $log.log(data);
-                if (data.message == "OK") {
-                    $scope.verMiembros();
-                    $log.log("Miembro agregado correctamente");
-                }
-                else {
-                    $log.log(data.message);
-                }
-            }).catch(function (data) {
-                $log.log("Error de conexion, intente de nuevo");
-            })
-        }
-        $scope.eliminarMiembro = function (PersonaID) {
-            var resp = confirm("¿Está seguro que desea eliminar el integrante?");
-            if (resp == true) {
-                var obj = {};
-                obj.pForoID = $scope.Foro.ForoID;
-                obj.pPersonaID = PersonaID;
-                $log.log("Eliminando miembro");
-                $log.log(obj);
-                var fd = new FormData();
-                fd.append("obj", JSON.stringify(obj));
-                $http.post(host + "api/EliminarAccesoXForo.php", fd, {
-                    headers: {
-                        "Content-Type": undefined
-                    }
-                }).then(function (respuesta) {
-                    var data = respuesta.data;
-                    $log.log("Datos");
-                    $log.log(data);
-                    if (data.message == "OK") {
-                        $log.log("Miembro eliminado correctamente");
-                        $scope.verMiembros();
-                    }
-                    else {
-                        $log.log(data.message);
-                    }
-                }).catch(function (data) {
-                    $log.log("Error de conexion, intente de nuevo");
-                })
-            }
-        }
-        $scope.verMiembros = function () {
-            var obj = {};
-            obj.pForoID = $scope.Foro.ForoID;
-            $log.log("Ver miembros X foro");
-            $log.log(obj);
-            var fd = new FormData();
-            fd.append("obj", JSON.stringify(obj));
-            $http.post(host + "api/VerMiembrosXForo.php", fd, {
-                headers: {
-                    "Content-Type": undefined
-                }
-            }).then(function (respuesta) {
-                var data = respuesta.data;
-                $log.log("Datos");
-                $log.log(data);
-                if (data.message == "OK") {
-                    $scope.arrayMiembros = data.MiembrosXForo;
-                    $log.log("Miembros consultados correctamente");
-                }
-                else {
-                    $log.log(data.message);
-                }
-            }).catch(function (data) {
-                $log.log("Error de conexion, intente de nuevo");
-            })
-        }
-        $scope.verMiembros();
-    }
-});
-/* Popup Editar Preguntas del Foro */
-app.controller("popupEditarPreguntas", function ($scope, $rootScope, $location, $http, $cookies, $interval, $filter, $log) {
-    if (!$rootScope.sesionActiva()) { // verificamos si una sesion ya fue iniciada
-        $location.path("login");
-    }
-    else {
-        $scope.Foro = $rootScope.ForoSeleccionado;
-        $scope.cargarPreguntas = function () {
-            var obj = {};
-            obj.ForoID = $scope.Foro.ForoID;
-            $log.log("Consultando preguntas X foro");
-            $log.log(obj);
-            var fd = new FormData();
-            fd.append("obj", JSON.stringify(obj));
-            $http.post(host + "api/VerEncuestaXForo.php", fd, {
-                headers: {
-                    "Content-Type": undefined
-                }
-            }).then(function (respuesta) {
-                var data = respuesta.data;
-                $log.log("Datos");
-                $log.log(data);
-                if (data.message == "OK") {
-                    $scope.arrayPreguntas = data.EncuestaXForo;
-                    $log.log("Preguntas consultados correctamente");
-                }
-                else {
-                    $log.log(data.message);
-                }
-            }).catch(function (data) {
-                $log.log("Error de conexion, intente de nuevo");
-            })
-        }
-        $scope.agregarPregunta = function (obj) {
-            obj.ForoID = $scope.Foro.ForoID;
-            $log.log("Agregando pregunta al foro");
-            $log.log(obj);
-            var fd = new FormData();
-            fd.append("obj", JSON.stringify(obj));
-            $http.post(host + "api/AgregarEncuesta.php", fd, {
-                headers: {
-                    "Content-Type": undefined
-                }
-            }).then(function (respuesta) {
-                var data = respuesta.data;
-                $log.log("Datos");
-                $log.log(data);
-                if (data.message == "OK") {
-                    $log.log("Pregunta agregada correctamente");
-                    //Se deben actualizar los archivos
-                    $scope.cargarPreguntas();
-                    obj.Descripcion = "";
-                }
-                else {
-                    $log.log(data.message);
-                }
-            }).catch(function (data) {
-                $log.log("Error de conexion, intente de nuevo");
-            })
-        }
-        $scope.eliminarPregunta = function (obj) {
-            var txt;
-            var resp = confirm("¿Está seguro que desea eliminar la pregunta?");
-            if (resp == true) {
-                $log.log("Eliminando pregunta del foro");
-                $log.log(obj);
-                var fd = new FormData();
-                fd.append("obj", JSON.stringify(obj));
-                $http.post(host + "api/EliminarPregunta.php", fd, {
-                    headers: {
-                        "Content-Type": undefined
-                    }
-                }).then(function (respuesta) {
-                    var data = respuesta.data;
-                    $log.log("Datos");
-                    $log.log(data);
-                    if (data.message == "OK") {
-                        $log.log("Pregunta eliminada correctamente");
-                        //Se deben actualizar los archivos
-                        $scope.cargarPreguntas();
-                    }
-                    else {
-                        $log.log(data.message);
-                    }
-                }).catch(function (data) {
-                    $log.log("Error de conexion, intente de nuevo");
-                })
-            }
-        }
-        $scope.cargarPreguntas();
-    }
-});
+
+
+
 /* Popup Editar Archivos */
 app.controller("popupEditarArchivos", function ($scope, $rootScope, $location, $http, $cookies, $interval, $filter, $log) {
     if (!$rootScope.sesionActiva()) { // verificamos si una sesion ya fue iniciada
@@ -604,1291 +367,201 @@ app.controller("popupEditarArchivos", function ($scope, $rootScope, $location, $
         $scope.cargarArchivos();
     }
 });
+
 /* Mis Articulos */
-app.controller("misArticulos", function ($scope, $rootScope, $location, $http, $cookies, $interval, $filter, $log) {
+app.controller("misArchivos", function ($scope, $rootScope, $location, $http, $cookies, $interval, $filter, $log) {
     if (!$rootScope.sesionActiva()) { // verificamos si una sesion ya fue iniciada
         $location.path("login");
     }
     else {
-        $scope.controlAgregarArticulo = false;
-        $scope.controlEditarArticulo = false;
-        $scope.Articulo = {}; //Todo artículo es un foro..
-        $scope.varEditarArticulo = function (Articulo) {
-            if ($scope.controlEditarArticulo) {
-                $scope.controlEditarArticulo = false;
+        $scope.controlAgregarArchivo = false;
+        $scope.controlAgregarCarpeta = false;
+        $scope.controlVerArchivo = false;
+        $scope.controlEditarArchivo = false;
+        $scope.Archivo = {};
+        $scope.Carpeta = {};
+        
+        /*----------------- Controles para los Popups -----------------*/
+        $scope.varAgregarArchivo = function (Archivo) {
+            if ($scope.controlAgregarArchivo) {
+                $scope.controlAgregarArchivo = false;
             }
             else {
-                $scope.controlEditarArticulo = true;
-                $scope.Articulo = JSON.clone(Articulo);
-                //Se cargan los datos en los campos para editarlos
-                if ($scope.Articulo.Privado == "1") {
-                    $scope.Articulo.Privado = true;
-                }
-                else {
-                    $scope.Articulo.Privado = false;
-                }
+                $scope.controlAgregarArchivo = true;
+                $scope.Archivo = {};
             }
         }
-        $scope.varAgregarArticulo = function () {
-            if ($scope.controlAgregarArticulo) {
-                $scope.controlAgregarArticulo = false;
+        /***********************/
+        $scope.varAgregarCarpeta = function () {
+            if ($scope.controlAgregarCarpeta) {
+                $scope.controlAgregarCarpeta = false;
             }
             else {
-                $scope.controlAgregarArticulo = true;
-                $scope.Articulo = {};
+                $scope.controlAgregarCarpeta = true;
+                $scope.Carpeta = {};
             }
         }
-        $scope.editarArticulo = function (obj) {
-            obj.Privacidad = 1;
-            var fd = new FormData();
-            fd.append("obj", JSON.stringify(obj));
-            $log.log("Editando Articulo");
-            $log.log(obj);
-            $http.post(host + "api/ActualizarForo.php", fd, {
-                headers: {
-                    "Content-Type": undefined
-                }
-            }).then(function (respuesta) {
-                var data = respuesta.data;
-                $log.log(data);
-                if (data.message == "OK") {
-                    $log.log("Articulo Editado correctamente");
-                    $scope.verArticulos();
-                }
-                else {
-                    $log.log(data.message);
-                }
-            }).catch(function (data) {
-                $log.log("Error de conexion, intente de nuevo");
-            })
-        }
-        $scope.crearArticulo = function (obj) {
-            $log.log(obj);
-            obj.Tipo = "Articulo";
-            obj.Propietario = $rootScope.idUsuarioActivo;
-            obj.Privacidad = 1;
-            var fd = new FormData();
-            $log.log(obj);
-            fd.append("obj", JSON.stringify(obj));
-            $log.log("Creando Articulo");
-            $http.post(host + "api/AgregarForo.php", fd, {
-                headers: {
-                    "Content-Type": undefined
-                }
-            }).then(function (respuesta) {
-                var data = respuesta.data;
-                $log.log(data);
-                if (data.message == "OK") {
-                    $log.log("Articulo registrado correctamente");
-                    $scope.verArticulos();
-                    $scope.Articulo = {};
-                }
-                else {
-                    $log.log(data.message);
-                }
-            }).catch(function (data) {
-                $log.log("Error de conexion, intente de nuevo");
-            })
-        }
-        $scope.eliminarArticulo = function (ForoID) {
-            var resp = confirm("¿Está seguro que desea eliminar el Artículo?");
-            if (resp == true) {
-                $log.log("You pressed OK!");
-                var obj = {};
-                obj.ForoID = ForoID;
-                var fd = new FormData();
-                fd.append("obj", JSON.stringify(obj));
-                $log.log("Eliminando Artículo");
-                $log.log(obj);
-                $http.post(host + "api/EliminarForo.php", fd, {
-                    headers: {
-                        "Content-Type": undefined
-                    }
-                }).then(function (respuesta) {
-                    var data = respuesta.data;
-                    $log.log("Datos");
-                    $log.log(data);
-                    if (data.message == "OK") {
-                        $log.log("Borrado con éxito");
-                        $scope.verArticulos(); //Se actualizan los Artículos
-                    }
-                    else {
-                        $log.log(data.message);
-                    }
-                }).catch(function (data) {
-                    $log.log("Error de conexion, intente de nuevo");
-                })
+        /***********************/
+        $scope.varVerArchivo = function(){
+            if ($scope.controlVerArchivo) {
+                $scope.controlVerArchivo = false;
             }
             else {
-                $log.log("You pressed Cancel!");
+                $scope.controlVerArchivo = true;
+                $scope.Archivo = {};
             }
         }
-        $scope.verArticulos = function () {
-            var obj = {};
-            obj.UsuarioID = $rootScope.idUsuarioActivo;
-            var fd = new FormData();
-            fd.append("obj", JSON.stringify(obj));
-            $log.log("Consultando mis Artículos");
-            $http.post(host + "api/VerArticulosXUsuario.php", fd, {
-                headers: {
-                    "Content-Type": undefined
-                }
-            }).then(function (respuesta) {
-                var data = respuesta.data;
-                $log.log("Datos");
-                $log.log(data);
-                if (data.message == "OK") {
-                    $scope.arrayArticulos = data.ArticulosXUsuario;
-                    $log.log("Se han consultado correctamente");
-                }
-                else {
-                    $log.log(data.message);
-                }
-            }).catch(function (data) {
-                $log.log("Error de conexion, intente de nuevo");
-            })
+        /***********************/
+        $scope.varEditarArchivo = function () {
+            if ($scope.controlEditarArchivo) {
+                $scope.controlEditarArchivo = false;
+            }
+            else {
+                $scope.controlEditarArchivo = true;
+                $scope.Archivo = {};
+            }
         }
-        $scope.verArticulos();
+        
+        
+        /*----------------- Funciones de crear archivos y carpetas -----------------*/
+        $scope.crearArchivo = function(Archivo){
+            $log.log("Creando un archivo");
+            $log.log(Archivo);
+        }
+        
+        $scope.crearCarpeta = function(Carpeta){
+            $log.log("Creando una carpeta");
+            $log.log(Carpeta);
+        }
+        
+        
+        /*----------------- Ver y Editar Contenido de un archivo -----------------*/
+        $scope.verContenido = function(Archivo){
+            $scope.varVerArchivo();
+            $scope.Archivo = $scope.arrayArchivos [2];
+            
+        }
+        $scope.editarContenido = function(Archivo){
+            $scope.varEditarArchivo();
+            $scope.Archivo = $scope.arrayArchivos [3];
+            
+        }
+        
+        
+        /*----------------- Funciones de eliminación -----------------*/
+        $scope.eliminarArchivo = function(ArchivoID, Nombre){
+            $log.log("Eliminando el archivo: ");
+            $log.log(ArchivoID);
+            if (confirm('Seguro que desea eliminar el archivo: '+Nombre)) {
+                $log.log("Confirmado.. Borrado");
+            } else {
+                $log.log("Cancelado");
+            }
+        }
+        
+        $scope.eliminarCarpeta = function(CarpetaID, Nombre){
+            $log.log("Eliminando la carpeta: ");
+            $log.log(CarpetaID);
+            if (confirm('Seguro que desea eliminar la carpeta: '+Nombre)) {
+                $log.log("Confirmado.. Borrada");
+            } else {
+                $log.log("Cancelado");
+            }
+        }
+        
+        /*----------------- Función de compartir un archivo con otro usuario -----------------*/
+        $scope.compartirArchivo = function(ArchivoID, Nombre){
+            $log.log("Compartiendo el archivo: "+ Nombre);
+            $log.log(ArchivoID);
+            
+        }
+        
+        
+        /*----------------- Función para actualizar el contenido del archivo -----------------*/
+        $scope.actualizarArchivo = function(Archivo){
+            $log.log("Actualizando el archivo: "+ Archivo.nombre);
+            
+        }
+        
+        /*----------------- Función para ver la carpeta -----------------*/
+        $scope.verCarpeta = function(CarpetaID){
+            $log.log("Viendo la carpeta "+ CarpetaID)
+        }
+        
+        
+        /*----------------- Función para ver todos los archivos en una ruta específica -----------------*/
+        $scope.verArchivos = function () {
+            
+            $scope.arrayArchivos = [
+                {
+                    "nombre": "Los Bandoleros",
+                    "fechaCreado": "10/11/2018",
+                    "fechaModificado": "20/11/2019",
+                    "tamanho": 600,
+                    "extension": "C:/Users/Armando/Dropbox/TEC",
+                    "tipo": 0,
+                    "id": 1,
+                    "contenido": ""
+                },
+                {
+                    "nombre": "Harry Potter",
+                    "fechaCreado": "20/11/2016",
+                    "fechaModificado": "22/12/2016",
+                    "tamanho": 500,
+                    "extension": "C:/Users/Armando/Dropbox/TEC",
+                    "tipo": 0,
+                    "id": 2,
+                    "contenido": ""
+                },
+                {
+                    "nombre": "Outer Space",
+                    "fechaCreado": "21/08/2015",
+                    "fechaModificado": "02/11/2016",
+                    "tamanho": 400,
+                    "extension": "C:/Users/Armando/Dropbox/TEC",
+                    "tipo": 1,
+                    "id": 3,
+                    "contenido": "Usualmente los artículos son breves y poco accesibles a los no especialistas. La introducción no suele explicar en detalle ciertos asuntos técnicos y en su lugar se remite a otras referencias que sí contienen dichos detalles. En general, un lector que no conozca lo esencial de las referencias puede tener dificultades de comprensión, ya que los artículos científicos no son obras de divulgación y están destinados a un público con conocimientos específicos, con el objeto de ser escritos breves."
+                },
+                {
+                    "nombre": "Tego Calderon",
+                    "fechaCreado": "10/11/2018",
+                    "fechaModificado": "22/10/2019",
+                    "tamanho": 300,
+                    "extension": "C:/Users/Armando/Dropbox/TEC",
+                    "tipo": 1,
+                    "id": 4,
+                    "contenido": "Cuando un trabajo no está aún publicado, pero ya ha sido aceptado por el comité editorial para su publicación, se dice que está «en prensa». Para el principios del siglo XXI se estimó que el número de artículos científicos publicados en el mundo tenía un crecimiento exponencial, duplicándose el número total de artículos publicados cada 9 años2​1​ Hacia 2012 el número de artículos publicados al años se estimaba en 1,8 millones (algo más de 1/3 de los mismos pertenecían a publicaciones sobre ciencias naturales). Además los datos muestran que el desempeño científico internacional está fuertemente correlacionado en el PIB, debido a que los países con mayor ingreso nacional destinan una mayor cantidad de recursos a la investigación científica."
+                },
+                {
+                    "nombre": "Don Omar",
+                    "fechaCreado": "21/11/2015",
+                    "fechaModificado": "03/10/2016",
+                    "tamanho": 200,
+                    "extension": "C:/Users/Armando/Dropbox/TEC",
+                    "tipo": 1,
+                    "id": 5,
+                    "contenido": "En ocasiones los artículos científicos son síntesis de informes o tesis de mayor envergadura, que orientan los esfuerzos de quienes puedan estar interesados en consultar la obra original. A veces la palabra inglesa paper posee una acepción ligeramente más amplia, pues incluye también a las ponencias."
+                },
+                {
+                    "nombre": "Manhattan Streets",
+                    "fechaCreado": "19/11/2017",
+                    "fechaModificado": "20/11/2019",
+                    "tamanho": 100,
+                    "extension": "C:/Users/Armando/Dropbox/TEC",
+                    "tipo": 1,
+                    "id": 6,
+                    "contenido": "Los artículos científicos deben estar cuidadosamente redactados para expresar de un modo claro y sintético lo que se pretende comunicar, e incluir las citas y referencias bibliográficas indispensables para contextualizar, justificar y verificar los antecedentes e ideas o datos previos contenidos en el trabajo. El contenido debe exponer además toda la información necesaria para poder reproducir los resultados originales que se dan a conocer en el mismo"
+                }
+                
+        ];
+            
+        };
+        
+        $scope.verArchivos();
     }
 });
-/* Mis Eventos */
-app.controller("misEventos", function ($scope, $rootScope, $location, $http, $cookies, $interval, $filter, $log) {
-    if (!$rootScope.sesionActiva()) { // verificamos si una sesion ya fue iniciada
-        $location.path("login");
-    }
-    else {
-        var map = null;
 
-        function initMap(scope) {
-            var Tec = {
-                lat: 9.857422
-                , lng: -83.912486
-            };
-            if (map == null) {
-                map = new google.maps.Map(document.getElementById('map'), {
-                    zoom: 17
-                    , center: Tec
-                });
-            }
-            var marker1 = new google.maps.Marker({
-                position: Tec
-                , map: null
-            });
-            map.addListener('click', function (e) {
-                scope.latLngSelected = e.latLng;
-                marker1.setMap(null);
-                marker1 = new google.maps.Marker({
-                    position: e.latLng
-                    , map: map
-                })
-            });
-        }
-        var marker = null;
-        var mapEdit = null;
-
-        function initMapEdit(scope) {
-            var Position = new google.maps.LatLng(scope.Evento.Latitud, scope.Evento.Longitud);
-            if (mapEdit == null) {
-                mapEdit = new google.maps.Map(document.getElementById('mapEdit'), {
-                    zoom: 17
-                    , center: Position
-                });
-            }
-            if (marker == null) {
-                marker = new google.maps.Marker({
-                    position: Position
-                    , map: null
-                });
-            }
-            marker.setMap(null);
-            marker = new google.maps.Marker({
-                position: Position
-                , map: mapEdit
-            });
-            mapEdit.panTo(Position);
-            mapEdit.addListener('click', function (e) {
-                scope.latLngSelected = e.latLng;
-                marker.setMap(null);
-                marker = new google.maps.Marker({
-                    position: e.latLng
-                    , map: mapEdit
-                })
-            });
-        }
-        $scope.controlAgregarEvento = "ocultarA";
-        $scope.controlEditarEvento = "ocultarA";
-        $scope.Evento = {};
-        $scope.varEditarEvento = function (Evento) {
-            if ($scope.controlEditarEvento == "") {
-                $scope.controlEditarEvento = "ocultarA";
-            }
-            else {
-                $scope.controlEditarEvento = "";
-                $scope.Evento = JSON.clone(Evento);
-                $scope.Evento.Date = new Date($scope.Evento.Fecha);
-                initMapEdit($scope);
-            }
-        }
-        $scope.varAgregarEvento = function () {
-            if ($scope.controlAgregarEvento == "") {
-                $scope.controlAgregarEvento = "ocultarA";
-            }
-            else {
-                $scope.controlAgregarEvento = "";
-                $scope.Evento = {};
-                initMap($scope);
-            }
-        }
-        $scope.editarEvento = function (obj) {
-            obj.Privacidad = 1;
-            obj.Latitud = $scope.latLngSelected.lat();
-            obj.Longitud = $scope.latLngSelected.lng();
-            var f = obj.Date;
-            obj.Fecha = f.getFullYear() + "-" + (f.getMonth() + 1) + "-" + f.getDate() + " " + f.getHours() + ":" + f.getMinutes() + ":00";
-            var fd = new FormData();
-            fd.append("obj", JSON.stringify(obj));
-            $http.post(host + "api/ActualizarEvento.php", fd, {
-                headers: {
-                    "Content-Type": undefined
-                }
-            }).then(function (respuesta) {
-                var data = respuesta.data;
-                $log.log(data);
-                if (data.message == "OK") {
-                    $log.log("Evento Editado correctamente");
-                    $scope.verEventos();
-                }
-                else {
-                    $log.log(data.message);
-                }
-            }).catch(function (data) {
-                $log.log("Error de conexion, intente de nuevo");
-            })
-        }
-        $scope.crearEvento = function (obj) {
-            obj.Tipo = "Evento";
-            obj.Propietario = $rootScope.idUsuarioActivo;
-            obj.Privacidad = 1;
-            obj.Latitud = $scope.latLngSelected.lat();
-            obj.Longitud = $scope.latLngSelected.lng();
-            var f = obj.Date;
-            obj.Fecha = f.getFullYear() + "-" + (f.getMonth() + 1) + "-" + f.getDate() + " " + f.getHours() + ":" + f.getMinutes() + ":00";
-            var fd = new FormData();
-            $log.log(obj);
-            fd.append("obj", JSON.stringify(obj));
-            $log.log("Creando Evento");
-            $http.post(host + "api/AgregarEvento.php", fd, {
-                headers: {
-                    "Content-Type": undefined
-                }
-            }).then(function (respuesta) {
-                var data = respuesta.data;
-                $log.log(data);
-                if (data.message == "OK") {
-                    $log.log("Evento registrado correctamente");
-                    $scope.verEventos();
-                    $scope.Evento = {};
-                }
-                else {
-                    $log.log(data.message);
-                }
-            }).catch(function (data) {
-                $log.log("Error de conexion, intente de nuevo");
-            })
-        }
-        $scope.eliminarEvento = function (ForoID) {
-            var resp = confirm("¿Está seguro que desea eliminar el Evento?");
-            if (resp == true) {
-                $log.log("You pressed OK!");
-                var obj = {};
-                obj.ForoID = ForoID;
-                var fd = new FormData();
-                fd.append("obj", JSON.stringify(obj));
-                $log.log("Eliminando Evento");
-                $log.log(obj);
-                $http.post(host + "api/EliminarEvento.php", fd, {
-                    headers: {
-                        "Content-Type": undefined
-                    }
-                }).then(function (respuesta) {
-                    var data = respuesta.data;
-                    $log.log("Datos");
-                    $log.log(data);
-                    if (data.message == "OK") {
-                        $log.log("Borrado con éxito");
-                        $scope.verEventos(); //Se actualizan los Eventos
-                    }
-                    else {
-                        $log.log(data.message);
-                    }
-                }).catch(function (data) {
-                    $log.log("Error de conexion, intente de nuevo");
-                })
-            }
-            else {
-                $log.log("You pressed Cancel!");
-            }
-        }
-        $scope.verEventos = function () {
-            var obj = {};
-            obj.UsuarioID = $rootScope.idUsuarioActivo;
-            var fd = new FormData();
-            fd.append("obj", JSON.stringify(obj));
-            $log.log("Consultando mis Eventos");
-            $http.post(host + "api/VerEventosXUsuario.php", fd, {
-                headers: {
-                    "Content-Type": undefined
-                }
-            }).then(function (respuesta) {
-                var data = respuesta.data;
-                $log.log("Datos");
-                $log.log(data);
-                if (data.message == "OK") {
-                    $scope.arrayEventos = data.EventosXUsuario;
-                    $log.log("Se han consultado correctamente");
-                }
-                else {
-                    $log.log(data.message);
-                }
-            }).catch(function (data) {
-                $log.log("Error de conexion, intente de nuevo");
-            })
-        }
-        $scope.verEventos();
-    }
-});
-/* Mis Foros */
-app.controller("misForos", function ($scope, $rootScope, $location, $http, $cookies, $interval, $filter, $log) {
-    if (!$rootScope.sesionActiva()) { // verificamos si una sesion ya fue iniciada
-        $location.path("login");
-    }
-    else {
-        $scope.controlCrearForo = false;
-        $scope.controlEditarForo = false;
-        $scope.Foro = $rootScope.ForoSeleccionado;
-        $scope.varEditarForo = function (Foro) {
-            if ($scope.controlEditarForo) {
-                $scope.controlEditarForo = false;
-            }
-            else {
-                $scope.controlEditarForo = true;
-                $scope.Foro = JSON.clone(Foro);
-                //Se cargan los datos en los campos para editarlos
-                if ($scope.Foro.Privado == "1") {
-                    $scope.Foro.Privado = true;
-                }
-                else {
-                    $scope.Foro.Privado = false;
-                }
-            }
-        }
-        $scope.varAgregarForo = function () {
-            if ($scope.controlCrearForo) {
-                $scope.controlCrearForo = false;
-            }
-            else {
-                $scope.controlCrearForo = true;
-                $scope.Foro = {};
-            }
-        }
-        $scope.editarForo = function (obj) {
-            if (obj.Privado) {
-                obj.Privacidad = 1;
-            }
-            else {
-                obj.Privacidad = 0;
-            }
-            var fd = new FormData();
-            fd.append("obj", JSON.stringify(obj));
-            $log.log("Editando Foro");
-            $log.log(obj);
-            $http.post(host + "api/ActualizarForo.php", fd, {
-                headers: {
-                    "Content-Type": undefined
-                }
-            }).then(function (respuesta) {
-                var data = respuesta.data;
-                $log.log(data);
-                if (data.message == "OK") {
-                    $log.log("Foro Editado correctamente");
-                    $scope.verForos();
-                }
-                else {
-                    $log.log(data.message);
-                }
-            }).catch(function (data) {
-                $log.log("Error de conexion, intente de nuevo");
-            })
-        }
-        $scope.crearForo = function (obj) {
-            obj.Tipo = "Foro";
-            obj.Propietario = $rootScope.idUsuarioActivo;
-            if (obj.Privado) {
-                obj.Privacidad = 1;
-            }
-            else {
-                obj.Privacidad = 0;
-            }
-            var fd = new FormData();
-            $log.log(obj);
-            fd.append("obj", JSON.stringify(obj));
-            $log.log("Creando Foro");
-            $http.post(host + "api/AgregarForo.php", fd, {
-                headers: {
-                    "Content-Type": undefined
-                }
-            }).then(function (respuesta) {
-                var data = respuesta.data;
-                $log.log(data);
-                if (data.message == "OK") {
-                    $log.log("Foro registrado correctamente");
-                    $scope.verForos();
-                    $scope.Foro = {};
-                }
-                else {
-                    $log.log(data.message);
-                }
-            }).catch(function (data) {
-                $log.log("Error de conexion, intente de nuevo");
-            })
-        }
-        $scope.agregarArchivo = function (Foro) {
-            $log.log("Agregando archivo al foro");
-            $rootScope.ForoSeleccionado = Foro;
-            $rootScope.cargarPopup('popupEditarArchivos');
-        }
-        $scope.editarMiembrosForo = function (foro) {
-            $log.log("Editando miembros de un Foro");
-            $rootScope.ForoSeleccionado = foro;
-            $rootScope.cargarPopup('popupMiembrosForo');
-        }
-        $scope.editarPreguntasForo = function (foro) {
-            $log.log("Editando preguntas de un foro");
-            $rootScope.ForoSeleccionado = foro;
-            $rootScope.cargarPopup('popupEditarPreguntas');
-        }
-        $scope.eliminarForo = function (ForoID) {
-            var resp = confirm("¿Está seguro que desea eliminar el foro?");
-            if (resp == true) {
-                $log.log("You pressed OK!");
-                var obj = {};
-                obj.ForoID = ForoID;
-                var fd = new FormData();
-                fd.append("obj", JSON.stringify(obj));
-                $log.log("Eliminando Foro");
-                $log.log(obj);
-                $http.post(host + "api/EliminarForo.php", fd, {
-                    headers: {
-                        "Content-Type": undefined
-                    }
-                }).then(function (respuesta) {
-                    var data = respuesta.data;
-                    $log.log("Datos");
-                    $log.log(data);
-                    if (data.message == "OK") {
-                        $log.log("Borrado con éxito");
-                        $scope.verForos(); //Se actualizan los foros
-                    }
-                    else {
-                        $log.log(data.message);
-                    }
-                }).catch(function (data) {
-                    $log.log("Error de conexion, intente de nuevo");
-                })
-            }
-            else {
-                $log.log("You pressed Cancel!");
-            }
-        }
-        $scope.verForos = function () {
-            var obj = {};
-            obj.UsuarioID = $rootScope.idUsuarioActivo;
-            $log.log("Obj consulta");
-            $log.log(obj);
-            var fd = new FormData();
-            fd.append("obj", JSON.stringify(obj));
-            $log.log("Consultando mis foros");
-            $http.post(host + "api/VerForosXUsuario.php", fd, {
-                headers: {
-                    "Content-Type": undefined
-                }
-            }).then(function (respuesta) {
-                var data = respuesta.data;
-                $log.log("Datos");
-                $log.log(data);
-                if (data.message == "OK") {
-                    $scope.arrayForos = data.ForosXUsuario;
-                    $log.log("Se han consultado correctamente");
-                }
-                else {
-                    $log.log(data.message);
-                }
-            }).catch(function (data) {
-                $log.log("Error de conexion, intente de nuevo");
-            })
-        }
-        $scope.verForos();
-    }
-});
-/* Mis Proyectos */
-app.controller("misProyectos", function ($scope, $rootScope, $location, $http, $cookies, $interval, $filter, $log) {
-    if (!$rootScope.sesionActiva()) { // verificamos si una sesion ya fue iniciada
-        $location.path("login");
-    }
-    else {
-        $scope.controlAgregarProyecto = false;
-        $scope.controlEditarProyecto = false;
-        $scope.Proyecto = {}; //Todo artículo es un foro..
-        $scope.varEditarProyecto = function (Proyecto) {
-            if ($scope.controlEditarProyecto) {
-                $scope.controlEditarProyecto = false;
-            }
-            else {
-                $scope.controlEditarProyecto = true;
-                $scope.Proyecto = JSON.clone(Proyecto);
-            }
-        }
-        $scope.varAgregarProyecto = function () {
-            if ($scope.controlAgregarProyecto) {
-                $scope.controlAgregarProyecto = false;
-            }
-            else {
-                $scope.controlAgregarProyecto = true;
-                $scope.Proyecto = {};
-            }
-        }
-        $scope.editarProyecto = function (obj) {
-            obj.Privacidad = 1;
-            var fd = new FormData();
-            fd.append("obj", JSON.stringify(obj));
-            $log.log("Editando Proyecto");
-            $log.log(obj);
-            $http.post(host + "api/ActualizarForo.php", fd, {
-                headers: {
-                    "Content-Type": undefined
-                }
-            }).then(function (respuesta) {
-                var data = respuesta.data;
-                $log.log(data);
-                if (data.message == "OK") {
-                    $log.log("Proyecto Editado correctamente");
-                    $scope.verProyectos();
-                }
-                else {
-                    $log.log(data.message);
-                }
-            }).catch(function (data) {
-                $log.log("Error de conexion, intente de nuevo");
-            })
-        }
-        $scope.crearProyecto = function (obj) {
-            $log.log(obj);
-            obj.Tipo = "Proyecto";
-            obj.Propietario = $rootScope.idUsuarioActivo;
-            obj.Privacidad = 0;
-            var fd = new FormData();
-            $log.log(obj);
-            fd.append("obj", JSON.stringify(obj));
-            $log.log("Creando Proyecto");
-            $http.post(host + "api/AgregarForo.php", fd, {
-                headers: {
-                    "Content-Type": undefined
-                }
-            }).then(function (respuesta) {
-                var data = respuesta.data;
-                $log.log(data);
-                if (data.message == "OK") {
-                    $log.log("Proyecto registrado correctamente");
-                    $scope.verProyectos();
-                    $scope.Proyecto = {};
-                }
-                else {
-                    $log.log(data.message);
-                }
-            }).catch(function (data) {
-                $log.log("Error de conexion, intente de nuevo");
-            })
-        }
-        $scope.eliminarProyecto = function (ForoID) {
-            var resp = confirm("¿Está seguro que desea eliminar el Artículo?");
-            if (resp == true) {
-                $log.log("You pressed OK!");
-                var obj = {};
-                obj.ForoID = ForoID;
-                var fd = new FormData();
-                fd.append("obj", JSON.stringify(obj));
-                $log.log("Eliminando Proyecto");
-                $log.log(obj);
-                $http.post(host + "api/EliminarForo.php", fd, {
-                    headers: {
-                        "Content-Type": undefined
-                    }
-                }).then(function (respuesta) {
-                    var data = respuesta.data;
-                    $log.log("Datos");
-                    $log.log(data);
-                    if (data.message == "OK") {
-                        $log.log("Borrado con éxito");
-                        $scope.verProyectos(); //Se actualizan los Proyectos
-                    }
-                    else {
-                        $log.log(data.message);
-                    }
-                }).catch(function (data) {
-                    $log.log("Error de conexion, intente de nuevo");
-                })
-            }
-            else {
-                $log.log("You pressed Cancel!");
-            }
-        }
-        $scope.verProyectos = function () {
-            var obj = {};
-            obj.UsuarioID = $rootScope.idUsuarioActivo;
-            $log.log(obj);
-            var fd = new FormData();
-            fd.append("obj", JSON.stringify(obj));
-            $log.log("Consultando mis Proyectos");
-            $http.post(host + "api/VerProyectosXUsuario.php", fd, {
-                headers: {
-                    "Content-Type": undefined
-                }
-            }).then(function (respuesta) {
-                var data = respuesta.data;
-                $log.log("Datos");
-                $log.log(data);
-                if (data.message == "OK") {
-                    $scope.arrayProyectos = data.ProyectosXUsuario;
-                    $log.log("Se han consultado correctamente");
-                }
-                else {
-                    $log.log(data.message);
-                }
-            }).catch(function (data) {
-                $log.log("Error de conexion, intente de nuevo");
-            })
-        }
-        $scope.verProyectos();
-    }
-});
-/* Noticias */
-app.controller("noticias", function ($scope, $rootScope, $location, $http, $cookies, $interval, $filter, $log) {
-    if (!$rootScope.sesionActiva()) { // verificamos si una sesion ya fue iniciada
-        $location.path("login");
-    }
-    else {
-        $scope.VerTopNoticias = function () {
-            var obj = {};
-            var fd = new FormData();
-            fd.append("obj", JSON.stringify(obj));
-            $log.log("Consultando top noticias");
-            $http.post(host + "api/VerTopNoticias.php", fd, {
-                headers: {
-                    "Content-Type": undefined
-                }
-            }).then(function (respuesta) {
-                var data = respuesta.data;
-                $log.log(data);
-                if (data.message == "OK") {
-                    $scope.arrayNoticias = data.Noticias;
-                    $log.log("Se han consultado correctamente");
-                }
-                else {
-                    $log.log(data.message);
-                }
-            }).catch(function (data) {
-                $log.log("Error de conexion, intente de nuevo");
-            })
-        }
-        $scope.VerTopNoticias();
-    }
-});
-/* Ver Articulos */
-app.controller("verArticulos", function ($scope, $rootScope, $location, $http, $cookies, $interval, $filter, $log) {
-    if (!$rootScope.sesionActiva()) { // verificamos si una sesion ya fue iniciada
-        $location.path("login");
-    }
-    else {
-        $scope.VerArticulos = function () {
-            var obj = {};
-            var fd = new FormData();
-            fd.append("obj", JSON.stringify(obj));
-            $log.log("Consultando todos los Artículos");
-            $http.post(host + "api/VerArticulos.php", fd, {
-                headers: {
-                    "Content-Type": undefined
-                }
-            }).then(function (respuesta) {
-                var data = respuesta.data;
-                $log.log("Datos");
-                $log.log(data);
-                if (data.message == "OK") {
-                    $scope.arrayArticulos = data.Articulos;
-                    $log.log("Se han consultado correctamente");
-                }
-                else {
-                    $log.log(data.message);
-                }
-            }).catch(function (data) {
-                $log.log("Error de conexion, intente de nuevo");
-            })
-        }
-        $scope.VerArticulos();
-    }
-});
-/* Ver Eventos */
-app.controller("verEventos", function ($scope, $rootScope, $location, $http, $cookies, $interval, $filter, $log) {
-    if (!$rootScope.sesionActiva()) { // verificamos si una sesion ya fue iniciada
-        $location.path("login");
-    }
-    else {
-        $scope.VerEventos = function () {
-            var obj = {};
-            var fd = new FormData();
-            fd.append("obj", JSON.stringify(obj));
-            $log.log("Consultando todos los Eventos");
-            $http.post(host + "api/VerEventos.php", fd, {
-                headers: {
-                    "Content-Type": undefined
-                }
-            }).then(function (respuesta) {
-                var data = respuesta.data;
-                $log.log("Datos");
-                $log.log(data);
-                if (data.message == "OK") {
-                    $scope.arrayEventos = data.Eventos;
-                    $log.log("Se han consultado correctamente");
-                }
-                else {
-                    $log.log(data.message);
-                }
-            }).catch(function (data) {
-                $log.log("Error de conexion, intente de nuevo");
-            })
-        }
-        $scope.VerEventos();
-    }
-});
-/* Ver Foros */
-app.controller("verForos", function ($scope, $rootScope, $location, $http, $cookies, $interval, $filter, $log) {
-    if (!$rootScope.sesionActiva()) { // verificamos si una sesion ya fue iniciada
-        $location.path("login");
-    }
-    else {
-        $scope.verForos = function () {
-            var obj = {};
-            obj.pPersonaID = $rootScope.idUsuarioActivo;
-            var fd = new FormData();
-            fd.append("obj", JSON.stringify(obj));
-            $log.log("Consultando todos los foros");
-            $http.post(host + "api/VerForos.php", fd, {
-                headers: {
-                    "Content-Type": undefined
-                }
-            }).then(function (respuesta) {
-                var data = respuesta.data;
-                $log.log("Datos");
-                $log.log(data);
-                if (data.message == "OK") {
-                    $scope.arrayForos = data.Foros;
-                    $log.log("Se han consultado correctamente");
-                }
-                else {
-                    $log.log(data.message);
-                }
-            }).catch(function (data) {
-                $log.log("Error de conexion, intente de nuevo");
-            })
-        }
-        $scope.verForos();
-    }
-});
-/* Ver Proyectos */
-app.controller("verProyectos", function ($scope, $rootScope, $location, $http, $cookies, $interval, $filter, $log) {
-    if (!$rootScope.sesionActiva()) { // verificamos si una sesion ya fue iniciada
-        $location.path("login");
-    }
-    else {
-        $scope.VerProyectos = function () {
-            var obj = {};
-            var fd = new FormData();
-            fd.append("obj", JSON.stringify(obj));
-            $log.log("Consultando todos los Proyectos");
-            $http.post(host + "api/VerProyectos.php", fd, {
-                headers: {
-                    "Content-Type": undefined
-                }
-            }).then(function (respuesta) {
-                var data = respuesta.data;
-                $log.log("Datos");
-                $log.log(data);
-                if (data.message == "OK") {
-                    $scope.arrayProyectos = data.Proyectos;
-                    $log.log("Se han consultado correctamente");
-                }
-                else {
-                    $log.log(data.message);
-                }
-            }).catch(function (data) {
-                $log.log("Error de conexion, intente de nuevo");
-            })
-        }
-        $scope.VerProyectos();
-    }
-});
-/* Administración Elecciones */
-app.controller("administrarElecciones", function ($scope, $rootScope, $location, $http, $cookies, $interval, $filter, $log) {
-    if (!$rootScope.sesionActiva()) { // verificamos si una sesion ya fue iniciada
-        $location.path("login");
-    }
-    else {
-        $scope.controlAgregarEleccion = false;
-        $scope.Eleccion = {};
-        $scope.varAgregarEleccion = function () {
-            if ($scope.controlAgregarEleccion) {
-                $scope.controlAgregarEleccion = false;
-            }
-            else {
-                $scope.Eleccion = {};
-                $scope.controlAgregarEleccion = true;
-            }
-        }
-        $scope.crearEleccion = function (objAux) {
-            var obj = {};
-            obj.CreadorID = $rootScope.idUsuarioActivo;
-            obj.Activo = 1;
-            obj.Titulo = objAux.Titulo;
-            var f;
-            f = objAux.DateInic;
-            obj.FechaInicio = f.getFullYear() + "-" + (f.getMonth() + 1) + "-" + f.getDate() + " " + f.getHours() + ":" + f.getMinutes() + ":00";
-            f = objAux.DateFin;
-            obj.FechaFin = f.getFullYear() + "-" + (f.getMonth() + 1) + "-" + f.getDate() + " " + f.getHours() + ":" + f.getMinutes() + ":00";
-            var fd = new FormData();
-            fd.append("obj", JSON.stringify(obj));
-            $log.log("Creando elección");
-            $log.log(obj);
-            $http.post(host + "api/AgregarProcesoElectoral.php", fd, {
-                headers: {
-                    "Content-Type": undefined
-                }
-            }).then(function (respuesta) {
-                var data = respuesta.data;
-                $log.log("Datos");
-                $log.log(data);
-                if (data.message == "OK") {
-                    $log.log("Proceso de elección creado con éxito");
-                    $scope.verElecciones();
-                    $scope.Eleccion = {};
-                }
-                else {
-                    $log.log(data.message);
-                }
-            }).catch(function (data) {
-                $log.log("Error de conexion, intente de nuevo");
-            })
-        }
-        $scope.cerrarEleccion = function (IDEleccion) {
-            var obj = {};
-            obj.ProcesoEleccionID = IDEleccion;
-            var fd = new FormData();
-            fd.append("obj", JSON.stringify(obj));
-            $log.log("Cerrar elección");
-            $log.log(obj);
-            $http.post(host + "api/CerrarProcesoElectoral.php", fd, {
-                headers: {
-                    "Content-Type": undefined
-                }
-            }).then(function (respuesta) {
-                var data = respuesta.data;
-                $log.log("Datos");
-                $log.log(data);
-                if (data.message == "OK") {
-                    $log.log("Proceso de elección cerrado con éxito");
-                    $scope.verElecciones();
-                }
-                else {
-                    $log.log(data.message);
-                }
-            }).catch(function (data) {
-                $log.log("Error de conexion, intente de nuevo");
-            })
-        }
-        $scope.eliminarEleccion = function (IDEleccion) {
-            var resp = confirm("¿Está seguro que desea eliminar la elección?");
-            if (resp == true) {
-                var obj = {};
-                obj.ProcesoEleccionID = IDEleccion;
-                var fd = new FormData();
-                fd.append("obj", JSON.stringify(obj));
-                $log.log("Eliminando un proceso de elección");
-                $log.log(obj);
-                $http.post(host + "api/EliminarProcesoElectoral.php", fd, {
-                    headers: {
-                        "Content-Type": undefined
-                    }
-                }).then(function (respuesta) {
-                    var data = respuesta.data;
-                    $log.log("Datos");
-                    $log.log(data);
-                    if (data.message == "OK") {
-                        $log.log("Elección borrada con éxito");
-                        $scope.verElecciones();
-                    }
-                    else {
-                        $log.log(data.message);
-                    }
-                }).catch(function (data) {
-                    $log.log("Error de conexion, intente de nuevo");
-                })
-            }
-        }
-        $scope.verElecciones = function () {
-            var obj;
-            obj = {};
-            var fd = new FormData();
-            fd.append("obj", JSON.stringify(obj));
-            $log.log("Consultando elecciones");
-            $http.post(host + "api/VerProcesosElectorales.php", fd, {
-                headers: {
-                    "Content-Type": undefined
-                }
-            }).then(function (respuesta) {
-                var data = respuesta.data;
-                $log.log("Datos");
-                $log.log(data);
-                if (data.message == "OK") {
-                    $scope.arrayElecciones = data.ProcesosElectorales;
-                    $log.log("Procesos de elección consultados con éxito");
-                }
-                else {
-                    $log.log(data.message);
-                }
-            }).catch(function (data) {
-                $log.log("Error de conexion, intente de nuevo");
-            })
-        }
-        $scope.verElecciones();
-    }
-});
-/* Ver Elecciones */
-app.controller("verElecciones", function ($scope, $rootScope, $location, $http, $cookies, $interval, $filter, $log) {
-    if (!$rootScope.sesionActiva()) { // verificamos si una sesion ya fue iniciada
-        $location.path("login");
-    }
-    else {}
-});
-/* Ver informacion del foro */
-app.controller("verInfo", function ($scope, $rootScope, $location, $http, $cookies, $interval, $filter, $log, $routeParams) {
-    if (!$rootScope.sesionActiva()) { // verificamos si una sesion ya fue iniciada
-        $location.path("login");
-    }
-    else {
-        $scope.of = {};
-        var mapVer = null;
-        var markerVer = null;
-
-        function cargarMapa() {
-            var Position = new google.maps.LatLng($scope.of.Latitud, $scope.of.Longitud);
-            if (mapVer == null) {
-                mapVer = new google.maps.Map(document.getElementById('mapVer'), {
-                    zoom: 16
-                    , center: Position
-                });
-            }
-            if (markerVer != null) {
-                markerVer.setMap(null);
-            }
-            markerVer = new google.maps.Marker({
-                position: Position
-                , map: mapVer
-            });
-            mapVer.panTo(Position);
-        }
-        $scope.controlVerEvento = "ocultarA";
-        $scope.varVerEvento = function () {
-            if ($scope.controlVerEvento == "") {
-                $scope.controlVerEvento = "ocultarA";
-            }
-            else {
-                $scope.controlVerEvento = "";
-                cargarMapa();
-            }
-        }
-        var idVer = $routeParams.idVer;
-
-        function cargarinfo() {
-            var obj = {};
-            obj.pForoID = idVer;
-            var fd = new FormData();
-            fd.append("obj", JSON.stringify(obj));
-            //$log.log(obj);
-            $http.post(host + "api/VerInfoForo.php", fd, {
-                headers: {
-                    "Content-Type": undefined
-                }
-            }).then(function (respuesta) {
-                var data = respuesta.data;
-                //$log.log(data);
-                if (data.message == "OK") {
-                    $scope.of = data.InfoForo[0];
-                    cargarArchivos();
-                }
-                else {
-                    $log.log(data.message);
-                }
-            }).catch(function (data) {
-                $log.log("Error de conexion, intente de nuevo");
-            })
-        }
-
-        function cargarEncuesta() {
-            var obj = {};
-            obj.ForoID = idVer;
-            var fd = new FormData();
-            fd.append("obj", JSON.stringify(obj));
-            $log.log(obj);
-            $http.post(host + "api/VerEncuestaXForo.php", fd, {
-                headers: {
-                    "Content-Type": undefined
-                }
-            }).then(function (respuesta) {
-                var data = respuesta.data;
-                $log.log(data);
-                if (data.message == "OK") {
-                    $scope.of.encuestas = data.EncuestaXForo;
-                }
-                else {
-                    $log.log(data.message);
-                }
-            }).catch(function (data) {
-                $log.log("Error de conexion, intente de nuevo");
-            })
-        }
-
-        function cargarArchivos() {
-            var obj = {};
-            obj.ForoID = idVer;
-            var fd = new FormData();
-            fd.append("obj", JSON.stringify(obj));
-            //$log.log(obj);
-            $http.post(host + "api/VerArchivosXForo.php", fd, {
-                headers: {
-                    "Content-Type": undefined
-                }
-            }).then(function (respuesta) {
-                var data = respuesta.data;
-                //$log.log(data);
-                if (data.message == "OK") {
-                    $scope.of.archivos = data.ArchivosXForo;
-                    cargarEncuesta();
-                }
-                else {
-                    $log.log(data.message);
-                }
-            }).catch(function (data) {
-                $log.log("Error de conexion, intente de nuevo");
-            })
-        }
-        $scope.votarEncuesta = function (idEncuesta, voto) {
-            var obj = {};
-            obj.EncuestaID = idEncuesta;
-            obj.VotanteID = $rootScope.idUsuarioActivo;
-            obj.Respuesta = voto;
-            var fd = new FormData();
-            fd.append("obj", JSON.stringify(obj));
-            $log.log(obj);
-            $http.post(host + "api/AgregarVotoEncuesta.php", fd, {
-                headers: {
-                    "Content-Type": undefined
-                }
-            }).then(function (respuesta) {
-                var data = respuesta.data;
-                //$log.log(data);
-                if (data.message == "OK") {
-                    cargarEncuesta();
-                }
-                else {
-                    $log.log(data.message);
-                }
-            }).catch(function (data) {
-                $log.log("Error de conexion, intente de nuevo");
-            })
-        }
-        $scope.meGustarForo = function () {
-            var obj = {};
-            obj.ForoID = idVer;
-            obj.PersonaID = $rootScope.idUsuarioActivo;
-            var fd = new FormData();
-            fd.append("obj", JSON.stringify(obj));
-            $log.log(obj);
-            $http.post(host + "api/AgregarMeGustaForo.php", fd, {
-                headers: {
-                    "Content-Type": undefined
-                }
-            }).then(function (respuesta) {
-                var data = respuesta.data;
-                $log.log(data);
-                if (data.message == "OK") {
-                    $scope.of.Likes++;
-                }
-                else {
-                    $log.log(data.message);
-                }
-            }).catch(function (data) {
-                $log.log("Error de conexion, intente de nuevo");
-            })
-        }
-        $scope.meGustarComentario = function (idComentario) {
-            var obj = {};
-            obj.ComentarioID = idComentario;
-            obj.PersonaID = $rootScope.idUsuarioActivo;
-            var fd = new FormData();
-            fd.append("obj", JSON.stringify(obj));
-            $log.log(obj);
-            $http.post(host + "api/AgregarMeGustaComentario.php", fd, {
-                headers: {
-                    "Content-Type": undefined
-                }
-            }).then(function (respuesta) {
-                var data = respuesta.data;
-                $log.log(data);
-                if (data.message == "OK") {
-                    $scope.cargarComentarios();
-                }
-                else {
-                    $log.log(data.message);
-                }
-            }).catch(function (data) {
-                $log.log("Error de conexion, intente de nuevo");
-            })
-        }
-        $scope.eliminarComentario = function (idComentario) {
-            var obj = {};
-            obj.pComentarioID = idComentario;
-            var fd = new FormData();
-            fd.append("obj", JSON.stringify(obj));
-            $log.log(obj);
-            $http.post(host + "api/EliminarComentario.php", fd, {
-                headers: {
-                    "Content-Type": undefined
-                }
-            }).then(function (respuesta) {
-                var data = respuesta.data;
-                $log.log(data);
-                if (data.message == "OK") {
-                    $scope.cargarComentarios();
-                    alert("El comentario se ha eliminado");
-                }
-                else {
-                    $log.log(data.message);
-                }
-            }).catch(function (data) {
-                $log.log("Error de conexion, intente de nuevo");
-            })
-        }
-        $scope.denunciarComentario = function (idComentario) {
-            var obj = {};
-            obj.ComentarioID = idComentario;
-            obj.PersonaID = $rootScope.idUsuarioActivo;
-            obj.pForoID = idVer;
-            var fd = new FormData();
-            fd.append("obj", JSON.stringify(obj));
-            $log.log(obj);
-            $http.post(host + "api/AgregarDenunciaComentario.php", fd, {
-                headers: {
-                    "Content-Type": undefined
-                }
-            }).then(function (respuesta) {
-                var data = respuesta.data;
-                $log.log(data);
-                if (data.message == "OK") {
-                    alert("Se ha denunciado el comentario");
-                }
-                else {
-                    $log.log(data.message);
-                }
-            }).catch(function (data) {
-                $log.log("Error de conexion, intente de nuevo");
-            })
-        }
-        $scope.denunciarForo = function () {
-            var obj = {};
-            obj.ForoID = idVer;
-            obj.PersonaID = $rootScope.idUsuarioActivo;
-            var fd = new FormData();
-            fd.append("obj", JSON.stringify(obj));
-            $log.log(obj);
-            $http.post(host + "api/AgregarDenunciaForo.php", fd, {
-                headers: {
-                    "Content-Type": undefined
-                }
-            }).then(function (respuesta) {
-                var data = respuesta.data;
-                $log.log(data);
-                if (data.message == "OK") {
-                    alert("El foro se ha marcado como inadecuado");
-                }
-                else {
-                    $log.log(data.message);
-                }
-            }).catch(function (data) {
-                $log.log("Error de conexion, intente de nuevo");
-            })
-        }
-        $scope.agregarComentario = function (texto) {
-            if (texto.length != 0) {
-                var obj = {};
-                obj.ForoID = idVer;
-                obj.Comentario = texto;
-                obj.PersonaID = $rootScope.idUsuarioActivo;
-                var fd = new FormData();
-                fd.append("obj", JSON.stringify(obj));
-                $log.log(obj);
-                $http.post(host + "api/AgregarComentario.php", fd, {
-                    headers: {
-                        "Content-Type": undefined
-                    }
-                }).then(function (respuesta) {
-                    var data = respuesta.data;
-                    $log.log(data);
-                    if (data.message == "OK") {
-                        $scope.txtComentario = "";
-                        $scope.cargarComentarios();
-                    }
-                    else {
-                        $log.log(data.message);
-                    }
-                }).catch(function (data) {
-                    $log.log("Error de conexion, intente de nuevo");
-                })
-            }
-        }
-        $scope.cargarComentarios = function () {
-            var obj = {};
-            obj.ForoID = idVer;
-            var fd = new FormData();
-            fd.append("obj", JSON.stringify(obj));
-            $log.log(obj);
-            $http.post(host + "api/VerComentariosForo.php", fd, {
-                headers: {
-                    "Content-Type": undefined
-                }
-            }).then(function (respuesta) {
-                var data = respuesta.data;
-                $log.log(data);
-                if (data.message == "OK") {
-                    $scope.of.comentarios = data.ComentariosForo;
-                }
-                else {
-                    $log.log(data.message);
-                }
-            }).catch(function (data) {
-                $log.log("Error de conexion, intente de nuevo");
-            })
-        }
-        cargarinfo();
-    }
-});
 /* Ver perfil de una persona */
 app.controller("verPerfil", function ($scope, $rootScope, $location, $http, $cookies, $interval, $filter, $log, $routeParams) {
     if (!$rootScope.sesionActiva()) { // verificamos si una sesion ya fue iniciada
@@ -1904,6 +577,7 @@ app.controller("verPerfil", function ($scope, $rootScope, $location, $http, $coo
         };
     }
 });
+
 /* Busqueda de archivos */
 app.controller("busqueda", function ($scope, $rootScope, $location, $http, $cookies, $interval, $filter, $log) {
     if (!$rootScope.sesionActiva()) { // verificamos si una sesion ya fue iniciada
