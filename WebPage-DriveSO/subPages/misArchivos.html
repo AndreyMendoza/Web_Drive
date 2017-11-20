@@ -1,0 +1,96 @@
+<div class="aCentro">
+    <div class=" f30 marginArribaSuper marginAbajoSuper aCentro cAzulOscuro">Archivos Personales</div>
+    <div class="flexFila">
+        <div class="contenedorCrear pointer marginDer" ng-click="varAgregarArchivo()">
+            <div class="title fullPadding"></div>
+            <div class="fullPadding f20"><i class="fa fa-plus" aria-hidden="true"></i> Crear Archivo</div>
+        </div>
+        <div class="contenedorCrear pointer marginIzq" ng-click="varAgregarCarpeta()">
+            <div class="title fullPadding"></div>
+            <div class="fullPadding f20"><i class="fa fa-plus" aria-hidden="true"></i> Crear Directorio</div>
+        </div>
+    </div>
+    <div class="contenedorGeneral" ng-repeat="archivo in arrayArchivos">
+        <div class="title fullPadding f18">{{archivo.nombre}}</div>
+        <div class="contenido ">
+            <div class="inline aFlexCentro fullPadding"><i class="fa fa-file-text-o f50" aria-hidden="true" ng-show="archivo.tipo"></i><i class="fa fa-folder-o f50" aria-hidden="true" ng-show="!archivo.tipo"></i> </div>
+            <div class="inline fullPadding aIzq">
+                <div class="f16" ng-show="!archivo.tipo">Tipo: Carpeta</div>
+                <div class="f16" ng-show="archivo.tipo">Tipo: Documento</div>
+                <div class="f16">Fecha de creación: {{archivo.fechaCreado}}</div>
+                <div class="f16">Fecha de modificación: {{archivo.fechaModificado}}</div>
+                <div class="f16">Tamaño: {{archivo.tamanho}}</div>
+                <div class="f16">Extensión: {{archivo.extension}}</div>
+                <!--Botones en caso de ser archivo-->
+                <div class="botones" ng-show="archivo.tipo">
+                    <boton><i class="fa fa-eye" aria-hidden="true" title="Contenido" ng-click="verContenido(archivo)"></i></boton>
+                    <boton><i class="fa fa-pencil" aria-hidden="true" title="Editar" ng-click="editarContenido(archivo)"></i></boton>
+                    <boton><i class="fa fa-trash" aria-hidden="true" title="Eliminar" ng-click="eliminarArchivo(archivo.id, archivo.nombre)"></i></boton>
+                    <boton><i class="fa fa-share" aria-hidden="true" title="Compartir" ng-click="compartirArchivo(archivo.id, archivo.nombre)"></i></boton>
+                </div>
+                <!--Botones en caso de ser carpeta-->
+                <div class="botones" ng-show="!archivo.tipo">
+                    <boton><i class="fa fa-eye" aria-hidden="true" title="Abrir" ng-click="verCarpeta(archivo.id)"></i></boton>
+                    <boton><i class="fa fa-trash" aria-hidden="true" title="Eliminar" ng-click="eliminarCarpeta(archivo.id, archivo.nombre)"></i></boton>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Contenedor para Agregar un nuevo archivo-->
+    <div class="contenedorFlotante" ng-show="controlAgregarArchivo">
+        <div>
+            <div class="fondo" ng-click="varAgregarArchivo()"></div>
+            <div class="title">Creación del Archivo<span ng-click="varAgregarArchivo()">X</span></div>
+            <div class="cuerpo fullPadding">
+                <form ng-submit="crearArchivo(Archivo)">
+                    <input class="fullWidth fullPadding f16 sombra " placeholder="Nombre" ng-model="Archivo.nombre">
+                    <textarea class="fullWidth fullPadding f16 sombra marginArriba" placeholder="Contenido del archivo" rows="5" ng-model="Archivo.contenido"></textarea>
+                    <div class="aDer">
+                        <button class="fullPadding f20 marginArriba" type="submit">Crear Archivo</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--Contenedor para Agregar una nueva carpeta-->
+    <div class="contenedorFlotante" ng-show="controlAgregarCarpeta">
+        <div>
+            <div class="fondo" ng-click="varAgregarCarpeta()"></div>
+            <div class="title">Creación de la Carpeta<span ng-click="varAgregarCarpeta()">X</span></div>
+            <div class="cuerpo fullPadding">
+                <form ng-submit="crearCarpeta(Carpeta)">
+                    <input class="fullWidth fullPadding f16 sombra" placeholder="Nombre" ng-model="Carpeta.nombre">
+                    <div class="aDer">
+                        <button class="fullPadding f20 marginArriba" type="submit">Crear Carpeta</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--Contenedor para Ver un archivo-->
+    <div class="contenedorFlotante" ng-show="controlVerArchivo">
+        <div class="width50p">
+            <div class="fondo" ng-click="varVerArchivo()"></div>
+            <div class="title">{{Archivo.nombre}}<span ng-click="varVerArchivo()">X</span></div>
+            <div class="cuerpo fullPadding">
+                <textarea readonly class="fullWidth fullPadding f16 sombra" placeholder="Archivo vacío" rows="10" ng-model="Archivo.contenido" ></textarea>
+            </div>
+        </div>
+    </div>
+    <!--Contenedor para Editar un archivo-->
+    <div class="contenedorFlotante" ng-show="controlEditarArchivo">
+        <div class="width50p">
+            <div class="fondo" ng-click="varEditarArchivo()"></div>
+            <div class="title">Edición del Archivo<span ng-click="varEditarArchivo()">X</span></div>
+            <div class="cuerpo fullPadding">
+                <form ng-submit="actualizarArchivo(Archivo)">
+                    <input class="fullWidth fullPadding f16 sombra " placeholder="Nombre" ng-model="Archivo.nombre" readonly>
+                    <textarea class="fullWidth fullPadding f16 sombra marginArriba" placeholder="Contenido del archivo" rows="5" ng-model="Archivo.contenido"></textarea>
+                    <div class="aDer">
+                        <button class="fullPadding f20 marginArriba" type="submit">Actualizar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

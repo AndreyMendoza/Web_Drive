@@ -336,6 +336,10 @@
     width: 150px;
 }
 
+.width50p{
+    width: 50%;
+}
+
 .width80p {
     width: 80%;
 }

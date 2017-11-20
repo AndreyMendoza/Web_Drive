@@ -30,7 +30,7 @@
 .contenedorCrear {
     background: var(--fondoContenedor);
     position: relative;
-    width: 750px;
+    width: 365px;
     margin-bottom: 20px;
     overflow: hidden;
     border-radius: 20px 20px 0px 0px;
@@ -39,7 +39,7 @@
     background: rgb(208, 201, 201);
 }
 .contenedorCrear > .title {
-    background: var(--cCeleste);
+    background: var(--cGris);
     color: #fff;
 }
 

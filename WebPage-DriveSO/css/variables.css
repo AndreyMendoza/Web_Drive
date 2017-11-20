@@ -33,5 +33,7 @@
     --fondoTituloTabla: #607D8B;
     /* colores*/
     --cCeleste: rgb(25, 112, 194);
+    --cVerde: rgb(80, 152, 20);
+    --cGris: rgba(0,0,0, 0.5)
     /* no se incluye nada del panel de facturacion */
 }
