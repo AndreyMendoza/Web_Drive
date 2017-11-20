@@ -16,62 +16,62 @@ host = "http://localhost:8080/democraticacr/";
 // control del archivo html que se carga en el ngview de la página dependiendo del path en la url
 app.config(function ($routeProvider) {
     $routeProvider.when("/login", {
-        templateUrl: "subPages/login.html",
-        controller: "login"
+        templateUrl: "subPages/login.html"
+        , controller: "login"
     }).when("/registro", {
-        templateUrl: "subPages/registro.html",
-        controller: "registro"
+        templateUrl: "subPages/registro.html"
+        , controller: "registro"
     }).when("/misForos", {
-        templateUrl: "subPages/misForos.html",
-        controller: "misForos"
+        templateUrl: "subPages/misForos.html"
+        , controller: "misForos"
     }).when("/verForos", {
-        templateUrl: "subPages/verForos.html",
-        controller: "verForos"
+        templateUrl: "subPages/verForos.html"
+        , controller: "verForos"
     }).when("/misEventos", {
-        templateUrl: "subPages/misEventos.html",
-        controller: "misEventos"
+        templateUrl: "subPages/misEventos.html"
+        , controller: "misEventos"
     }).when("/verEventos", {
-        templateUrl: "subPages/verEventos.html",
-        controller: "verEventos"
+        templateUrl: "subPages/verEventos.html"
+        , controller: "verEventos"
     }).when("/misArticulos", {
-        templateUrl: "subPages/misArticulos.html",
-        controller: "misArticulos"
+        templateUrl: "subPages/misArticulos.html"
+        , controller: "misArticulos"
     }).when("/verArticulos", {
-        templateUrl: "subPages/verArticulos.html",
-        controller: "verArticulos"
+        templateUrl: "subPages/verArticulos.html"
+        , controller: "verArticulos"
     }).when("/administrarElecciones", {
-        templateUrl: "subPages/administrarElecciones.html",
-        controller: "administrarElecciones"
+        templateUrl: "subPages/administrarElecciones.html"
+        , controller: "administrarElecciones"
     }).when("/verElecciones", {
-        templateUrl: "subPages/verElecciones.html",
-        controller: "verElecciones"
+        templateUrl: "subPages/verElecciones.html"
+        , controller: "verElecciones"
     }).when("/misProyectos", {
-        templateUrl: "subPages/misProyectos.html",
-        controller: "misProyectos"
+        templateUrl: "subPages/misProyectos.html"
+        , controller: "misProyectos"
     }).when("/verProyectos", {
-        templateUrl: "subPages/verProyectos.html",
-        controller: "verProyectos"
+        templateUrl: "subPages/verProyectos.html"
+        , controller: "verProyectos"
     }).when("/busqueda", {
-        templateUrl: "subPages/busqueda.html",
-        controller: "busqueda"
+        templateUrl: "subPages/busqueda.html"
+        , controller: "busqueda"
     }).when("/cambiarPass", {
-        templateUrl: "subPages/cambiarPass.html",
-        controller: "cambiarPass"
+        templateUrl: "subPages/cambiarPass.html"
+        , controller: "cambiarPass"
     }).when("/verInfo/:idVer", {
-        templateUrl: "subPages/verInfo.html",
-        controller: "verInfo"
+        templateUrl: "subPages/verInfo.html"
+        , controller: "verInfo"
     }).when("/verPerfil/:idUsuario", {
-        templateUrl: "subPages/verPerfil.html",
-        controller: "verPerfil"
+        templateUrl: "subPages/verPerfil.html"
+        , controller: "verPerfil"
     }).when("/verDenuncias", {
-        templateUrl: "subPages/verDenuncias.html",
-        controller: "verDenuncias"
+        templateUrl: "subPages/verDenuncias.html"
+        , controller: "verDenuncias"
     }).when("/administrarElecciones", {
-        templateUrl: "subPages/administrarElecciones.html",
-        controller: "administrarElecciones"
+        templateUrl: "subPages/administrarElecciones.html"
+        , controller: "administrarElecciones"
     }).when("/", {
-        templateUrl: "subPages/noticias.html",
-        controller: "noticias"
+        templateUrl: "subPages/noticias.html"
+        , controller: "noticias"
     }).otherwise({
         redirectTo: "/login"
     });
@@ -85,7 +85,8 @@ app.controller("mainController", function ($scope, $rootScope, $location, $http,
     $rootScope.cargarPopup = function (nombreArchivo) {
         if (nombreArchivo != "") {
             $rootScope.templateUrl = "popups/" + nombreArchivo + ".php";
-        } else {
+        }
+        else {
             $rootScope.templateUrl = "";
         }
     };
@@ -110,7 +111,8 @@ app.controller("mainController", function ($scope, $rootScope, $location, $http,
     $rootScope.sesionActiva = function () {
         if ($rootScope.sesionIniciada) {
             return true;
-        } else if ($cookies.getObject("sesion")) {
+        }
+        else if ($cookies.getObject("sesion")) {
             // carga las variables necesarias para garantizar el correcto funcionamiento de la aplicacion
             var sesion = $cookies.getObject("sesion");
             $rootScope.idUsuarioActivo = sesion.idUsuarioActivo;
@@ -124,7 +126,8 @@ app.controller("mainController", function ($scope, $rootScope, $location, $http,
                 expires: tiempo
             });
             return true;
-        } else {
+        }
+        else {
             return false;
         }
     };
@@ -142,9 +145,9 @@ app.controller("mainController", function ($scope, $rootScope, $location, $http,
 app.controller("login", function ($scope, $rootScope, $location, $http, $cookies, $interval, $filter, $log) {
     if ($rootScope.sesionActiva()) { // verificamos si una sesion ya fue iniciada
         $location.path("/");
-    } else {
+    }
+    else {
         $rootScope.nombrePanelActual = "";
-
         $scope.ingresar = function (user, pass) {
             /*var obj = {}
             obj.usuario = user;
@@ -191,7 +194,6 @@ app.controller("login", function ($scope, $rootScope, $location, $http, $cookies
                 $log.log("Error de conexion, intente de nuevo");
             })
             */
-
             var sesion = {};
             sesion.idUsuarioActivo = 201515424;
             sesion.nombreUsuarioActivo = "Armando López";
@@ -220,7 +222,8 @@ app.controller("registro", function ($scope, $rootScope, $location, $http, $cook
     if ($rootScope.sesionActiva()) { // verificamos si una sesion ya fue iniciada
         //$rootScope.cargarArchivo("");
         $location.path("/");
-    } else {
+    }
+    else {
         // *** agregarUsuario ***
         $scope.AgregarCuenta = function (obj) {
             obj.TipoUsuario = "regular";
@@ -239,7 +242,8 @@ app.controller("registro", function ($scope, $rootScope, $location, $http, $cook
                     $scope.objAgregar = {};
                     alert("Se ha registrado correctamente");
                     $location.path("login");
-                } else {
+                }
+                else {
                     $log.log(data.message);
                 }
             }).catch(function (data) {
@@ -248,12 +252,12 @@ app.controller("registro", function ($scope, $rootScope, $location, $http, $cook
         }
     }
 });
-
 /* CAMBIO DE CONTRASEÑA USUARIO LOGEADO */
 app.controller("cambiarPass", function ($scope, $rootScope, $location, $http, $cookies, $interval, $filter, $log) {
     if (!$rootScope.sesionActiva()) { // verificamos si una sesion ya fue iniciada
         $location.path("login");
-    } else {
+    }
+    else {
         function cambiarPass(objPass) {
             objPass.pPersonaID = $rootScope.idUsuarioActivo;
             $log.log(objPass);
@@ -269,7 +273,8 @@ app.controller("cambiarPass", function ($scope, $rootScope, $location, $http, $c
                 if (data.message == "OK") {
                     $scope.objPass = {};
                     alert("La contraseña se ha cambiado correctamente");
-                } else {
+                }
+                else {
                     $scope.msjRespuesta = "";
                     alert("Ha ocurrido un error al cambiar la contraseña, intente de nuevo");
                 }
@@ -281,7 +286,8 @@ app.controller("cambiarPass", function ($scope, $rootScope, $location, $http, $c
             if (objPass.pContrasenha && objPass.pNuevaContrasenha && objPass.passNuevaConf) {
                 if (objPass.pNuevaContrasenha != objPass.passNuevaConf) {
                     alert("Las contraseñas no coinciden");
-                } else {
+                }
+                else {
                     cambiarPass(objPass);
                 }
             }
@@ -294,12 +300,12 @@ app.controller("cambiarPass", function ($scope, $rootScope, $location, $http, $c
         };
     }
 });
-
 /* Popup Miembros Foro */
 app.controller("popupMiembrosForo", function ($scope, $rootScope, $location, $http, $cookies, $interval, $filter, $log) {
     if (!$rootScope.sesionActiva()) { // verificamos si una sesion ya fue iniciada
         $location.path("login");
-    } else {
+    }
+    else {
         $scope.Foro = $rootScope.ForoSeleccionado;
         $scope.buscarUsuarios = function (obj) {
             $log.log("Buscando Usuarios");
@@ -317,7 +323,8 @@ app.controller("popupMiembrosForo", function ($scope, $rootScope, $location, $ht
                 if (data.message == "OK") {
                     $scope.arrayUsuarios = data.PersonasEncontradas;
                     $log.log("Usuarios consultados correctamente");
-                } else {
+                }
+                else {
                     $log.log(data.message);
                 }
             }).catch(function (data) {
@@ -343,7 +350,8 @@ app.controller("popupMiembrosForo", function ($scope, $rootScope, $location, $ht
                 if (data.message == "OK") {
                     $scope.verMiembros();
                     $log.log("Miembro agregado correctamente");
-                } else {
+                }
+                else {
                     $log.log(data.message);
                 }
             }).catch(function (data) {
@@ -371,7 +379,8 @@ app.controller("popupMiembrosForo", function ($scope, $rootScope, $location, $ht
                     if (data.message == "OK") {
                         $log.log("Miembro eliminado correctamente");
                         $scope.verMiembros();
-                    } else {
+                    }
+                    else {
                         $log.log(data.message);
                     }
                 }).catch(function (data) {
@@ -397,7 +406,8 @@ app.controller("popupMiembrosForo", function ($scope, $rootScope, $location, $ht
                 if (data.message == "OK") {
                     $scope.arrayMiembros = data.MiembrosXForo;
                     $log.log("Miembros consultados correctamente");
-                } else {
+                }
+                else {
                     $log.log(data.message);
                 }
             }).catch(function (data) {
@@ -411,7 +421,8 @@ app.controller("popupMiembrosForo", function ($scope, $rootScope, $location, $ht
 app.controller("popupEditarPreguntas", function ($scope, $rootScope, $location, $http, $cookies, $interval, $filter, $log) {
     if (!$rootScope.sesionActiva()) { // verificamos si una sesion ya fue iniciada
         $location.path("login");
-    } else {
+    }
+    else {
         $scope.Foro = $rootScope.ForoSeleccionado;
         $scope.cargarPreguntas = function () {
             var obj = {};
@@ -431,14 +442,14 @@ app.controller("popupEditarPreguntas", function ($scope, $rootScope, $location, 
                 if (data.message == "OK") {
                     $scope.arrayPreguntas = data.EncuestaXForo;
                     $log.log("Preguntas consultados correctamente");
-                } else {
+                }
+                else {
                     $log.log(data.message);
                 }
             }).catch(function (data) {
                 $log.log("Error de conexion, intente de nuevo");
             })
         }
-
         $scope.agregarPregunta = function (obj) {
             obj.ForoID = $scope.Foro.ForoID;
             $log.log("Agregando pregunta al foro");
@@ -458,15 +469,14 @@ app.controller("popupEditarPreguntas", function ($scope, $rootScope, $location, 
                     //Se deben actualizar los archivos
                     $scope.cargarPreguntas();
                     obj.Descripcion = "";
-                } else {
+                }
+                else {
                     $log.log(data.message);
                 }
             }).catch(function (data) {
                 $log.log("Error de conexion, intente de nuevo");
             })
         }
-
-
         $scope.eliminarPregunta = function (obj) {
             var txt;
             var resp = confirm("¿Está seguro que desea eliminar la pregunta?");
@@ -487,7 +497,8 @@ app.controller("popupEditarPreguntas", function ($scope, $rootScope, $location, 
                         $log.log("Pregunta eliminada correctamente");
                         //Se deben actualizar los archivos
                         $scope.cargarPreguntas();
-                    } else {
+                    }
+                    else {
                         $log.log(data.message);
                     }
                 }).catch(function (data) {
@@ -495,7 +506,6 @@ app.controller("popupEditarPreguntas", function ($scope, $rootScope, $location, 
                 })
             }
         }
-
         $scope.cargarPreguntas();
     }
 });
@@ -503,7 +513,8 @@ app.controller("popupEditarPreguntas", function ($scope, $rootScope, $location, 
 app.controller("popupEditarArchivos", function ($scope, $rootScope, $location, $http, $cookies, $interval, $filter, $log) {
     if (!$rootScope.sesionActiva()) { // verificamos si una sesion ya fue iniciada
         $location.path("login");
-    } else {
+    }
+    else {
         $scope.Foro = $rootScope.ForoSeleccionado;
         $scope.cargarArchivos = function () {
             var obj = {};
@@ -523,7 +534,8 @@ app.controller("popupEditarArchivos", function ($scope, $rootScope, $location, $
                 if (data.message == "OK") {
                     $scope.arrayArchivos = data.ArchivosXForo;
                     $log.log("Archivos consultados correctamente");
-                } else {
+                }
+                else {
                     $log.log(data.message);
                 }
             }).catch(function (data) {
@@ -549,7 +561,8 @@ app.controller("popupEditarArchivos", function ($scope, $rootScope, $location, $
                     $log.log("Archivo agregado correctamente");
                     //Se deben actualizar los archivos
                     $scope.cargarArchivos();
-                } else {
+                }
+                else {
                     $log.log(data.message);
                 }
             }).catch(function (data) {
@@ -579,7 +592,8 @@ app.controller("popupEditarArchivos", function ($scope, $rootScope, $location, $
                         $log.log("Archivo eliminado correctamente");
                         //Se deben actualizar los archivos
                         $scope.cargarArchivos();
-                    } else {
+                    }
+                    else {
                         $log.log(data.message);
                     }
                 }).catch(function (data) {
@@ -594,21 +608,23 @@ app.controller("popupEditarArchivos", function ($scope, $rootScope, $location, $
 app.controller("misArticulos", function ($scope, $rootScope, $location, $http, $cookies, $interval, $filter, $log) {
     if (!$rootScope.sesionActiva()) { // verificamos si una sesion ya fue iniciada
         $location.path("login");
-    } else {
+    }
+    else {
         $scope.controlAgregarArticulo = false;
         $scope.controlEditarArticulo = false;
         $scope.Articulo = {}; //Todo artículo es un foro..
-
         $scope.varEditarArticulo = function (Articulo) {
             if ($scope.controlEditarArticulo) {
                 $scope.controlEditarArticulo = false;
-            } else {
+            }
+            else {
                 $scope.controlEditarArticulo = true;
                 $scope.Articulo = JSON.clone(Articulo);
                 //Se cargan los datos en los campos para editarlos
                 if ($scope.Articulo.Privado == "1") {
                     $scope.Articulo.Privado = true;
-                } else {
+                }
+                else {
                     $scope.Articulo.Privado = false;
                 }
             }
@@ -616,7 +632,8 @@ app.controller("misArticulos", function ($scope, $rootScope, $location, $http, $
         $scope.varAgregarArticulo = function () {
             if ($scope.controlAgregarArticulo) {
                 $scope.controlAgregarArticulo = false;
-            } else {
+            }
+            else {
                 $scope.controlAgregarArticulo = true;
                 $scope.Articulo = {};
             }
@@ -637,7 +654,8 @@ app.controller("misArticulos", function ($scope, $rootScope, $location, $http, $
                 if (data.message == "OK") {
                     $log.log("Articulo Editado correctamente");
                     $scope.verArticulos();
-                } else {
+                }
+                else {
                     $log.log(data.message);
                 }
             }).catch(function (data) {
@@ -664,7 +682,8 @@ app.controller("misArticulos", function ($scope, $rootScope, $location, $http, $
                     $log.log("Articulo registrado correctamente");
                     $scope.verArticulos();
                     $scope.Articulo = {};
-                } else {
+                }
+                else {
                     $log.log(data.message);
                 }
             }).catch(function (data) {
@@ -692,13 +711,15 @@ app.controller("misArticulos", function ($scope, $rootScope, $location, $http, $
                     if (data.message == "OK") {
                         $log.log("Borrado con éxito");
                         $scope.verArticulos(); //Se actualizan los Artículos
-                    } else {
+                    }
+                    else {
                         $log.log(data.message);
                     }
                 }).catch(function (data) {
                     $log.log("Error de conexion, intente de nuevo");
                 })
-            } else {
+            }
+            else {
                 $log.log("You pressed Cancel!");
             }
         }
@@ -719,7 +740,8 @@ app.controller("misArticulos", function ($scope, $rootScope, $location, $http, $
                 if (data.message == "OK") {
                     $scope.arrayArticulos = data.ArticulosXUsuario;
                     $log.log("Se han consultado correctamente");
-                } else {
+                }
+                else {
                     $log.log(data.message);
                 }
             }).catch(function (data) {
@@ -733,30 +755,31 @@ app.controller("misArticulos", function ($scope, $rootScope, $location, $http, $
 app.controller("misEventos", function ($scope, $rootScope, $location, $http, $cookies, $interval, $filter, $log) {
     if (!$rootScope.sesionActiva()) { // verificamos si una sesion ya fue iniciada
         $location.path("login");
-    } else {
+    }
+    else {
         var map = null;
 
         function initMap(scope) {
             var Tec = {
-                lat: 9.857422,
-                lng: -83.912486
+                lat: 9.857422
+                , lng: -83.912486
             };
             if (map == null) {
                 map = new google.maps.Map(document.getElementById('map'), {
-                    zoom: 17,
-                    center: Tec
+                    zoom: 17
+                    , center: Tec
                 });
             }
             var marker1 = new google.maps.Marker({
-                position: Tec,
-                map: null
+                position: Tec
+                , map: null
             });
             map.addListener('click', function (e) {
                 scope.latLngSelected = e.latLng;
                 marker1.setMap(null);
                 marker1 = new google.maps.Marker({
-                    position: e.latLng,
-                    map: map
+                    position: e.latLng
+                    , map: map
                 })
             });
         }
@@ -767,28 +790,28 @@ app.controller("misEventos", function ($scope, $rootScope, $location, $http, $co
             var Position = new google.maps.LatLng(scope.Evento.Latitud, scope.Evento.Longitud);
             if (mapEdit == null) {
                 mapEdit = new google.maps.Map(document.getElementById('mapEdit'), {
-                    zoom: 17,
-                    center: Position
+                    zoom: 17
+                    , center: Position
                 });
             }
             if (marker == null) {
                 marker = new google.maps.Marker({
-                    position: Position,
-                    map: null
+                    position: Position
+                    , map: null
                 });
             }
             marker.setMap(null);
             marker = new google.maps.Marker({
-                position: Position,
-                map: mapEdit
+                position: Position
+                , map: mapEdit
             });
             mapEdit.panTo(Position);
             mapEdit.addListener('click', function (e) {
                 scope.latLngSelected = e.latLng;
                 marker.setMap(null);
                 marker = new google.maps.Marker({
-                    position: e.latLng,
-                    map: mapEdit
+                    position: e.latLng
+                    , map: mapEdit
                 })
             });
         }
@@ -798,7 +821,8 @@ app.controller("misEventos", function ($scope, $rootScope, $location, $http, $co
         $scope.varEditarEvento = function (Evento) {
             if ($scope.controlEditarEvento == "") {
                 $scope.controlEditarEvento = "ocultarA";
-            } else {
+            }
+            else {
                 $scope.controlEditarEvento = "";
                 $scope.Evento = JSON.clone(Evento);
                 $scope.Evento.Date = new Date($scope.Evento.Fecha);
@@ -808,7 +832,8 @@ app.controller("misEventos", function ($scope, $rootScope, $location, $http, $co
         $scope.varAgregarEvento = function () {
             if ($scope.controlAgregarEvento == "") {
                 $scope.controlAgregarEvento = "ocultarA";
-            } else {
+            }
+            else {
                 $scope.controlAgregarEvento = "";
                 $scope.Evento = {};
                 initMap($scope);
@@ -832,7 +857,8 @@ app.controller("misEventos", function ($scope, $rootScope, $location, $http, $co
                 if (data.message == "OK") {
                     $log.log("Evento Editado correctamente");
                     $scope.verEventos();
-                } else {
+                }
+                else {
                     $log.log(data.message);
                 }
             }).catch(function (data) {
@@ -862,7 +888,8 @@ app.controller("misEventos", function ($scope, $rootScope, $location, $http, $co
                     $log.log("Evento registrado correctamente");
                     $scope.verEventos();
                     $scope.Evento = {};
-                } else {
+                }
+                else {
                     $log.log(data.message);
                 }
             }).catch(function (data) {
@@ -890,13 +917,15 @@ app.controller("misEventos", function ($scope, $rootScope, $location, $http, $co
                     if (data.message == "OK") {
                         $log.log("Borrado con éxito");
                         $scope.verEventos(); //Se actualizan los Eventos
-                    } else {
+                    }
+                    else {
                         $log.log(data.message);
                     }
                 }).catch(function (data) {
                     $log.log("Error de conexion, intente de nuevo");
                 })
-            } else {
+            }
+            else {
                 $log.log("You pressed Cancel!");
             }
         }
@@ -917,7 +946,8 @@ app.controller("misEventos", function ($scope, $rootScope, $location, $http, $co
                 if (data.message == "OK") {
                     $scope.arrayEventos = data.EventosXUsuario;
                     $log.log("Se han consultado correctamente");
-                } else {
+                }
+                else {
                     $log.log(data.message);
                 }
             }).catch(function (data) {
@@ -931,20 +961,23 @@ app.controller("misEventos", function ($scope, $rootScope, $location, $http, $co
 app.controller("misForos", function ($scope, $rootScope, $location, $http, $cookies, $interval, $filter, $log) {
     if (!$rootScope.sesionActiva()) { // verificamos si una sesion ya fue iniciada
         $location.path("login");
-    } else {
+    }
+    else {
         $scope.controlCrearForo = false;
         $scope.controlEditarForo = false;
         $scope.Foro = $rootScope.ForoSeleccionado;
         $scope.varEditarForo = function (Foro) {
             if ($scope.controlEditarForo) {
                 $scope.controlEditarForo = false;
-            } else {
+            }
+            else {
                 $scope.controlEditarForo = true;
                 $scope.Foro = JSON.clone(Foro);
                 //Se cargan los datos en los campos para editarlos
                 if ($scope.Foro.Privado == "1") {
                     $scope.Foro.Privado = true;
-                } else {
+                }
+                else {
                     $scope.Foro.Privado = false;
                 }
             }
@@ -952,7 +985,8 @@ app.controller("misForos", function ($scope, $rootScope, $location, $http, $cook
         $scope.varAgregarForo = function () {
             if ($scope.controlCrearForo) {
                 $scope.controlCrearForo = false;
-            } else {
+            }
+            else {
                 $scope.controlCrearForo = true;
                 $scope.Foro = {};
             }
@@ -960,7 +994,8 @@ app.controller("misForos", function ($scope, $rootScope, $location, $http, $cook
         $scope.editarForo = function (obj) {
             if (obj.Privado) {
                 obj.Privacidad = 1;
-            } else {
+            }
+            else {
                 obj.Privacidad = 0;
             }
             var fd = new FormData();
@@ -977,7 +1012,8 @@ app.controller("misForos", function ($scope, $rootScope, $location, $http, $cook
                 if (data.message == "OK") {
                     $log.log("Foro Editado correctamente");
                     $scope.verForos();
-                } else {
+                }
+                else {
                     $log.log(data.message);
                 }
             }).catch(function (data) {
@@ -989,7 +1025,8 @@ app.controller("misForos", function ($scope, $rootScope, $location, $http, $cook
             obj.Propietario = $rootScope.idUsuarioActivo;
             if (obj.Privado) {
                 obj.Privacidad = 1;
-            } else {
+            }
+            else {
                 obj.Privacidad = 0;
             }
             var fd = new FormData();
@@ -1007,7 +1044,8 @@ app.controller("misForos", function ($scope, $rootScope, $location, $http, $cook
                     $log.log("Foro registrado correctamente");
                     $scope.verForos();
                     $scope.Foro = {};
-                } else {
+                }
+                else {
                     $log.log(data.message);
                 }
             }).catch(function (data) {
@@ -1029,7 +1067,6 @@ app.controller("misForos", function ($scope, $rootScope, $location, $http, $cook
             $rootScope.ForoSeleccionado = foro;
             $rootScope.cargarPopup('popupEditarPreguntas');
         }
-
         $scope.eliminarForo = function (ForoID) {
             var resp = confirm("¿Está seguro que desea eliminar el foro?");
             if (resp == true) {
@@ -1051,13 +1088,15 @@ app.controller("misForos", function ($scope, $rootScope, $location, $http, $cook
                     if (data.message == "OK") {
                         $log.log("Borrado con éxito");
                         $scope.verForos(); //Se actualizan los foros
-                    } else {
+                    }
+                    else {
                         $log.log(data.message);
                     }
                 }).catch(function (data) {
                     $log.log("Error de conexion, intente de nuevo");
                 })
-            } else {
+            }
+            else {
                 $log.log("You pressed Cancel!");
             }
         }
@@ -1080,7 +1119,8 @@ app.controller("misForos", function ($scope, $rootScope, $location, $http, $cook
                 if (data.message == "OK") {
                     $scope.arrayForos = data.ForosXUsuario;
                     $log.log("Se han consultado correctamente");
-                } else {
+                }
+                else {
                     $log.log(data.message);
                 }
             }).catch(function (data) {
@@ -1094,14 +1134,16 @@ app.controller("misForos", function ($scope, $rootScope, $location, $http, $cook
 app.controller("misProyectos", function ($scope, $rootScope, $location, $http, $cookies, $interval, $filter, $log) {
     if (!$rootScope.sesionActiva()) { // verificamos si una sesion ya fue iniciada
         $location.path("login");
-    } else {
+    }
+    else {
         $scope.controlAgregarProyecto = false;
         $scope.controlEditarProyecto = false;
         $scope.Proyecto = {}; //Todo artículo es un foro..
         $scope.varEditarProyecto = function (Proyecto) {
             if ($scope.controlEditarProyecto) {
                 $scope.controlEditarProyecto = false;
-            } else {
+            }
+            else {
                 $scope.controlEditarProyecto = true;
                 $scope.Proyecto = JSON.clone(Proyecto);
             }
@@ -1109,7 +1151,8 @@ app.controller("misProyectos", function ($scope, $rootScope, $location, $http, $
         $scope.varAgregarProyecto = function () {
             if ($scope.controlAgregarProyecto) {
                 $scope.controlAgregarProyecto = false;
-            } else {
+            }
+            else {
                 $scope.controlAgregarProyecto = true;
                 $scope.Proyecto = {};
             }
@@ -1130,7 +1173,8 @@ app.controller("misProyectos", function ($scope, $rootScope, $location, $http, $
                 if (data.message == "OK") {
                     $log.log("Proyecto Editado correctamente");
                     $scope.verProyectos();
-                } else {
+                }
+                else {
                     $log.log(data.message);
                 }
             }).catch(function (data) {
@@ -1157,7 +1201,8 @@ app.controller("misProyectos", function ($scope, $rootScope, $location, $http, $
                     $log.log("Proyecto registrado correctamente");
                     $scope.verProyectos();
                     $scope.Proyecto = {};
-                } else {
+                }
+                else {
                     $log.log(data.message);
                 }
             }).catch(function (data) {
@@ -1185,13 +1230,15 @@ app.controller("misProyectos", function ($scope, $rootScope, $location, $http, $
                     if (data.message == "OK") {
                         $log.log("Borrado con éxito");
                         $scope.verProyectos(); //Se actualizan los Proyectos
-                    } else {
+                    }
+                    else {
                         $log.log(data.message);
                     }
                 }).catch(function (data) {
                     $log.log("Error de conexion, intente de nuevo");
                 })
-            } else {
+            }
+            else {
                 $log.log("You pressed Cancel!");
             }
         }
@@ -1213,7 +1260,8 @@ app.controller("misProyectos", function ($scope, $rootScope, $location, $http, $
                 if (data.message == "OK") {
                     $scope.arrayProyectos = data.ProyectosXUsuario;
                     $log.log("Se han consultado correctamente");
-                } else {
+                }
+                else {
                     $log.log(data.message);
                 }
             }).catch(function (data) {
@@ -1227,7 +1275,8 @@ app.controller("misProyectos", function ($scope, $rootScope, $location, $http, $
 app.controller("noticias", function ($scope, $rootScope, $location, $http, $cookies, $interval, $filter, $log) {
     if (!$rootScope.sesionActiva()) { // verificamos si una sesion ya fue iniciada
         $location.path("login");
-    } else {
+    }
+    else {
         $scope.VerTopNoticias = function () {
             var obj = {};
             var fd = new FormData();
@@ -1243,7 +1292,8 @@ app.controller("noticias", function ($scope, $rootScope, $location, $http, $cook
                 if (data.message == "OK") {
                     $scope.arrayNoticias = data.Noticias;
                     $log.log("Se han consultado correctamente");
-                } else {
+                }
+                else {
                     $log.log(data.message);
                 }
             }).catch(function (data) {
@@ -1257,7 +1307,8 @@ app.controller("noticias", function ($scope, $rootScope, $location, $http, $cook
 app.controller("verArticulos", function ($scope, $rootScope, $location, $http, $cookies, $interval, $filter, $log) {
     if (!$rootScope.sesionActiva()) { // verificamos si una sesion ya fue iniciada
         $location.path("login");
-    } else {
+    }
+    else {
         $scope.VerArticulos = function () {
             var obj = {};
             var fd = new FormData();
@@ -1274,7 +1325,8 @@ app.controller("verArticulos", function ($scope, $rootScope, $location, $http, $
                 if (data.message == "OK") {
                     $scope.arrayArticulos = data.Articulos;
                     $log.log("Se han consultado correctamente");
-                } else {
+                }
+                else {
                     $log.log(data.message);
                 }
             }).catch(function (data) {
@@ -1288,7 +1340,8 @@ app.controller("verArticulos", function ($scope, $rootScope, $location, $http, $
 app.controller("verEventos", function ($scope, $rootScope, $location, $http, $cookies, $interval, $filter, $log) {
     if (!$rootScope.sesionActiva()) { // verificamos si una sesion ya fue iniciada
         $location.path("login");
-    } else {
+    }
+    else {
         $scope.VerEventos = function () {
             var obj = {};
             var fd = new FormData();
@@ -1305,7 +1358,8 @@ app.controller("verEventos", function ($scope, $rootScope, $location, $http, $co
                 if (data.message == "OK") {
                     $scope.arrayEventos = data.Eventos;
                     $log.log("Se han consultado correctamente");
-                } else {
+                }
+                else {
                     $log.log(data.message);
                 }
             }).catch(function (data) {
@@ -1319,7 +1373,8 @@ app.controller("verEventos", function ($scope, $rootScope, $location, $http, $co
 app.controller("verForos", function ($scope, $rootScope, $location, $http, $cookies, $interval, $filter, $log) {
     if (!$rootScope.sesionActiva()) { // verificamos si una sesion ya fue iniciada
         $location.path("login");
-    } else {
+    }
+    else {
         $scope.verForos = function () {
             var obj = {};
             obj.pPersonaID = $rootScope.idUsuarioActivo;
@@ -1337,7 +1392,8 @@ app.controller("verForos", function ($scope, $rootScope, $location, $http, $cook
                 if (data.message == "OK") {
                     $scope.arrayForos = data.Foros;
                     $log.log("Se han consultado correctamente");
-                } else {
+                }
+                else {
                     $log.log(data.message);
                 }
             }).catch(function (data) {
@@ -1351,7 +1407,8 @@ app.controller("verForos", function ($scope, $rootScope, $location, $http, $cook
 app.controller("verProyectos", function ($scope, $rootScope, $location, $http, $cookies, $interval, $filter, $log) {
     if (!$rootScope.sesionActiva()) { // verificamos si una sesion ya fue iniciada
         $location.path("login");
-    } else {
+    }
+    else {
         $scope.VerProyectos = function () {
             var obj = {};
             var fd = new FormData();
@@ -1368,7 +1425,8 @@ app.controller("verProyectos", function ($scope, $rootScope, $location, $http, $
                 if (data.message == "OK") {
                     $scope.arrayProyectos = data.Proyectos;
                     $log.log("Se han consultado correctamente");
-                } else {
+                }
+                else {
                     $log.log(data.message);
                 }
             }).catch(function (data) {
@@ -1378,25 +1436,23 @@ app.controller("verProyectos", function ($scope, $rootScope, $location, $http, $
         $scope.VerProyectos();
     }
 });
-
 /* Administración Elecciones */
 app.controller("administrarElecciones", function ($scope, $rootScope, $location, $http, $cookies, $interval, $filter, $log) {
     if (!$rootScope.sesionActiva()) { // verificamos si una sesion ya fue iniciada
         $location.path("login");
-    } else {
+    }
+    else {
         $scope.controlAgregarEleccion = false;
         $scope.Eleccion = {};
-
         $scope.varAgregarEleccion = function () {
             if ($scope.controlAgregarEleccion) {
                 $scope.controlAgregarEleccion = false;
-            } else {
+            }
+            else {
                 $scope.Eleccion = {};
                 $scope.controlAgregarEleccion = true;
-
             }
         }
-
         $scope.crearEleccion = function (objAux) {
             var obj = {};
             obj.CreadorID = $rootScope.idUsuarioActivo;
@@ -1407,7 +1463,6 @@ app.controller("administrarElecciones", function ($scope, $rootScope, $location,
             obj.FechaInicio = f.getFullYear() + "-" + (f.getMonth() + 1) + "-" + f.getDate() + " " + f.getHours() + ":" + f.getMinutes() + ":00";
             f = objAux.DateFin;
             obj.FechaFin = f.getFullYear() + "-" + (f.getMonth() + 1) + "-" + f.getDate() + " " + f.getHours() + ":" + f.getMinutes() + ":00";
-
             var fd = new FormData();
             fd.append("obj", JSON.stringify(obj));
             $log.log("Creando elección");
@@ -1424,19 +1479,17 @@ app.controller("administrarElecciones", function ($scope, $rootScope, $location,
                     $log.log("Proceso de elección creado con éxito");
                     $scope.verElecciones();
                     $scope.Eleccion = {};
-                } else {
+                }
+                else {
                     $log.log(data.message);
                 }
             }).catch(function (data) {
                 $log.log("Error de conexion, intente de nuevo");
             })
         }
-
         $scope.cerrarEleccion = function (IDEleccion) {
-
             var obj = {};
             obj.ProcesoEleccionID = IDEleccion;
-
             var fd = new FormData();
             fd.append("obj", JSON.stringify(obj));
             $log.log("Cerrar elección");
@@ -1452,20 +1505,19 @@ app.controller("administrarElecciones", function ($scope, $rootScope, $location,
                 if (data.message == "OK") {
                     $log.log("Proceso de elección cerrado con éxito");
                     $scope.verElecciones();
-                } else {
+                }
+                else {
                     $log.log(data.message);
                 }
             }).catch(function (data) {
                 $log.log("Error de conexion, intente de nuevo");
             })
         }
-
         $scope.eliminarEleccion = function (IDEleccion) {
             var resp = confirm("¿Está seguro que desea eliminar la elección?");
             if (resp == true) {
                 var obj = {};
                 obj.ProcesoEleccionID = IDEleccion;
-
                 var fd = new FormData();
                 fd.append("obj", JSON.stringify(obj));
                 $log.log("Eliminando un proceso de elección");
@@ -1481,7 +1533,8 @@ app.controller("administrarElecciones", function ($scope, $rootScope, $location,
                     if (data.message == "OK") {
                         $log.log("Elección borrada con éxito");
                         $scope.verElecciones();
-                    } else {
+                    }
+                    else {
                         $log.log(data.message);
                     }
                 }).catch(function (data) {
@@ -1489,7 +1542,6 @@ app.controller("administrarElecciones", function ($scope, $rootScope, $location,
                 })
             }
         }
-
         $scope.verElecciones = function () {
             var obj;
             obj = {};
@@ -1507,7 +1559,8 @@ app.controller("administrarElecciones", function ($scope, $rootScope, $location,
                 if (data.message == "OK") {
                     $scope.arrayElecciones = data.ProcesosElectorales;
                     $log.log("Procesos de elección consultados con éxito");
-                } else {
+                }
+                else {
                     $log.log(data.message);
                 }
             }).catch(function (data) {
@@ -1517,19 +1570,19 @@ app.controller("administrarElecciones", function ($scope, $rootScope, $location,
         $scope.verElecciones();
     }
 });
-
-
 /* Ver Elecciones */
 app.controller("verElecciones", function ($scope, $rootScope, $location, $http, $cookies, $interval, $filter, $log) {
     if (!$rootScope.sesionActiva()) { // verificamos si una sesion ya fue iniciada
         $location.path("login");
-    } else {}
+    }
+    else {}
 });
 /* Ver informacion del foro */
 app.controller("verInfo", function ($scope, $rootScope, $location, $http, $cookies, $interval, $filter, $log, $routeParams) {
     if (!$rootScope.sesionActiva()) { // verificamos si una sesion ya fue iniciada
         $location.path("login");
-    } else {
+    }
+    else {
         $scope.of = {};
         var mapVer = null;
         var markerVer = null;
@@ -1538,16 +1591,16 @@ app.controller("verInfo", function ($scope, $rootScope, $location, $http, $cooki
             var Position = new google.maps.LatLng($scope.of.Latitud, $scope.of.Longitud);
             if (mapVer == null) {
                 mapVer = new google.maps.Map(document.getElementById('mapVer'), {
-                    zoom: 16,
-                    center: Position
+                    zoom: 16
+                    , center: Position
                 });
             }
             if (markerVer != null) {
                 markerVer.setMap(null);
             }
             markerVer = new google.maps.Marker({
-                position: Position,
-                map: mapVer
+                position: Position
+                , map: mapVer
             });
             mapVer.panTo(Position);
         }
@@ -1555,7 +1608,8 @@ app.controller("verInfo", function ($scope, $rootScope, $location, $http, $cooki
         $scope.varVerEvento = function () {
             if ($scope.controlVerEvento == "") {
                 $scope.controlVerEvento = "ocultarA";
-            } else {
+            }
+            else {
                 $scope.controlVerEvento = "";
                 cargarMapa();
             }
@@ -1578,7 +1632,8 @@ app.controller("verInfo", function ($scope, $rootScope, $location, $http, $cooki
                 if (data.message == "OK") {
                     $scope.of = data.InfoForo[0];
                     cargarArchivos();
-                } else {
+                }
+                else {
                     $log.log(data.message);
                 }
             }).catch(function (data) {
@@ -1601,7 +1656,8 @@ app.controller("verInfo", function ($scope, $rootScope, $location, $http, $cooki
                 $log.log(data);
                 if (data.message == "OK") {
                     $scope.of.encuestas = data.EncuestaXForo;
-                } else {
+                }
+                else {
                     $log.log(data.message);
                 }
             }).catch(function (data) {
@@ -1624,9 +1680,9 @@ app.controller("verInfo", function ($scope, $rootScope, $location, $http, $cooki
                 //$log.log(data);
                 if (data.message == "OK") {
                     $scope.of.archivos = data.ArchivosXForo;
-
                     cargarEncuesta();
-                } else {
+                }
+                else {
                     $log.log(data.message);
                 }
             }).catch(function (data) {
@@ -1650,7 +1706,8 @@ app.controller("verInfo", function ($scope, $rootScope, $location, $http, $cooki
                 //$log.log(data);
                 if (data.message == "OK") {
                     cargarEncuesta();
-                } else {
+                }
+                else {
                     $log.log(data.message);
                 }
             }).catch(function (data) {
@@ -1673,7 +1730,8 @@ app.controller("verInfo", function ($scope, $rootScope, $location, $http, $cooki
                 $log.log(data);
                 if (data.message == "OK") {
                     $scope.of.Likes++;
-                } else {
+                }
+                else {
                     $log.log(data.message);
                 }
             }).catch(function (data) {
@@ -1696,7 +1754,8 @@ app.controller("verInfo", function ($scope, $rootScope, $location, $http, $cooki
                 $log.log(data);
                 if (data.message == "OK") {
                     $scope.cargarComentarios();
-                } else {
+                }
+                else {
                     $log.log(data.message);
                 }
             }).catch(function (data) {
@@ -1719,7 +1778,8 @@ app.controller("verInfo", function ($scope, $rootScope, $location, $http, $cooki
                 if (data.message == "OK") {
                     $scope.cargarComentarios();
                     alert("El comentario se ha eliminado");
-                } else {
+                }
+                else {
                     $log.log(data.message);
                 }
             }).catch(function (data) {
@@ -1743,7 +1803,8 @@ app.controller("verInfo", function ($scope, $rootScope, $location, $http, $cooki
                 $log.log(data);
                 if (data.message == "OK") {
                     alert("Se ha denunciado el comentario");
-                } else {
+                }
+                else {
                     $log.log(data.message);
                 }
             }).catch(function (data) {
@@ -1766,7 +1827,8 @@ app.controller("verInfo", function ($scope, $rootScope, $location, $http, $cooki
                 $log.log(data);
                 if (data.message == "OK") {
                     alert("El foro se ha marcado como inadecuado");
-                } else {
+                }
+                else {
                     $log.log(data.message);
                 }
             }).catch(function (data) {
@@ -1792,7 +1854,8 @@ app.controller("verInfo", function ($scope, $rootScope, $location, $http, $cooki
                     if (data.message == "OK") {
                         $scope.txtComentario = "";
                         $scope.cargarComentarios();
-                    } else {
+                    }
+                    else {
                         $log.log(data.message);
                     }
                 }).catch(function (data) {
@@ -1815,7 +1878,8 @@ app.controller("verInfo", function ($scope, $rootScope, $location, $http, $cooki
                 $log.log(data);
                 if (data.message == "OK") {
                     $scope.of.comentarios = data.ComentariosForo;
-                } else {
+                }
+                else {
                     $log.log(data.message);
                 }
             }).catch(function (data) {
@@ -1825,123 +1889,30 @@ app.controller("verInfo", function ($scope, $rootScope, $location, $http, $cooki
         cargarinfo();
     }
 });
-/* Ver perfil de una persona y editar los datos si es el usuario registrado */
+/* Ver perfil de una persona */
 app.controller("verPerfil", function ($scope, $rootScope, $location, $http, $cookies, $interval, $filter, $log, $routeParams) {
     if (!$rootScope.sesionActiva()) { // verificamos si una sesion ya fue iniciada
         $location.path("login");
-    } else {
+    }
+    else {
         var idUsuario = $routeParams.idUsuario;
         $scope.idUsuario = idUsuario;
-
-        function cargarinfo() {
-            var obj = {};
-            obj.pPersonaID = idUsuario;
-            var fd = new FormData();
-            fd.append("obj", JSON.stringify(obj));
-            $log.log(obj);
-            $http.post(host + "api/VerDatosXPersona.php", fd, {
-                headers: {
-                    "Content-Type": undefined
-                }
-            }).then(function (respuesta) {
-                var data = respuesta.data;
-                $log.log(data);
-                if (data.message == "OK") {
-                    $scope.op = data.DatosXPersona[0];
-                    cargarArchivos();
-                } else {
-                    $log.log(data.message);
-                }
-            }).catch(function (data) {
-                $log.log("Error de conexion, intente de nuevo");
-            })
-        }
-        $scope.cambiarTipoUsuario = function (tipoUsuario) {
-            var obj = {};
-            obj.PersonaID = idUsuario;
-            obj.TipoUsuario = tipoUsuario;
-            $log.log(obj);
-            var fd = new FormData();
-            fd.append("obj", JSON.stringify(obj));
-            $http.post(host + "api/ActualizarTipoUsuario.php", fd, {
-                headers: {
-                    "Content-Type": undefined
-                }
-            }).then(function (respuesta) {
-                var data = respuesta.data;
-                $log.log(data);
-                $scope.calificado = true;
-                if (data.message == "OK") {
-                    cargarinfo();
-                } else {
-                    $log.log(data.message);
-                }
-            }).catch(function (data) {
-                $log.log("Error de conexion, intente de nuevo");
-            })
-        }
-        $scope.calificarPersona = function (calificacion) {
-            var obj = {};
-            obj.VotanteID = $rootScope.idUsuarioActivo;
-            obj.PersonaID = idUsuario;
-            obj.Calificacion = calificacion;
-            $log.log(obj);
-            var fd = new FormData();
-            fd.append("obj", JSON.stringify(obj));
-            $http.post(host + "api/CalificarPersona.php", fd, {
-                headers: {
-                    "Content-Type": undefined
-                }
-            }).then(function (respuesta) {
-                var data = respuesta.data;
-                $log.log(data);
-                $scope.calificado = true;
-                if (data.message == "OK") {
-                    cargarinfo();
-                } else {
-                    $log.log(data.message);
-                }
-            }).catch(function (data) {
-                $log.log("Error de conexion, intente de nuevo");
-            })
-        }
-        $scope.editarPerfil = function () {
-            $scope.objEditar = JSON.clone($scope.op);
-            $scope.editarInformacion = true;
-        }
-        $scope.ActualizarPersona = function (obj) {
-            obj.PersonaID = $rootScope.idUsuarioActivo;
-            var fd = new FormData();
-            fd.append("obj", JSON.stringify(obj));
-            $log.log(obj);
-            $http.post(host + "api/ActualizarPersona.php", fd, {
-                headers: {
-                    "Content-Type": undefined
-                }
-            }).then(function (respuesta) {
-                var data = respuesta.data;
-                $log.log(data);
-                if (data.message == "OK") {
-                    cargarinfo();
-                    $scope.editarInformacion = false;
-                } else {
-                    $log.log(data.message);
-                }
-            }).catch(function (data) {
-                $log.log("Error de conexion, intente de nuevo");
-            })
-        }
-        cargarinfo();
+        $scope.nombreUsuario = $rootScope.nombreUsuarioActivo;
+        $scope.datosPerfil = {
+            "espacioTotal": 1024
+            , "espacioDisponible": 500
+        };
     }
 });
-/* Plantilla controller */
+/* Busqueda de archivos */
 app.controller("busqueda", function ($scope, $rootScope, $location, $http, $cookies, $interval, $filter, $log) {
     if (!$rootScope.sesionActiva()) { // verificamos si una sesion ya fue iniciada
         $location.path("login");
-    } else {
-        $scope.buscarUsuarios = function (obj) {
-            $log.log("Buscando Usuarios");
-            $log.log(obj);
+    }
+    else {
+        $scope.buscarArchivos = function (obj) {
+            $log.log("Buscando Archivos");
+            /*$log.log(obj);
             var fd = new FormData();
             fd.append("obj", JSON.stringify(obj));
             $http.post(host + "api/buscarUsuario.php", fd, {
@@ -1959,111 +1930,31 @@ app.controller("busqueda", function ($scope, $rootScope, $location, $http, $cook
                 }
             }).catch(function (data) {
                 $log.log("Error de conexion, intente de nuevo");
-            })
+            })*/
+            var json = {
+                "archivos": [
+                    {
+                        "nombre": "Archivo1"
+                        , "id": 1
+                    }
+                    , {
+                        "nombre": "Archivo2"
+                        , "id": 2
+                    }
+                    , {
+                        "nombre": "Archivo3"
+                        , "id": 3
+                    }
+                            ]
+            };
+            $scope.archivosEncontrados = json;
         }
     }
 });
-app.controller("verDenuncias", function ($scope, $rootScope, $location, $http, $cookies, $interval, $filter, $log) {
-    if (!$rootScope.sesionActiva()) { // verificamos si una sesion ya fue iniciada
-        $location.path("login");
-    } else {
-        function ListarDenunciasXComentario() {
-            obj = {};
-            var fd = new FormData();
-            fd.append("obj", JSON.stringify(obj));
-            $http.post(host + "api/ListarDenunciasXComentario.php", fd, {
-                headers: {
-                    "Content-Type": undefined
-                }
-            }).then(function (respuesta) {
-                var data = respuesta.data;
-                $log.log("Datos");
-                $log.log(data);
-                if (data.message == "OK") {
-                    $scope.comentariosDenunciados = data.DenunciasXComentario;
-                } else {
-                    $log.log(data.message);
-                }
-            }).catch(function (data) {
-                $log.log("Error de conexion, intente de nuevo");
-            })
-        }
-
-        function ListarDenunciasXForo() {
-            obj = {};
-            var fd = new FormData();
-            fd.append("obj", JSON.stringify(obj));
-            $http.post(host + "api/ListarDenunciasXForo.php", fd, {
-                headers: {
-                    "Content-Type": undefined
-                }
-            }).then(function (respuesta) {
-                var data = respuesta.data;
-                $log.log("Datos");
-                $log.log(data);
-                if (data.message == "OK") {
-                    $scope.forosDenunciados = data.DenunciasXForo;
-                } else {
-                    $log.log(data.message);
-                }
-            }).catch(function (data) {
-                $log.log("Error de conexion, intente de nuevo");
-            })
-        }
-        $scope.eliminarComentario = function (idComentario) {
-            var obj = {};
-            obj.pComentarioID = idComentario;
-            var fd = new FormData();
-            fd.append("obj", JSON.stringify(obj));
-            $log.log(obj);
-            $http.post(host + "api/EliminarComentario.php", fd, {
-                headers: {
-                    "Content-Type": undefined
-                }
-            }).then(function (respuesta) {
-                var data = respuesta.data;
-                $log.log(data);
-                if (data.message == "OK") {
-                    ListarDenunciasXComentario();
-                    alert("El comentario se ha eliminado");
-                } else {
-                    $log.log(data.message);
-                }
-            }).catch(function (data) {
-                $log.log("Error de conexion, intente de nuevo");
-            })
-        }
-        $scope.eliminarForo = function (idForo) {
-            var obj = {};
-            obj.ForoID = idForo;
-            var fd = new FormData();
-            fd.append("obj", JSON.stringify(obj));
-            $log.log(obj);
-            $http.post(host + "api/EliminarForo.php", fd, {
-                headers: {
-                    "Content-Type": undefined
-                }
-            }).then(function (respuesta) {
-                var data = respuesta.data;
-                $log.log(data);
-                if (data.message == "OK") {
-                    ListarDenunciasXComentario();
-                    ListarDenunciasXForo();
-                } else {
-                    $log.log(data.message);
-                }
-            }).catch(function (data) {
-                $log.log("Error de conexion, intente de nuevo");
-            })
-        }
-        ListarDenunciasXComentario();
-        ListarDenunciasXForo();
-    }
-});
-
 /* Plantilla controller */
 app.controller("plantilla", function ($scope, $rootScope, $location, $http, $cookies, $interval, $filter, $log) {
     if (!$rootScope.sesionActiva()) { // verificamos si una sesion ya fue iniciada
         $location.path("login");
-    } else {}
+    }
+    else {}
 });

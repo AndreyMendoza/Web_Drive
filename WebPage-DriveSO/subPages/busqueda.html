@@ -1,12 +1,12 @@
 <div class="marginArriba">
-    <div class="f24 marginArribaSuper marginAbajoSuper aCentro">Buscar personas</div>
-    <form ng-submit="buscarUsuarios(obj)">
+    <div class="f24 marginArribaSuper marginAbajoSuper aCentro">Buscar archivos</div>
+    <form ng-submit="buscarArchivos(obj)">
         <div class="bordeCeleste fullPadding">
-            <input placeholder="Buscar una persona" ng-model="obj.pIndicio" class="w500" type="text">
+            <input placeholder="Nombre del archivo" ng-model="obj.pIndicio" class="w500" type="text">
             <button type="submit" class="bgCeleste fullPadding  fff"><i class="fa fa-search" aria-hidden="true"></i></button>
         </div>
     </form>
     <div class="marginArriba"> Resultados:
-        <div ng-repeat="u in usuariosEncontrados" class="marginIzq fullPadding pointer"> <a class="f18" href="#!/verPerfil/{{u.PersonaID}}"><i class="fa cCeleste fa-user-circle-o f22" aria-hidden="true"></i> {{u.Nombre}} {{u.Apellido1}} {{u.Apellido2}}</a> </div>
+        <div ng-repeat="archivo in archivosEncontrados.archivos" class="marginIzq fullPadding pointer"> <a class="f18" href="#!/verPerfil/{{u.PersonaID}}"><i class="fa cCeleste fa-file-text-o f22" aria-hidden="true"></i> {{archivo.nombre}} - {{archivo.id}}</a> </div>
     </div>
 </div>
