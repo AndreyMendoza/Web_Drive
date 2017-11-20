@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<persona id="201508">
+    <edad>20</edad>
+    <list>hola</list>
+    <list>adios</list>
+    <nombre>Andrey</nombre>
+    <p id="201589">
+        <edad>30</edad>
+        <list>hola</list>
+        <list>adios</list>
+        <nombre>Armando</nombre>
+    </p>
+</persona>
