@@ -1,0 +1,163 @@
+/* Contenedor de usuarios*/
+
+.contenedorUsuarios {
+    background: #ddd;
+    width: 700px;
+    border-radius: 5px;
+}
+
+/* Contenedor de usuario*/
+
+.contUsuario {
+    overflow: hidden;
+    border-radius: 10px;
+    background: rgba(25, 112, 194, 0.2);
+}
+
+/*Contenedor MAP*/
+
+#map,
+#mapEdit,
+#mapVer {
+    height: 300px;
+    width: 100%;
+    min-width: 500px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.4);
+}
+
+/* Contenedor Crear*/
+
+.contenedorCrear {
+    background: var(--fondoContenedor);
+    position: relative;
+    width: 365px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border-radius: 20px 20px 0px 0px;
+}
+.contenedorCrear:hover {
+    background: rgb(208, 201, 201);
+}
+.contenedorCrear > .title {
+    background: var(--cGris);
+    color: #fff;
+}
+
+/* Contenedor General */
+
+.contenedorGeneral {
+    position: relative;
+    width: 750px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border-radius: 0px 20px 0 20px;
+}
+.contenedorGeneral > .title {
+    background: var(--cCeleste);
+    color: #fff;
+}
+.contenedorGeneral > .contenido {
+    display: flex;
+    padding-bottom: 20px;
+}
+.contenedorGeneral .botones {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    border-top-left-radius: 5px;
+    font-size: 0;
+}
+.botones boton {
+    color: #444;
+    cursor: pointer;
+    padding: 0 5px;
+}
+.botones boton:hover i {
+    color: #000;
+    transform: scale(1.25);
+}
+
+/* Contenedor normal */
+
+.contenedor > div {
+    background: var(--fondoContenedor);
+    color: var(--colorContenedor);
+    margin: 0 15px;
+    border-radius: 5px 5px 0 0;
+    display: inline-block;
+    overflow: auto;
+}
+.contenedor> div .title {
+    background: var(--fondoTituloContenedor);
+    color: var(--colorTituloContenedor);
+    font-size: 24px;
+    padding: 5px 8px;
+    position: relative;
+}
+
+/* Contenedor Flotante */
+
+.contenedorFlotante {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.contenedorFlotante .fondo {
+    background: rgba(0, 0, 0, 0.65);
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    z-index: -1;
+}
+.contenedorFlotante > div {
+    background: var(--fondoContenedor);
+    color: var(--colorContenedor);
+    margin: 0 15px;
+    border-radius: 5px 5px 0 0;
+    overflow: auto;
+    display: inline-block;
+    overflow: auto;
+    max-height: 100%;
+}
+.contenedorFlotante > div .title {
+    background: var(--fondoTituloContenedor);
+    color: var(--colorTituloContenedor);
+    font-size: 24px;
+    padding: 5px 8px;
+    padding-right: 70px;
+    position: relative;
+}
+.title span {
+    font-size: 20px;
+    background: #e00000;
+    padding: 4px 15px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+}
+.title span:hover {
+    background: #ff0000;
+}
+.verPagina {
+    width: 750px;
+}
+.verPagina .comentario,
+.verPagina .contPrincipal,
+.verPagina .publicarComentario {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+.fondoAzul {
+    background: var(--fondoTituloContenedor);
+    color: var(--colorTituloContenedor);
+}
