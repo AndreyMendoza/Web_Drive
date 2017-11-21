@@ -1,6 +1,9 @@
 package Model;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
+@XmlRootElement
 public class Archivo extends Directorio{
 
 // -----------------------------------------------------------------------------
@@ -14,8 +17,9 @@ public class Archivo extends Directorio{
 
 // -----------------------------------------------------------------------------
     
-    public Archivo(String Nombre, String ruta, float tamanho, Almacenamiento tipo) {
+    public Archivo(String Nombre, String ruta, float tamanho, Almacenamiento tipo, String extension) {
         super(Nombre, ruta, tamanho, tipo);
+        this.extension = extension;
     }
 
 // -----------------------------------------------------------------------------
@@ -34,6 +38,7 @@ public class Archivo extends Directorio{
     
 // -----------------------------------------------------------------------------
 
+    @XmlElement
     public String getExtension() {
         return extension;
     }

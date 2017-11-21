@@ -2,9 +2,8 @@ package Controller;
 
 import Model.Almacenamiento;
 import Model.Carpeta;
-import Model.Directorio;
 import Model.ListaUsuarios;
-import Model.UsuarioModel;
+import Model.Usuario;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.io.File;
@@ -43,7 +42,7 @@ public class Herramientas {
     
 // -----------------------------------------------------------------------------
     
-    public static boolean agregar_usuario(UsuarioModel usuario) throws Exception
+    public static boolean agregar_usuario(Usuario usuario) throws Exception
     {
         try {
             
@@ -73,7 +72,7 @@ public class Herramientas {
     
     public static boolean login(String usuario, String password)
     {
-        ListaUsuarios usuarios = leer_usuarios();
+        ListaUsuarios usuarios = leer_usuarios();        
         return usuarios.login(usuario, password);
     }
     
@@ -106,26 +105,44 @@ public class Herramientas {
         try {
             // Creando estructura en memoria
             Carpeta directorio = new Carpeta(usuario,
-                    drive_path + "\\" + usuario,
+                    usuario,
                     0,
                     Almacenamiento.CARPETA);
             Carpeta compartidos = new Carpeta(usuario,
-                    drive_path + "\\" + usuario + "\\Archivos Compartidos",
+                    directorio.getRuta() + "\\Archivos Compartidos",
                     0,
                     Almacenamiento.CARPETA);
             directorio.agregar_hijo(compartidos);
             
             // Guardar estructura en memoria a un XML   
-            JAXBContext ctx = JAXBContext.newInstance(Directorio.class);
+            JAXBContext ctx = JAXBContext.newInstance(Carpeta.class);
             Marshaller marsh = ctx.createMarshaller();
             marsh.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
             
-            File file = new File(drive_path + "\\usuarios.xml");
+            File file = new File(drive_path + "\\" + usuario + "\\file_system.xml");
             marsh.marshal(directorio, file);
             return true;
         } catch (JAXBException ex) {
             throw new Exception("Error");
         }
+    }
+    
+// -----------------------------------------------------------------------------
+    
+    public static Carpeta cargar_file_system(String usuario)
+    {
+        Carpeta directorio = null;
+        try {
+            File file = new File(drive_path + "\\" + usuario + "\\file_system.xml");
+            JAXBContext jaxbContext = JAXBContext.newInstance(Carpeta.class);
+            
+            Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+            directorio = (Carpeta) jaxbUnmarshaller.unmarshal(file);
+            
+        } catch (JAXBException ex) {
+            Logger.getLogger(Herramientas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return directorio;
     }
     
 // -----------------------------------------------------------------------------

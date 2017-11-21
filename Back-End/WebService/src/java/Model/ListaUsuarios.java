@@ -10,7 +10,7 @@ public class ListaUsuarios {
 
 // -----------------------------------------------------------------------------
     
-    private ArrayList<UsuarioModel> usuarios = new ArrayList<>();
+    private ArrayList<Usuario> usuarios = new ArrayList<>();
 
 // -----------------------------------------------------------------------------
     
@@ -21,15 +21,15 @@ public class ListaUsuarios {
 // -----------------------------------------------------------------------------
     
     @XmlElement
-    public ArrayList<UsuarioModel> getUsuarios() {
+    public ArrayList<Usuario> getUsuarios() {
         return usuarios;
     }
 
 // -----------------------------------------------------------------------------
     
-    public boolean agregar_usuario(UsuarioModel usuario)
+    public boolean agregar_usuario(Usuario usuario)
     {
-        for (UsuarioModel u : usuarios)
+        for (Usuario u : usuarios)
         {
             // Verificar que el usuario no este repetido
             if (u.getUsuario().equals(usuario.getUsuario()))
@@ -41,7 +41,7 @@ public class ListaUsuarios {
     
 // -----------------------------------------------------------------------------
     
-    public void setUsuarios(ArrayList<UsuarioModel> usuarios) {
+    public void setUsuarios(ArrayList<Usuario> usuarios) {
         this.usuarios = usuarios;
     }
     
@@ -49,7 +49,7 @@ public class ListaUsuarios {
 
     public boolean login(String usuario, String password)
     {
-        for (UsuarioModel u : usuarios)
+        for (Usuario u : usuarios)
         {
             // Verificar que el usuario no este repetido
             if (u.getUsuario().equals(usuario) &&

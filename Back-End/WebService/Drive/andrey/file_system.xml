@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<carpeta>
+    <fecha_creado>2017-11-21T12:38:08.891-06:00</fecha_creado>
+    <fecha_modificado>2017-11-21T12:38:08.891-06:00</fecha_modificado>
+    <nombre>andrey</nombre>
+    <ruta>andrey</ruta>
+    <tamanho>0.0</tamanho>
+    <tipo>CARPETA</tipo>
+    <hijos xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="carpeta">
+        <fecha_creado>2017-11-21T12:38:08.891-06:00</fecha_creado>
+        <fecha_modificado>2017-11-21T12:38:08.891-06:00</fecha_modificado>
+        <nombre>andrey</nombre>
+        <ruta>andrey\Archivos Compartidos</ruta>
+        <tamanho>0.0</tamanho>
+        <tipo>CARPETA</tipo>
+    </hijos>
+</carpeta>

@@ -1,6 +1,6 @@
 package Model;
 
-public class UsuarioModel {
+public class Usuario {
 
 // -----------------------------------------------------------------------------
     
@@ -10,12 +10,12 @@ public class UsuarioModel {
     
 // -----------------------------------------------------------------------------
 
-    public UsuarioModel() {
+    public Usuario() {
     }
     
 // -----------------------------------------------------------------------------    
 
-    public UsuarioModel(String usuario, String password, float tamanho_drive) {
+    public Usuario(String usuario, String password, float tamanho_drive) {
         super();
         this.usuario = usuario;
         this.password = password;

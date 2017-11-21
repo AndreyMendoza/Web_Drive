@@ -2,7 +2,8 @@
 package Controller;
 
 import Model.MensajeModel;
-import Model.UsuarioModel;
+import Model.Usuario;
+import java.util.ArrayList;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
@@ -22,9 +23,11 @@ public class UsuarioController {
     {
         MensajeModel mensaje = new MensajeModel();
         try {
-            UsuarioModel nuevo_usuario = new UsuarioModel(usuario, password, tamanho);
+            Usuario nuevo_usuario = new Usuario(usuario, password, tamanho);
             if (Herramientas.agregar_usuario(nuevo_usuario))
+            {
                 mensaje.setMensaje("OK");
+            }
             else
                 mensaje.setMensaje("El nombre de usuario ya existe.");
         } catch (Exception ex) {
@@ -44,9 +47,15 @@ public class UsuarioController {
         MensajeModel mensaje = new MensajeModel();
         try {
             if (Herramientas.login(usuario, password))
+            {
                 mensaje.setMensaje("OK");
+                ArrayList<Object> result = new ArrayList<>();
+                result.add(mensaje);
+                result.add(Herramientas.cargar_file_system(usuario));
+                return Herramientas.crear_json(result);
+            }
             else
-                mensaje.setMensaje("Usuario o contraseña incorrectas.");
+                mensaje.setMensaje("Usuario o contrasenha incorrectas.");
         } catch (Exception ex) {
             mensaje.setMensaje("ERROR");
         }        

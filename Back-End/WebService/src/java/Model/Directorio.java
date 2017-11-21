@@ -2,6 +2,8 @@
 package Model;
 
 import java.util.Date;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 
 public class Directorio {
@@ -23,6 +25,7 @@ public class Directorio {
 // -----------------------------------------------------------------------------
     
     public Directorio(String Nombre, String ruta, float tamanho, Almacenamiento tipo) {
+        super();
         this.Nombre = Nombre;
         this.ruta = ruta;
         this.tamanho = tamanho;
@@ -33,6 +36,7 @@ public class Directorio {
     
  // -----------------------------------------------------------------------------   
     
+    @XmlElement
     public String getNombre() {
         return Nombre;
     }
@@ -45,6 +49,7 @@ public class Directorio {
 
 // -----------------------------------------------------------------------------
     
+    @XmlElement
     public String getRuta() {
         return ruta;
     }
@@ -57,6 +62,7 @@ public class Directorio {
 
 // -----------------------------------------------------------------------------
     
+    @XmlElement
     public float getTamanho() {
         return tamanho;
     }
@@ -67,6 +73,7 @@ public class Directorio {
 
 // -----------------------------------------------------------------------------
     
+    @XmlElement
     public Date getFecha_creado() {
         return fecha_creado;
     }
@@ -79,6 +86,7 @@ public class Directorio {
 
 // -----------------------------------------------------------------------------
     
+    @XmlElement
     public Date getFecha_modificado() {
         return fecha_modificado;
     }
@@ -91,6 +99,7 @@ public class Directorio {
     
 // -----------------------------------------------------------------------------
 
+    @XmlElement
     public Almacenamiento getTipo() {
         return tipo;
     }

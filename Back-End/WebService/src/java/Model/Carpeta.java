@@ -1,8 +1,10 @@
 package Model;
 
 import java.util.ArrayList;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
-
+@XmlRootElement
 public class Carpeta extends Directorio{
 
 // -----------------------------------------------------------------------------
@@ -36,6 +38,7 @@ public class Carpeta extends Directorio{
     
 // -----------------------------------------------------------------------------
 
+    @XmlElement
     public ArrayList<Directorio> getHijos() {
         return hijos;
     }
