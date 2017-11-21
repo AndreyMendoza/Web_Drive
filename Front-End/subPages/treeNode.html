@@ -1,0 +1,24 @@
+<!--Contenedor para Copiar o Mover un Archivo-->
+<div class="contenedorFlotante">
+    <div class="width50p">
+        <div class="fondo" ng-click=""></div>
+        <div class="title">Función de Copiado<span ng-click="">X</span></div>
+        <div class="cuerpo fullPadding">
+            <form ng-submit="actualizarArchivo(Archivo)">
+                <div class="flexColumna aFlexCentro aIzq">
+                    <label class="fullWidth fullPadding f16 sombra marginArriba"><a class="cCeleste">Copiando el archivo:</a> {{Archivo.nombre}}</label>
+                    <label class="fullWidth fullPadding f16 sombra marginArriba"><a class="cCeleste">Localización:</a> {{abc.currentNode.label}}</label>
+                </div>
+
+                <!--Tree node-->
+                <div class="marginArribaSuper" data-angular-treeview="true" data-tree-id="abc" data-tree-model="treedata" data-node-id="id" data-node-label="label" data-node-children="children">
+                </div>
+                <!--Fin del Tree node-->
+
+                <div class="aDer">
+                    <button class="fullPadding f20 marginArriba" type="submit">Copiar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

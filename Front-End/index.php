@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="css/master.css">
     <link rel="stylesheet" href="css/subPages.css">
     <link rel="stylesheet" href="css/globales.css">
+    <link rel="stylesheet" type="text/css" href="css/angular.treeview.css">
 </head>
 
 <body ng-app="app" ng-controller="mainController">
@@ -39,6 +40,9 @@
     <script src="js/angular/angular-route.min.js"></script>
     <script src="js/angular/cookies.js"></script>
     <script src="js/scripts.js"></script>
+    <script type="text/javascript" src="js/treeview/angular.treeview.js"></script>
+    <script type="text/javascript" src="js/treeview/angular.treeview.min.js"></script>
+    
 </body>
 
 </html>

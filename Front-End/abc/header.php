@@ -3,7 +3,7 @@
     <ul class="mp">
         <li><a href="#!/verArchivos"><i class="fa fa-home" aria-hidden="true"></i><span> Inicio</span></a>
             <ul>
-                <li><a href="#!/verArchivos"><span>Mis Archivos</span></a></li>
+                <li><a href="#!/treeNode"><span>Mis Archivos</span></a></li>
             </ul>
         </li>
         <li><a href="#!/busqueda"><i class="fa fa-search" aria-hidden="true"></i><span> Buscar</span></a> </li>

@@ -1,4 +1,4 @@
-var app = angular.module('app', ['ngRoute', 'ngCookies']);
+var app = angular.module('app', ['ngRoute', 'ngCookies', 'angularTreeview']);
 // en caso de que necesitemos clonar un objeto JSON
 JSON.clone = function (obj) {
     return JSON.parse(JSON.stringify(obj));
@@ -30,9 +30,9 @@ app.config(function ($routeProvider) {
     }).when("/cambiarPass", {
         templateUrl: "subPages/cambiarPass.html"
         , controller: "cambiarPass"
-    }).when("/verInfo/:idVer", {
-        templateUrl: "subPages/verInfo.html"
-        , controller: "verInfo"
+    }).when("/treeNode", {
+        templateUrl: "subPages/treeNode.html"
+        , controller: "treeNode"
     }).when("/verPerfil/:idUsuario", {
         templateUrl: "subPages/verPerfil.html"
         , controller: "verPerfil"
@@ -378,6 +378,7 @@ app.controller("misArchivos", function ($scope, $rootScope, $location, $http, $c
         $scope.controlAgregarCarpeta = false;
         $scope.controlVerArchivo = false;
         $scope.controlEditarArchivo = false;
+        $scope.controlCopiar = false;
         $scope.Archivo = {};
         $scope.Carpeta = {};
         
@@ -421,7 +422,16 @@ app.controller("misArchivos", function ($scope, $rootScope, $location, $http, $c
                 $scope.Archivo = {};
             }
         }
-        
+        /***********************/
+        $scope.varCopiar = function(){
+            if ($scope.controlCopiar) {
+                $scope.controlCopiar = false;
+            }
+            else {
+                $scope.controlCopiar = true;
+                $scope.Archivo = {};
+            }
+        }
         
         /*----------------- Funciones de crear archivos y carpetas -----------------*/
         $scope.crearArchivo = function(Archivo){
@@ -486,6 +496,18 @@ app.controller("misArchivos", function ($scope, $rootScope, $location, $http, $c
         /*----------------- Función para ver la carpeta -----------------*/
         $scope.verCarpeta = function(CarpetaID){
             $log.log("Viendo la carpeta "+ CarpetaID)
+        }
+        
+        
+        /*----------------- Función para copiar un archivo o carpeta -----------------*/
+        $scope.copiar = function(Archivo){
+            $log.log("Copiando el archivo: ")
+            $log.log(Archivo);
+            
+            $scope.varCopiar();
+            $scope.Archivo = $scope.arrayArchivos [4];
+            
+            
         }
         
         
@@ -559,6 +581,44 @@ app.controller("misArchivos", function ($scope, $rootScope, $location, $http, $c
         };
         
         $scope.verArchivos();
+        
+        $scope.treedata = 
+        [
+            { "label" : "User", "id" : "role1", "children" : [
+                { "label" : "subUser1", "id" : "role11", "children" : [] },
+                { "label" : "subUser2", "id" : "role12", "children" : [
+                    { "label" : "subUser2-1", "id" : "role121", "children" : [
+                        { "label" : "subUser2-1-1", "id" : "role1211", "children" : [] },
+                        { "label" : "subUser2-1-2", "id" : "role1212", "children" : [] }
+                    ]}
+                ]}
+            ]},
+            { "label" : "Admin", "id" : "role2", "children" : [] },
+            { "label" : "Guest", "id" : "role3", "children" : [] }
+        ];
+    }
+});
+
+/* Ver perfil de una persona */
+app.controller("treeNode", function ($scope, $rootScope, $location, $http, $cookies, $interval, $filter, $log, $routeParams) {
+    if (!$rootScope.sesionActiva()) { // verificamos si una sesion ya fue iniciada
+        $location.path("login");
+    }
+    else {
+        $scope.treedata = 
+        [
+            { "label" : "User", "id" : "role1", "children" : [
+                { "label" : "subUser1", "id" : "role11", "children" : [] },
+                { "label" : "subUser2", "id" : "role12", "children" : [
+                    { "label" : "subUser2-1", "id" : "role121", "children" : [
+                        { "label" : "subUser2-1-1", "id" : "role1211", "children" : [] },
+                        { "label" : "subUser2-1-2", "id" : "role1212", "children" : [] }
+                    ]}
+                ]}
+            ]},
+            { "label" : "Admin", "id" : "role2", "children" : [] },
+            { "label" : "Guest", "id" : "role3", "children" : [] }
+        ];
     }
 });
 
@@ -625,6 +685,7 @@ app.controller("busqueda", function ($scope, $rootScope, $location, $http, $cook
         }
     }
 });
+
 /* Plantilla controller */
 app.controller("plantilla", function ($scope, $rootScope, $location, $http, $cookies, $interval, $filter, $log) {
     if (!$rootScope.sesionActiva()) { // verificamos si una sesion ya fue iniciada
