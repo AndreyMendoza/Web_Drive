@@ -1,7 +1,7 @@
 
 package Controller;
 
-import Model.Message;
+import Model.MensajeModel;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import javax.ws.rs.GET;
@@ -16,10 +16,11 @@ public class Prueba {
     public String operar(@QueryParam("nombre") String nombre)
     {
         Gson gson = new GsonBuilder().create();
-        Message msg = new Message();
-        msg.setMsg("Hola " + nombre);
+        MensajeModel msg = new MensajeModel();
+        msg.setMensaje("Hola " + nombre);
         String result = gson.toJson(msg);
         return result;
     }
+    
     
 }

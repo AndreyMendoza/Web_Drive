@@ -14,27 +14,31 @@ public class Tests {
 
 
     public static void main(String[] args) throws JAXBException, FileNotFoundException {
-        JAXBContext ctx = JAXBContext.newInstance(Persona.class);
+        JAXBContext ctx = JAXBContext.newInstance(ListaUsuarios.class);
         
         Marshaller marsh = ctx.createMarshaller();
         marsh.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
         
-        Persona p1 = new Persona(20, "Andrey", "201508");
-        p1.setPersona();
+        File file = new File("pruebas.xml");
+        ListaUsuarios ls = new ListaUsuarios();
         
-        marsh.marshal(p1, new FileOutputStream("persona.xml"));
+        UsuarioModel u1 = new UsuarioModel("usuario 1", "asd", 11);
+        UsuarioModel u2 = new UsuarioModel("usuario 2", "asd", 11);
+        ls.agregar_usuario(u1);
+        ls.agregar_usuario(u2);
+        
+        marsh.marshal(ls, file);
+        
         
         // ---------------------------------------------------------------------
         
-         File file = new File("persona.xml");
-         JAXBContext jaxbContext = JAXBContext.newInstance(Persona.class);    
+         file = new File("pruebas.xml");
+         JAXBContext jaxbContext = JAXBContext.newInstance(ListaUsuarios.class);    
          
         Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();    
-        Persona e = (Persona) jaxbUnmarshaller.unmarshal(file);    
-        System.out.println(e.getId()+" "+e.getNombre()+" "+e.getEdad());  
+        ListaUsuarios e = (ListaUsuarios) jaxbUnmarshaller.unmarshal(file);    
         
-        Persona p2 = e.getP();
-        System.out.println(p2.getId() + " " + p2.getNombre() + " " + p2.getEdad());  
+        System.out.println(e.toString());
               
     }
 }

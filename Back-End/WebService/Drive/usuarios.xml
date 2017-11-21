@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<listaUsuarios>
+    <usuarios>
+        <password>asd</password>
+        <tamanho_drive>15.0</tamanho_drive>
+        <usuario>andrey</usuario>
+    </usuarios>
+    <usuarios>
+        <password>asd</password>
+        <tamanho_drive>85.0</tamanho_drive>
+        <usuario>andreyy</usuario>
+    </usuarios>
+</listaUsuarios>
