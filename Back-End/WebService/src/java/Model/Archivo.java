@@ -14,8 +14,8 @@ public class Archivo extends Directorio{
 
 // -----------------------------------------------------------------------------
     
-    public Archivo(String Nombre, String ruta, float tamanho) {
-        super(Nombre, ruta, tamanho);
+    public Archivo(String Nombre, String ruta, float tamanho, Almacenamiento tipo) {
+        super(Nombre, ruta, tamanho, tipo);
     }
 
 // -----------------------------------------------------------------------------

@@ -3,6 +3,7 @@ package Model;
 
 import java.util.Date;
 
+
 public class Directorio {
 
 // -----------------------------------------------------------------------------
@@ -12,16 +13,22 @@ public class Directorio {
     private float tamanho;
     private Date fecha_creado;
     private Date fecha_modificado;
+    private Almacenamiento tipo;
 
 // -----------------------------------------------------------------------------
 
     public Directorio() {
     }
     
-    public Directorio(String Nombre, String ruta, float tamanho) {
+// -----------------------------------------------------------------------------
+    
+    public Directorio(String Nombre, String ruta, float tamanho, Almacenamiento tipo) {
         this.Nombre = Nombre;
         this.ruta = ruta;
         this.tamanho = tamanho;
+        this.fecha_creado = new Date();
+        this.fecha_modificado = new Date();
+        this.tipo = tipo;
     }
     
  // -----------------------------------------------------------------------------   
@@ -83,5 +90,17 @@ public class Directorio {
     }
     
 // -----------------------------------------------------------------------------
+
+    public Almacenamiento getTipo() {
+        return tipo;
+    }
+    
+// -----------------------------------------------------------------------------
+
+    public void setTipo(Almacenamiento tipo) {
+        this.tipo = tipo;
+    }
+
+// -----------------------------------------------------------------------------  
     
 }

@@ -16,8 +16,8 @@ public class Carpeta extends Directorio{
 
 // -----------------------------------------------------------------------------
     
-    public Carpeta(String Nombre, String ruta, float tamanho) {
-        super(Nombre, ruta, tamanho);
+    public Carpeta(String Nombre, String ruta, float tamanho, Almacenamiento tipo) {
+        super(Nombre, ruta, tamanho, tipo);
     }
     
 // -----------------------------------------------------------------------------
@@ -47,5 +47,21 @@ public class Carpeta extends Directorio{
     }
     
 // -----------------------------------------------------------------------------
+    
+    public void agregar_hijo(Directorio hijo)
+    {
+        // Verificar que no se repita
+        for (Directorio d : hijos)
+        {
+            if (d.getTipo() == hijo.getTipo() &&
+                d.getNombre().equals(hijo.getNombre()))
+                break;
+        }                    
+        hijos.add(hijo);
+    }
+    
+// -----------------------------------------------------------------------------
+    
+    
     
 }

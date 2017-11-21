@@ -1,5 +1,8 @@
 package Controller;
 
+import Model.Almacenamiento;
+import Model.Carpeta;
+import Model.Directorio;
 import Model.ListaUsuarios;
 import Model.UsuarioModel;
 import com.google.gson.Gson;
@@ -54,9 +57,10 @@ public class Herramientas {
                File file = new File(drive_path + "\\usuarios.xml");
                marsh.marshal(usuarios, file);
 
-               String nombre_carpeta = usuario.getUsuario();
-               crear_carpeta(nombre_carpeta);
-               crear_carpeta(nombre_carpeta + "\\Archivos Compartidos");
+               String nombre_usuario = usuario.getUsuario();
+               crear_carpeta(nombre_usuario);
+               crear_carpeta(nombre_usuario + "\\Archivos Compartidos");
+               crear_file_system(nombre_usuario);
                return true;
            }
         } catch (JAXBException ex) {
@@ -95,4 +99,41 @@ public class Herramientas {
         return result;
     }
     
+// -----------------------------------------------------------------------------
+
+    public static boolean crear_file_system(String usuario) throws Exception
+    {
+        try {
+            // Creando estructura en memoria
+            Carpeta directorio = new Carpeta(usuario,
+                    drive_path + "\\" + usuario,
+                    0,
+                    Almacenamiento.CARPETA);
+            Carpeta compartidos = new Carpeta(usuario,
+                    drive_path + "\\" + usuario + "\\Archivos Compartidos",
+                    0,
+                    Almacenamiento.CARPETA);
+            directorio.agregar_hijo(compartidos);
+            
+            // Guardar estructura en memoria a un XML   
+            JAXBContext ctx = JAXBContext.newInstance(Directorio.class);
+            Marshaller marsh = ctx.createMarshaller();
+            marsh.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+            
+            File file = new File(drive_path + "\\usuarios.xml");
+            marsh.marshal(directorio, file);
+            return true;
+        } catch (JAXBException ex) {
+            throw new Exception("Error");
+        }
+    }
+    
+// -----------------------------------------------------------------------------
+
+    private static Carpeta buscar_carpeta(String usuario, String nombre_carpeta)
+    {
+        
+        
+        return null;
+    }
 }
