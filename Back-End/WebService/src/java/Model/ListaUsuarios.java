@@ -46,5 +46,19 @@ public class ListaUsuarios {
     }
     
 // -----------------------------------------------------------------------------   
+
+    public boolean login(String usuario, String password)
+    {
+        for (UsuarioModel u : usuarios)
+        {
+            // Verificar que el usuario no este repetido
+            if (u.getUsuario().equals(usuario) &&
+                u.getPassword().equals(password))
+                return true;
+        } 
+        return false;
+    }
+    
+// -----------------------------------------------------------------------------  
     
 }

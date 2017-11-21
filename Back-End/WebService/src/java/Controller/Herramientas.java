@@ -54,10 +54,34 @@ public class Herramientas {
                File file = new File(drive_path + "\\usuarios.xml");
                marsh.marshal(usuarios, file);
 
+               String nombre_carpeta = usuario.getUsuario();
+               crear_carpeta(nombre_carpeta);
+               crear_carpeta(nombre_carpeta + "\\Archivos Compartidos");
                return true;
            }
         } catch (JAXBException ex) {
             throw new Exception("Error");
+        }
+        return false;
+    }
+    
+// -----------------------------------------------------------------------------
+    
+    public static boolean login(String usuario, String password)
+    {
+        ListaUsuarios usuarios = leer_usuarios();
+        return usuarios.login(usuario, password);
+    }
+    
+// -----------------------------------------------------------------------------
+
+    public static boolean crear_carpeta(String ruta_nombre)
+    {
+        File dir = new File(drive_path + "\\" + ruta_nombre);
+        
+        if (!dir.exists())
+        {
+            return dir.mkdir();
         }
         return false;
     }

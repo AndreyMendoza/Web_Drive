@@ -35,4 +35,21 @@ public class UsuarioController {
   
 // -----------------------------------------------------------------------------
     
+    @Path("login")
+    @GET
+    public String login(
+            @QueryParam("usuario") String usuario,
+            @QueryParam("password") String password)
+    {
+        MensajeModel mensaje = new MensajeModel();
+        try {
+            if (Herramientas.login(usuario, password))
+                mensaje.setMensaje("OK");
+            else
+                mensaje.setMensaje("Usuario o contraseña incorrectas.");
+        } catch (Exception ex) {
+            mensaje.setMensaje("ERROR");
+        }        
+        return Herramientas.crear_json(mensaje);
+    }
 }
