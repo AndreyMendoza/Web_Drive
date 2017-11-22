@@ -118,10 +118,12 @@ app.controller("login", function ($scope, $rootScope, $location, $http, $cookies
         $rootScope.nombrePanelActual = "";
         $scope.ingresar = function (user, pass) {
             $log.log("Login Cuenta");
+            $log.log(user + " -- "+pass);
             
             
             $http.get(host + "Usuario/login?usuario="+user+"&password="+pass).then(function (data)  {
                 $log.log(data);
+                var data = data.data;
                 if (data.mensaje == "OK") {
                     
                     // guardar la sesion en una cookie
@@ -142,8 +144,8 @@ app.controller("login", function ($scope, $rootScope, $location, $http, $cookies
                     $rootScope.sesionIniciada = true;
                     $location.path("/");
                 } else {
-                    $log.log(data.message);
-                    alert("Datos incorrectos(mensaje!=OK), intente de nuevo");
+                    $log.log(data.mensaje);
+                    alert(data.mensaje);
                 }
             }).catch(function (data) {
                 $log.log("Error de conexion, intente de nuevo");
@@ -184,10 +186,10 @@ app.controller("registro", function ($scope, $rootScope, $location, $http, $cook
         $scope.AgregarCuenta = function (obj) {
             $log.log("Añadiendo cuenta de usuario", obj);
             
-            $http.get(host + "Usuario/login?usuario="+user+"&password="+pass).then(function (data) {
-                var data = respuesta.data;
+            $http.get(host + "Usuario/agregar_usuario?usuario="+obj.Usuario+"&password="+obj.Contrasenha+"&tamanho="+obj.Bytes).then(function (data) {
+                var data = data.data;
                 $log.log(data);
-                if (data.message == "OK") {
+                if (data.mensaje == "OK") {
                     $scope.objAgregar = {};
                     alert("Se ha registrado correctamente");
                     $location.path("login");
@@ -201,6 +203,8 @@ app.controller("registro", function ($scope, $rootScope, $location, $http, $cook
         }
     }
 });
+
+
 /* CAMBIO DE CONTRASEÑA USUARIO LOGEADO */
 app.controller("cambiarPass", function ($scope, $rootScope, $location, $http, $cookies, $interval, $filter, $log) {
     if (!$rootScope.sesionActiva()) { // verificamos si una sesion ya fue iniciada
