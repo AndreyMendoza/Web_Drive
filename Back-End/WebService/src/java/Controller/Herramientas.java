@@ -125,21 +125,23 @@ public class Herramientas {
     
     public static boolean crear_archivo_fs(String usuario, String ruta, 
                                            String nombre,String extension, 
-                                           String contenido) throws Exception
+                                           String contenido, boolean reemplazar) throws Exception
     {
         try {
             // Tamanho en megabytes
-            long tamanho = crear_archivo_os(usuario, drive_path + "/" + ruta + "/" + nombre + extension, contenido);
-            if (tamanho >= 0)
+            long tamanho = crear_archivo_os(usuario, drive_path + "/" + ruta + "/", nombre + extension,contenido, reemplazar);
+            if (tamanho != -999)
             {
                 Carpeta directorio = cargar_file_system(usuario);
                 Archivo archivo = new Archivo(nombre, ruta, tamanho, Almacenamiento.ARCHIVO, extension);
-                if (directorio.agregar_hijo(ruta, archivo))
-                {
-                    directorio.setTamanho(directorio.getTamanho() + tamanho);
-                    guardar_file_system(usuario, directorio);
-                    return true;
-                }
+                
+                directorio.agregar_hijo(ruta, archivo);
+                
+                directorio.setTamanho(directorio.getTamanho() + tamanho);
+                guardar_file_system(usuario, directorio);
+
+                return true;
+
             }
             return false;
         } catch (Exception ex) {
@@ -149,32 +151,67 @@ public class Herramientas {
     
 // -----------------------------------------------------------------------------
     
-    private static long crear_archivo_os(String usuario, String ruta_nombre, String contenido) throws Exception
+    private static long crear_archivo_os(String usuario, String ruta, String nombre, String contenido, boolean reemplazar) throws Exception
     {
+        String tmp = ruta + "tmp-" + nombre;
+        String ruta_nombre = ruta + nombre;
+        
         try {
             File archivo = new File(ruta_nombre);
-            FileOutputStream fos = new FileOutputStream(archivo);
-            BufferedWriter handler = new BufferedWriter(new OutputStreamWriter(fos));     
+            long tamanho_actual = archivo.length();   
             
-            handler.write(contenido);
-            handler.close();
-            fos.close();          
-            
-            if (!espacio_disponible(usuario, archivo.length()))
-            {
-               Files.delete(Paths.get(ruta_nombre));
-               return -1; 
+            if(!archivo.exists() && !archivo.isDirectory())
+            {   
+                
+                FileOutputStream fos = new FileOutputStream(archivo);
+                BufferedWriter handler = new BufferedWriter(new OutputStreamWriter(fos));     
+
+                handler.write(contenido);
+                handler.close();
+                fos.close(); 
+                
+                if (!espacio_disponible(usuario, archivo.length(), 0))
+                   Files.delete(Paths.get(ruta_nombre));
+                else
+                    return archivo.length();
             }
-            return archivo.length();
+            else
+            {
+                if (reemplazar)
+                {
+                    File temporal = new File(tmp);
+                    FileOutputStream fos = new FileOutputStream(temporal);
+                    BufferedWriter handler = new BufferedWriter(new OutputStreamWriter(fos));     
+
+                    handler.write(contenido);
+                    handler.close();
+                    fos.close(); 
+                    
+                    if (espacio_disponible(usuario, temporal.length(), tamanho_actual))
+                    {
+                       Files.delete(Paths.get(tmp));
+                       FileOutputStream fileoutput = new FileOutputStream(archivo);
+                       BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fileoutput));     
+
+                       bw.write(contenido);
+                       bw.close();
+                       fos.close(); 
+                       return archivo.length() - tamanho_actual;
+                    }
+                    Files.delete(Paths.get(ruta_nombre));
+                        
+                }
+            }
             
         } catch (Exception ex) {
             throw new Exception("Error");
         } 
+        return -999;
     }
     
 // -----------------------------------------------------------------------------
     
-    public static boolean espacio_disponible(String usuario, long espacio)
+    public static boolean espacio_disponible(String usuario, long espacio, long actual) throws Exception
     {
         ListaUsuarios usuarios = leer_usuarios();
         Carpeta directorio = cargar_file_system(usuario);
@@ -182,10 +219,13 @@ public class Herramientas {
         for (Usuario u : usuarios.getUsuarios())
             if (u.getUsuario().equals(usuario))
             {
-                float disponible = u.getTamanho_drive() - directorio.getTamanho();
-                espacio = espacio;
+                float disponible = u.getTamanho_drive() - directorio.getTamanho() + actual;
                 if (disponible - espacio >= 0)
+                {
+//                    directorio.setTamanho(directorio.getTamanho() + actual);
+//                    guardar_file_system(usuario, directorio);
                     return true;
+                }
                 break;
             }
         return false;

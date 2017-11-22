@@ -28,35 +28,39 @@ Back-end
 		- Extension																	X
 	
 	- Usuarios 
-		- Crear Drive 
+		- Crear Drive 																X
 			- Cantidad de bytes														X
 			- Nombre usuario 														X
 			- Contraseña															X
-			- Crear dos carpetas:
+			- Crear dos carpetas:													X
 				- Raiz																X
 					- Archivos compartidos											X
 		- Log In																	X
 		
-		- Crear Directorio
+		- Crear Directorio															X
 			- En el directorio actual 												X
 			- Nombre 																X
 			- Verificar que no se repita											X
 		
 		- Listar archivos y directorios dentro del directorio actual 				X
-		- Modificar Archivos 
-			- Cambiar el contenido 
-		- Ver propiedades del archivo 
+			
+		- Ver propiedades del archivo 												X
 			- Nombre 																X
 			- Fecha creacion														X
 			- Fecha Modificacion													X
 			- Tamanho																X
 			- Extension																X
+			
+			
 		- Ver contenido del archivo 
 		
 		- Copias de archivos 
 			- Subir de pc a drive 
 			- Descargar de drive a pc 
 			- Copiar de drive a drive  
+		
+		- Modificar Archivos 
+			- Cambiar el contenido 
 		
 		- Mover un archivo 
 		- Eliminar archivos 

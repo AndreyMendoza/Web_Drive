@@ -46,11 +46,12 @@ public class ArchivoController {
             @QueryParam("ruta") String ruta,
             @QueryParam("nombre") String nombre,
             @QueryParam("extension") String extension,
-            @QueryParam("contenido") String contenido)
+            @QueryParam("contenido") String contenido,
+            @QueryParam("reemplazar") boolean reemplazar)
     {
         MensajeModel mensaje = new MensajeModel();
         try {
-            if (Herramientas.crear_archivo_fs(usuario, ruta, nombre, extension, contenido))
+            if (Herramientas.crear_archivo_fs(usuario, ruta, nombre, extension, contenido, reemplazar))
             {
                 mensaje.setMensaje("OK");
                 mensaje.addObjeto(Herramientas.buscar_directorio(usuario, ruta));
