@@ -12,7 +12,7 @@ function notificarMapaCargado() {
 function focus(eName) {
     window.setTimeout('document.getElementById("' + eName + '").focus()', 100);
 }
-host = "http://localhost:8080/democraticacr/";
+host = "http://localhost:33150/WebService/api/";
 // control del archivo html que se carga en el ngview de la página dependiendo del path en la url
 app.config(function ($routeProvider) {
     $routeProvider.when("/login", {
@@ -117,52 +117,39 @@ app.controller("login", function ($scope, $rootScope, $location, $http, $cookies
     else {
         $rootScope.nombrePanelActual = "";
         $scope.ingresar = function (user, pass) {
-            /*var obj = {}
-            obj.usuario = user;
-            obj.contrasenha = pass;
             $log.log("Login Cuenta");
-            $log.log(obj);
-            var fd = new FormData();
-            fd.append("obj", JSON.stringify(obj));
-            $http.post(host + "api/IniciarSesion.php", fd, {
-                headers: {
-                    'Content-Type': undefined
-                }
-            }).then(function (respuesta) {
-                var data = respuesta.data;
+            
+            
+            $http.get(host + "Usuario/login?usuario="+user+"&password="+pass).then(function (data)  {
                 $log.log(data);
-                if (data.message == "OK") {
-                    var usuario = data.infoUsuario;
+                if (data.mensaje == "OK") {
+                    
                     // guardar la sesion en una cookie
                     var sesion = {};
-                    sesion.idUsuarioActivo = usuario.PersonaID;
-                    sesion.nombreUsuarioActivo = usuario.Nombre;
-                    sesion.apellido1UsuarioActivo = usuario.Apellido1;
-                    sesion.apellido2UsuarioActivo = usuario.Apellido2;
-                    sesion.tipoUsuarioActivo = usuario.TipoUsuario;
+                    sesion.nombreUsuarioActivo = user;
+                    
+                    //Guardado de la cookie
                     var tiempo = new Date();
-                    tiempo.setHours(tiempo.getHours() + 12); // guardamos la sesion por 12 horas
+                    tiempo.setHours(tiempo.getHours() + 1); // guardamos la sesion por 1 hora
                     $cookies.putObject("sesion", sesion, {
                         expires: tiempo
                     });
+                    
                     // actualizamos las variables de sesion
-                    $rootScope.idUsuarioActivo = sesion.idUsuarioActivo;
                     $rootScope.nombreUsuarioActivo = sesion.nombreUsuarioActivo;
-                    $rootScope.apellido1UsuarioActivo = sesion.apellido1UsuarioActivo;
-                    $rootScope.apellido2UsuarioActivo = sesion.apellido2UsuarioActivo;
-                    $rootScope.tipoUsuarioActivo = sesion.tipoUsuarioActivo;
+                    
                     //$rootScope.userUsuarioActivo = sesion.userUsuarioActivo;
                     $rootScope.sesionIniciada = true;
                     $location.path("/");
                 } else {
                     $log.log(data.message);
-                    alert("Datos incorrectos, intente de nuevo");
+                    alert("Datos incorrectos(mensaje!=OK), intente de nuevo");
                 }
             }).catch(function (data) {
                 $log.log("Error de conexion, intente de nuevo");
             })
-            */
-            var sesion = {};
+            
+            /*var sesion = {};
             sesion.idUsuarioActivo = 201515424;
             sesion.nombreUsuarioActivo = "Armando López";
             sesion.apellido1UsuarioActivo = "usuarioApellido1";
@@ -181,7 +168,7 @@ app.controller("login", function ($scope, $rootScope, $location, $http, $cookies
             $rootScope.tipoUsuarioActivo = "admin";
             //$rootScope.userUsuarioActivo = sesion.userUsuarioActivo;
             $rootScope.sesionIniciada = true;
-            $location.path("/");
+            $location.path("/");*/
         }
     }
 });
@@ -195,16 +182,9 @@ app.controller("registro", function ($scope, $rootScope, $location, $http, $cook
     else {
         // *** agregarUsuario ***
         $scope.AgregarCuenta = function (obj) {
-            obj.TipoUsuario = "regular";
-            var fd = new FormData();
-            $log.log("agregando cuenta");
-            $log.log(obj);
-            fd.append("obj", JSON.stringify(obj));
-            $http.post(host + "api/AgregarCuenta.php", fd, {
-                headers: {
-                    "Content-Type": undefined
-                }
-            }).then(function (respuesta) {
+            $log.log("Añadiendo cuenta de usuario", obj);
+            
+            $http.get(host + "Usuario/login?usuario="+user+"&password="+pass).then(function (data) {
                 var data = respuesta.data;
                 $log.log(data);
                 if (data.message == "OK") {
