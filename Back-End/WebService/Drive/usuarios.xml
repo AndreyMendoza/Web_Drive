@@ -5,6 +5,7 @@
         <tamanho_drive>85.0</tamanho_drive>
         <usuario>andrey</usuario>
     </usuarios>
+<<<<<<< HEAD
     <usuarios>
         <password>asd</password>
         <tamanho_drive>85.0</tamanho_drive>
@@ -15,4 +16,6 @@
         <tamanho_drive>100.0</tamanho_drive>
         <usuario>armando</usuario>
     </usuarios>
+=======
+>>>>>>> origin/master
 </listaUsuarios>

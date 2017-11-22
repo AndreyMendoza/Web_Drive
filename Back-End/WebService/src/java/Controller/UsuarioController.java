@@ -35,7 +35,6 @@ public class UsuarioController {
         } catch (Exception ex) {
             mensaje.setMensaje("ERROR");
         }        
-        //return Herramientas.crear_json(mensaje);
         String output = Herramientas.crear_json(mensaje);
         return Response.ok(output).header("Access-Control-Allow-Origin", "*").build();
     }
@@ -55,15 +54,12 @@ public class UsuarioController {
             {
                 mensaje.setMensaje("OK");
                 mensaje.addObjeto(Herramientas.cargar_file_system(usuario));
-                //output = Herramientas.crear_json(mensaje);
-                //return Response.ok(output).header("Access-Control-Allow-Origin", "*").build();
             }
             else
                 mensaje.setMensaje("Usuario o contrasenha incorrectas.");
         } catch (Exception ex) {
             mensaje.setMensaje("ERROR");
         }        
-        //return Herramientas.crear_json(mensaje);
         output = Herramientas.crear_json(mensaje);
         return Response.ok(output).header("Access-Control-Allow-Origin", "*").build();
     }
