@@ -35,7 +35,10 @@ public class Carpeta extends Directorio{
                 if (d.getTipo() == Almacenamiento.CARPETA)
                 {
                      if (((Carpeta) d).agregar_hijo(ruta, hijo))
+                     {
+                         d.setTamanho(d.getTamanho() + hijo.getTamanho());
                          return true;
+                     }
                 }
             }
             return false;
@@ -97,8 +100,8 @@ public class Carpeta extends Directorio{
             return null;
         }
     }
-
     
 // -----------------------------------------------------------------------------
+    
     
 }

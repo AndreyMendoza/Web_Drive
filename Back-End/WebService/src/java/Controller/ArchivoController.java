@@ -37,4 +37,30 @@ public class ArchivoController {
   
 // -----------------------------------------------------------------------------
 
+    @Path("crear_archivo")
+    @GET
+    public String agregar_archivo(
+            @QueryParam("usuario") String usuario,
+            @QueryParam("ruta") String ruta,
+            @QueryParam("nombre") String nombre,
+            @QueryParam("extension") String extension,
+            @QueryParam("contenido") String contenido)
+    {
+        MensajeModel mensaje = new MensajeModel();
+        try {
+            if (Herramientas.crear_archivo_fs(usuario, ruta, nombre, extension, contenido))
+            {
+                mensaje.setMensaje("OK");
+                mensaje.addObjeto(Herramientas.buscar_directorio(usuario, ruta));
+                return Herramientas.crear_json(mensaje);
+            }
+            else
+                mensaje.setMensaje("No fue posible agregar el archivo.");
+        } catch (Exception ex) {
+            mensaje.setMensaje("ERROR");
+        }        
+        return Herramientas.crear_json(mensaje);
+    }
+   
+// -----------------------------------------------------------------------------
 }

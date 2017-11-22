@@ -1,33 +1,41 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <carpeta>
-    <fecha_creado>2017-11-21T23:35:03.118-06:00</fecha_creado>
-    <fecha_modificado>2017-11-21T23:35:03.118-06:00</fecha_modificado>
+    <fecha_creado>2017-11-22T01:43:44.573-06:00</fecha_creado>
+    <fecha_modificado>2017-11-22T01:43:44.573-06:00</fecha_modificado>
     <nombre>andrey</nombre>
     <ruta>andrey</ruta>
-    <tamanho>0.0</tamanho>
+    <tamanho>54.0</tamanho>
     <tipo>CARPETA</tipo>
     <hijos xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="carpeta">
-        <fecha_creado>2017-11-21T23:35:03.118-06:00</fecha_creado>
-        <fecha_modificado>2017-11-21T23:35:03.118-06:00</fecha_modificado>
+        <fecha_creado>2017-11-22T01:43:44.573-06:00</fecha_creado>
+        <fecha_modificado>2017-11-22T01:43:44.573-06:00</fecha_modificado>
         <nombre>Archivos Compartidos</nombre>
         <ruta>andrey/Archivos Compartidos</ruta>
         <tamanho>0.0</tamanho>
         <tipo>CARPETA</tipo>
     </hijos>
     <hijos xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="carpeta">
-        <fecha_creado>2017-11-21T23:35:13.327-06:00</fecha_creado>
-        <fecha_modificado>2017-11-21T23:35:13.327-06:00</fecha_modificado>
+        <fecha_creado>2017-11-22T01:43:46.549-06:00</fecha_creado>
+        <fecha_modificado>2017-11-22T01:43:46.549-06:00</fecha_modificado>
         <nombre>pruebas</nombre>
         <ruta>andrey/pruebas</ruta>
-        <tamanho>0.0</tamanho>
+        <tamanho>54.0</tamanho>
         <tipo>CARPETA</tipo>
-        <hijos xsi:type="carpeta">
-            <fecha_creado>2017-11-21T23:35:31.497-06:00</fecha_creado>
-            <fecha_modificado>2017-11-21T23:35:31.497-06:00</fecha_modificado>
-            <nombre>pruebas</nombre>
-            <ruta>andrey/pruebas/pruebas</ruta>
-            <tamanho>0.0</tamanho>
-            <tipo>CARPETA</tipo>
+        <hijos>
+            <fecha_creado>2017-11-22T01:44:06.812-06:00</fecha_creado>
+            <fecha_modificado>2017-11-22T01:44:06.812-06:00</fecha_modificado>
+            <nombre>archivo1</nombre>
+            <ruta>andrey/pruebas</ruta>
+            <tamanho>27.0</tamanho>
+            <tipo>ARCHIVO</tipo>
+        </hijos>
+        <hijos>
+            <fecha_creado>2017-11-22T01:44:42.957-06:00</fecha_creado>
+            <fecha_modificado>2017-11-22T01:44:42.957-06:00</fecha_modificado>
+            <nombre>archivo2</nombre>
+            <ruta>andrey/pruebas</ruta>
+            <tamanho>27.0</tamanho>
+            <tipo>ARCHIVO</tipo>
         </hijos>
     </hijos>
 </carpeta>

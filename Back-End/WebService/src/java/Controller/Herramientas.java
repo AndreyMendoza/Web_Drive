@@ -3,13 +3,18 @@ package Controller;
 import Model.Almacenamiento;
 import Model.Archivo;
 import Model.Carpeta;
-import Model.Directorio;
 import Model.ListaUsuarios;
 import Model.Usuario;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import java.io.BufferedWriter;
 import java.io.File;
-import java.util.ArrayList;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.bind.JAXBContext;
@@ -117,6 +122,76 @@ public class Herramientas {
     
 // -----------------------------------------------------------------------------
     
+    public static boolean crear_archivo_fs(String usuario, String ruta, 
+                                           String nombre,String extension, 
+                                           String contenido) throws Exception
+    {
+        try {
+            // Tamanho en megabytes
+            long tamanho = crear_archivo_os(usuario, drive_path + "/" + ruta + "/" + nombre + extension, contenido);
+            if (tamanho >= 0)
+            {
+                Carpeta directorio = cargar_file_system(usuario);
+                Archivo archivo = new Archivo(nombre, ruta, tamanho, Almacenamiento.ARCHIVO, extension);
+                if (directorio.agregar_hijo(ruta, archivo))
+                {
+                    directorio.setTamanho(directorio.getTamanho() + tamanho);
+                    guardar_file_system(usuario, directorio);
+                    return true;
+                }
+            }
+            return false;
+        } catch (Exception ex) {
+            throw new Exception("Error");
+        }
+    }
+    
+// -----------------------------------------------------------------------------
+    
+    private static long crear_archivo_os(String usuario, String ruta_nombre, String contenido) throws Exception
+    {
+        try {
+            File archivo = new File(ruta_nombre);
+            FileOutputStream fos = new FileOutputStream(archivo);
+            BufferedWriter handler = new BufferedWriter(new OutputStreamWriter(fos));     
+            
+            handler.write(contenido);
+            handler.close();
+            fos.close();          
+            
+            if (!espacio_disponible(usuario, archivo.length()))
+            {
+               Files.delete(Paths.get(ruta_nombre));
+               return -1; 
+            }
+            return archivo.length();
+            
+        } catch (Exception ex) {
+            throw new Exception("Error");
+        } 
+    }
+    
+// -----------------------------------------------------------------------------
+    
+    public static boolean espacio_disponible(String usuario, long espacio)
+    {
+        ListaUsuarios usuarios = leer_usuarios();
+        Carpeta directorio = cargar_file_system(usuario);
+        
+        for (Usuario u : usuarios.getUsuarios())
+            if (u.getUsuario().equals(usuario))
+            {
+                float disponible = u.getTamanho_drive() - directorio.getTamanho();
+                espacio = espacio;
+                if (disponible - espacio >= 0)
+                    return true;
+                break;
+            }
+        return false;
+    }
+    
+// -----------------------------------------------------------------------------
+    
     public static Carpeta buscar_directorio(String usuario, String ruta)
     {
         Carpeta directorio = cargar_file_system(usuario);
@@ -131,6 +206,15 @@ public class Herramientas {
         String result = gson.toJson(objeto);
         return result;
     }
+
+// -----------------------------------------------------------------------------
+    
+    public static String leer_archivo(String ruta) throws IOException 
+    {
+        File file = new File(ruta);
+        String contenido = new Scanner(file).useDelimiter("\\Z").next();
+        return contenido;
+}
     
 // -----------------------------------------------------------------------------
 

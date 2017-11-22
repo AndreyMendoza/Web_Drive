@@ -1,9 +1,18 @@
 
 package tests;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Scanner;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
@@ -13,7 +22,7 @@ import javax.xml.bind.Unmarshaller;
 public class Tests {
 
 
-    public static void main(String[] args) throws JAXBException, FileNotFoundException {
+    public static void main(String[] args) throws JAXBException, FileNotFoundException, UnsupportedEncodingException, IOException {
 //        JAXBContext ctx = JAXBContext.newInstance(ListaUsuarios.class);
 //        
 //        Marshaller marsh = ctx.createMarshaller();
@@ -38,13 +47,21 @@ public class Tests {
 //        Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();    
 //        ListaUsuarios e = (ListaUsuarios) jaxbUnmarshaller.unmarshal(file);    
         
-        String and = "andrey\\\\hola\\\\adios";
+//          File archivo = new File("archivo.txt");
+//          FileOutputStream fos = new FileOutputStream(archivo);
+//          BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
+//          String a = "\nadasdasd\nasdasdasd\nasdasdasdasdasd\nasbbddbdbbd";
+//          bw.write(a);
+//          bw.write(a);
+//          bw.close();
+//          
+//          
+//        File file = new File("archivo.txt");
+//        String content = new Scanner(file).useDelimiter("\\Z").next();
+//        System.out.println(content);
         
-        System.out.println(and);
-        System.out.println(and.replaceAll("\\\\", "/"));
-        File f = new File("test/saludos.txt");
-        f.mkdir();
-              
+        Files.delete(Paths.get("archivo.txt"));
+        
     }
 }
    
