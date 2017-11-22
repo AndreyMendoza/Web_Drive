@@ -38,7 +38,12 @@ public class Tests {
 //        Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();    
 //        ListaUsuarios e = (ListaUsuarios) jaxbUnmarshaller.unmarshal(file);    
         
-        System.out.println(new File("").getAbsolutePath());
+        String and = "andrey\\\\hola\\\\adios";
+        
+        System.out.println(and);
+        System.out.println(and.replaceAll("\\\\", "/"));
+        File f = new File("test/saludos.txt");
+        f.mkdir();
               
     }
 }

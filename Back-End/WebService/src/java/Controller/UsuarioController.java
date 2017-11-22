@@ -49,10 +49,8 @@ public class UsuarioController {
             if (Herramientas.login(usuario, password))
             {
                 mensaje.setMensaje("OK");
-                ArrayList<Object> result = new ArrayList<>();
-                result.add(mensaje);
-                result.add(Herramientas.cargar_file_system(usuario));
-                return Herramientas.crear_json(result);
+                mensaje.addObjeto(Herramientas.cargar_file_system(usuario));
+                return Herramientas.crear_json(mensaje);
             }
             else
                 mensaje.setMensaje("Usuario o contrasenha incorrectas.");

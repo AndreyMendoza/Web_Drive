@@ -24,9 +24,22 @@ public class Carpeta extends Directorio{
     
 // -----------------------------------------------------------------------------
     
-    public Directorio get_child()
+    public boolean agregar_hijo(String ruta, Directorio hijo)
     {
-        return null;
+        if (ruta.equals(this.ruta))
+            return agregar_hijo_aux(hijo);
+        else 
+        {
+            for (Directorio d : hijos)
+            {
+                if (d.getTipo() == Almacenamiento.CARPETA)
+                {
+                     if (((Carpeta) d).agregar_hijo(ruta, hijo))
+                         return true;
+                }
+            }
+            return false;
+        }
     }
     
 // -----------------------------------------------------------------------------
@@ -51,20 +64,41 @@ public class Carpeta extends Directorio{
     
 // -----------------------------------------------------------------------------
     
-    public void agregar_hijo(Directorio hijo)
+    public boolean agregar_hijo_aux(Directorio hijo)
     {
         // Verificar que no se repita
         for (Directorio d : hijos)
         {
             if (d.getTipo() == hijo.getTipo() &&
                 d.getNombre().equals(hijo.getNombre()))
-                break;
+                return false;
         }                    
         hijos.add(hijo);
+        return true;
     }
     
 // -----------------------------------------------------------------------------
     
+    public Carpeta buscar_directorio(String ruta)
+    {
+        if (ruta.equals(this.ruta))
+            return this;
+        else 
+        {
+            for (Directorio d : hijos)
+            {
+                if (d.getTipo() == Almacenamiento.CARPETA)
+                {
+                    Carpeta result = ((Carpeta) d).buscar_directorio(ruta);
+                    if (result != null)
+                        return result;
+                }
+            }
+            return null;
+        }
+    }
+
     
+// -----------------------------------------------------------------------------
     
 }

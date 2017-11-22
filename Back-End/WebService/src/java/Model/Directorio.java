@@ -3,19 +3,18 @@ package Model;
 
 import java.util.Date;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 
 
 public class Directorio {
 
 // -----------------------------------------------------------------------------
     
-    private String Nombre;
-    private String ruta;
-    private float tamanho;
-    private Date fecha_creado;
-    private Date fecha_modificado;
-    private Almacenamiento tipo;
+    protected String Nombre;
+    protected String ruta;
+    protected float tamanho;
+    protected Date fecha_creado;
+    protected Date fecha_modificado;
+    protected Almacenamiento tipo;
 
 // -----------------------------------------------------------------------------
 
