@@ -5,4 +5,9 @@
         <tamanho_drive>85.0</tamanho_drive>
         <usuario>andrey</usuario>
     </usuarios>
+    <usuarios>
+        <password>asd</password>
+        <tamanho_drive>85.0</tamanho_drive>
+        <usuario>andreyy</usuario>
+    </usuarios>
 </listaUsuarios>

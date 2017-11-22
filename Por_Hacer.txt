@@ -1,5 +1,5 @@
 Usuarios 
-	- Log In
+	- Log In																		X
 	- XML configurable
 		- Archivos
 		
@@ -19,38 +19,38 @@ Pagina Web
 	
 Back-end
 	- Creacion de archivos
-		- No crear archivos o directorios en el mismo nivel con el mismo nombre
+		- No crear archivos o directorios en el mismo nivel con el mismo nombre		X
 		- Preguntar si sobreescribir
-		- Verificar si hay espacio disponible
+		- Verificar si hay espacio disponible										X
 		
-		- Definir contenidos
-		- Nombre
-		- Extension
+		- Definir contenidos														X
+		- Nombre																	X
+		- Extension																	X
 	
 	- Usuarios 
 		- Crear Drive 
-			- Cantidad de bytes
-			- Nombre usuario 
-			- Contraseña
+			- Cantidad de bytes														X
+			- Nombre usuario 														X
+			- Contraseña															X
 			- Crear dos carpetas:
-				- Raiz
-					- Archivos compartidos
-		- Log In
+				- Raiz																X
+					- Archivos compartidos											X
+		- Log In																	X
 		
 		- Crear Directorio
-			- En el directorio actual 
-			- Nombre 
-			- Verificar que no se repita
+			- En el directorio actual 												X
+			- Nombre 																X
+			- Verificar que no se repita											X
 		
-		- Listar archivos y directorios dentro del directorio actual 
+		- Listar archivos y directorios dentro del directorio actual 				X
 		- Modificar Archivos 
 			- Cambiar el contenido 
 		- Ver propiedades del archivo 
-			- Nombre 
-			- Fecha creacion
-			- Fecha Modificacion
-			- Tamanho
-			- Extension
+			- Nombre 																X
+			- Fecha creacion														X
+			- Fecha Modificacion													X
+			- Tamanho																X
+			- Extension																X
 		- Ver contenido del archivo 
 		
 		- Copias de archivos 
