@@ -41,7 +41,7 @@
     <script src="js/angular/cookies.js"></script>
     <script src="js/scripts.js"></script>
     <script type="text/javascript" src="js/treeview/angular.treeview.js"></script>
-    <script type="text/javascript" src="js/treeview/angular.treeview.min.js"></script>
+    
     
 </body>
 
