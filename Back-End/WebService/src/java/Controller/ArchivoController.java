@@ -1,6 +1,7 @@
 
 package Controller;
 
+import Model.Almacenamiento;
 import Model.Carpeta;
 import Model.MensajeModel;
 import javax.ws.rs.GET;
@@ -142,5 +143,29 @@ public class ArchivoController {
     }
 
 // -----------------------------------------------------------------------------
+    
+    @Path("eliminar_archivo")
+    @GET
+    public Response eliminar_archivo(
+            @QueryParam("usuario") String usuario,
+            @QueryParam("ruta") String ruta,
+            @QueryParam("nombre") String nombre,
+            @QueryParam("tipo") Almacenamiento tipo)
+    {
+        MensajeModel mensaje = new MensajeModel();
+        try {
+            if (Herramientas.eliminar_archivo(usuario, ruta, nombre, tipo))
+            {
+                mensaje.setMensaje("OK");
+                mensaje.addObjeto(Herramientas.buscar_directorio(usuario, ruta));
+            }
+            else
+                mensaje.setMensaje("No fue posible eliminar el archivo.");
+        } catch (Exception ex) {
+            mensaje.setMensaje("ERROR");
+        }        
+        String output = Herramientas.crear_json(mensaje);
+        return Response.ok(output).header("Access-Control-Allow-Origin", "*").build();
+    }
     
 }

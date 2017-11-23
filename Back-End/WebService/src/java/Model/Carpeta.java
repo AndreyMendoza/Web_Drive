@@ -1,6 +1,7 @@
 package Model;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -139,16 +140,48 @@ public class Carpeta extends Directorio{
     
 // -----------------------------------------------------------------------------
 
-    private float calcular_pesos()
+    public boolean eliminar_archivo(String ruta, String nombre)
     {
-        float peso = 0;
-        for (Directorio d : hijos)
+        Iterator itr = hijos.iterator();
+        while (itr.hasNext())
         {
-            peso = peso + d.getTamanho();
+            Directorio d = (Directorio)itr.next();
+            if (d.getTipo() == Almacenamiento.ARCHIVO &&
+                d.getRuta().equals(ruta) && d.getNombre().equals(nombre))
+            {
+                itr.remove();
+                return true;
+            }
+            else if (d.getTipo() == Almacenamiento.CARPETA)
+                ((Carpeta) d).eliminar_archivo(ruta, nombre);
         }
-        return peso;
+        return false;
     }
+    
 // -----------------------------------------------------------------------------
     
+        public boolean eliminar_carpeta(String ruta, Directorio hijo)
+    {
+        if (ruta.equals(this.ruta))
+            return agregar_hijo_aux(hijo);
+        else 
+        {
+            for (Directorio d : hijos)
+            {
+                if (d.getTipo() == Almacenamiento.CARPETA)
+                {
+                     if (((Carpeta) d).agregar_hijo(ruta, hijo))
+                     {
+                         d.setTamanho(d.getTamanho() + hijo.getTamanho());
+                         return true;
+                     }
+                     
+                }
+            }
+            return false;
+        }
+    }
+    
+// -----------------------------------------------------------------------------
     
 }

@@ -275,6 +275,23 @@ public class Herramientas {
     
 // -----------------------------------------------------------------------------
     
+    public static boolean eliminar_archivo(String usuario, String ruta,
+                                            String nombre, Almacenamiento tipo) throws Exception
+    {
+        Carpeta directorio = cargar_file_system(usuario);
+        if (tipo == Almacenamiento.ARCHIVO)
+        {
+           if (directorio.eliminar_archivo(ruta, nombre))
+           {
+               directorio.atualizar_pesos();
+               return guardar_file_system(usuario, directorio);
+           }
+        }        
+        return false;
+    }
+    
+// -----------------------------------------------------------------------------
+    
     public static boolean espacio_disponible(String usuario, long espacio, long actual) throws Exception
     {
         ListaUsuarios usuarios = leer_usuarios();
