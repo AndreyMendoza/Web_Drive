@@ -102,6 +102,24 @@ public class Carpeta extends Directorio{
     }
     
 // -----------------------------------------------------------------------------
+    
+        public boolean modificar_peso_archivo(String ruta, String nombre, float peso)
+    {
+        for (Directorio d : hijos)
+        {
+            if (d instanceof Archivo &&
+                ruta.equals(d.getRuta()) && nombre.equals(d.getNombre()))
+            {
+                d.setTamanho(peso);
+                return true;
+            }
+            else if (d instanceof Carpeta)
+                ((Carpeta) d).modificar_peso_archivo(ruta, nombre, peso);
+        }
+        return false;
+    }
+    
+// -----------------------------------------------------------------------------
 
     public float atualizar_pesos()
     {

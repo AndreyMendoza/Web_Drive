@@ -137,8 +137,8 @@ public class Herramientas {
                 
                 directorio.agregar_hijo(ruta, archivo);
                 
-                //directorio.setTamanho(directorio.getTamanho() + tamanho);
-                directorio.atualizar_pesos();
+                if (directorio.modificar_peso_archivo(ruta, nombre, tamanho))
+                    directorio.atualizar_pesos();
                 
                 guardar_file_system(usuario, directorio);
 
@@ -198,7 +198,7 @@ public class Herramientas {
                        bw.write(contenido);
                        bw.close();
                        fos.close(); 
-                       return archivo.length() - tamanho_actual;
+                       return archivo.length();
                     }
                     Files.delete(Paths.get(ruta_nombre));
                         
