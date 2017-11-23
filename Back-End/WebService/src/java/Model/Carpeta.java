@@ -107,13 +107,13 @@ public class Carpeta extends Directorio{
     {
         for (Directorio d : hijos)
         {
-            if (d instanceof Archivo &&
+            if (d.getTipo() == Almacenamiento.ARCHIVO &&
                 ruta.equals(d.getRuta()) && nombre.equals(d.getNombre()))
             {
                 d.setTamanho(peso);
                 return true;
             }
-            else if (d instanceof Carpeta)
+            else if (d.getTipo() == Almacenamiento.CARPETA)
                 ((Carpeta) d).modificar_peso_archivo(ruta, nombre, peso);
         }
         return false;
