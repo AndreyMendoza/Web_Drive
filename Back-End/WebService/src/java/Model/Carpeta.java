@@ -153,7 +153,8 @@ public class Carpeta extends Directorio{
                 return true;
             }
             else if (d.getTipo() == Almacenamiento.CARPETA)
-                ((Carpeta) d).eliminar_archivo(ruta, nombre);
+                if (((Carpeta) d).eliminar_archivo(ruta, nombre))
+                    return true;
         }
         return false;
     }
