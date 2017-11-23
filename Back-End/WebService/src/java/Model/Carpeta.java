@@ -102,6 +102,35 @@ public class Carpeta extends Directorio{
     }
     
 // -----------------------------------------------------------------------------
+
+    public float atualizar_pesos()
+    {
+        float peso = 0;
+        for (Directorio d : hijos)
+        {
+            if (d instanceof Carpeta)
+            {
+                peso = peso + ((Carpeta) d).atualizar_pesos();
+            }
+            else
+                peso = d.getTamanho() + peso;
+        }
+        tamanho = peso;
+        return peso;
+    }
+    
+// -----------------------------------------------------------------------------
+
+    private float calcular_pesos()
+    {
+        float peso = 0;
+        for (Directorio d : hijos)
+        {
+            peso = peso + d.getTamanho();
+        }
+        return peso;
+    }
+// -----------------------------------------------------------------------------
     
     
 }

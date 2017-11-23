@@ -28,8 +28,8 @@ public class Herramientas {
 // -----------------------------------------------------------------------------
 
     private final static String drive_path = 
-            "C:/xampp/htdocs/Web_Drive/Back-End/WebService/Drive";
-            //"C:\\Users\\Andrey\\Documents\\Git\\Web_Drive\\Back-End\\WebService\\Drive";
+            //"C:/xampp/htdocs/Web_Drive/Back-End/WebService/Drive";
+            "C:\\Users\\Andrey\\Documents\\Git\\Web_Drive\\Back-End\\WebService\\Drive";
     
 // -----------------------------------------------------------------------------
     
@@ -137,7 +137,9 @@ public class Herramientas {
                 
                 directorio.agregar_hijo(ruta, archivo);
                 
-                directorio.setTamanho(directorio.getTamanho() + tamanho);
+                //directorio.setTamanho(directorio.getTamanho() + tamanho);
+                directorio.atualizar_pesos();
+                
                 guardar_file_system(usuario, directorio);
 
                 return true;
