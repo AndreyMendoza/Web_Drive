@@ -430,10 +430,8 @@ app.controller("misArchivos", function ($scope, $rootScope, $location, $http, $c
                 /*FALTA AGREGAR EL PARAMETRO DE REEMPLAZAR*/
                 /*FALTA AGREGAR EL PARAMETRO DE REEMPLAZAR*/
                 /*FALTA AGREGAR EL PARAMETRO DE REEMPLAZAR*/
-                var x = host + "Archivo/crear_archivo?usuario="+$rootScope.nombreUsuarioActivo+"&ruta="+$rootScope.rutaActual+"&nombre="+Archivo.nombre+"&extension="+Archivo.extension+"&contenido="+Archivo.contenido;
-                $log.log(x);
                 
-                $http.get(host + "Archivo/crear_archivo?usuario="+$rootScope.nombreUsuarioActivo+"&ruta="+$rootScope.rutaActual+"&nombre="+Archivo.nombre+"&extension="+Archivo.extension+"&contenido="+Archivo.contenido).then(function (data)  { 
+                $http.get(host + "Archivo/crear_archivo?usuario="+$rootScope.nombreUsuarioActivo+"&ruta="+$rootScope.rutaActual+"&nombre="+Archivo.nombre+"&extension="+Archivo.extension+"&contenido="+Archivo.contenido+"&reemplazar="+Archivo.chkReemplazar).then(function (data)  { 
                     var data = data.data;
                     $log.log(data);
                     if (data.mensaje == "OK") {
