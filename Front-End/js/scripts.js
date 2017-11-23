@@ -478,12 +478,26 @@ app.controller("misArchivos", function ($scope, $rootScope, $location, $http, $c
         /*----------------- Ver y Editar Contenido de un archivo -----------------*/
         $scope.verContenido = function(Archivo){
             $scope.varVerArchivo();
-            $scope.Archivo = $scope.arrayArchivos [2];
+            $scope.Archivo = Archivo;
+            
+            $http.get(host + "Archivo/ver_archivo?ruta="+Archivo.ruta+"&nombre="+Archivo.Nombre).then(function (data)  {
+                var data = data.data;
+                $log.log(data);
+                if (data.mensaje == "OK") {
+                    $scope.Archivo.contenido = data.result[0];
+                } else {
+                    $log.log(data.mensaje);
+                    alert(data.mensaje);
+                }
+            }).catch(function (data) {
+                $log.log("Error de conexion, intente de nuevo");
+            });
             
         }
         $scope.editarContenido = function(Archivo){
             $scope.varEditarArchivo();
-            $scope.Archivo = $scope.arrayArchivos [3];
+            $scope.verContenido(Archivo);
+            
             
         }
         
