@@ -1,12 +1,11 @@
 <div class="marginArriba">
-    <div class="f24 marginArribaSuper marginAbajoSuper aCentro">Buscar archivos</div>
-    <form ng-submit="buscarArchivos(obj)">
-        <div class="bordeCeleste fullPadding">
-            <input placeholder="Nombre del archivo" ng-model="obj.pIndicio" class="w500" type="text">
-            <button type="submit" class="bgCeleste fullPadding  fff"><i class="fa fa-search" aria-hidden="true"></i></button>
-        </div>
-    </form>
-    <div class="marginArriba"> Resultados:
-        <div ng-repeat="archivo in archivosEncontrados.archivos" class="marginIzq fullPadding pointer"> <a class="f18" href="#!/verPerfil/{{u.PersonaID}}"><i class="fa cCeleste fa-file-text-o f22" aria-hidden="true"></i> {{archivo.nombre}} - {{archivo.id}}</a> </div>
+    <div class="f24 marginArribaSuper marginAbajo aCentro">Buscar directorio</div>
+
+    <div class="flexColumna aIzq">
+        <span class="f16 marginArriba marginAbajoSuper aCentro">Seleccione una dirección para cargar cierto nivel de archivos..</span>
     </div>
+    <!--Tree node-->
+    <div class="marginArribaSuper" data-angular-treeview="true" data-tree-id="abc" data-tree-model="treedata" data-node-id="Nombre" data-node-label="Nombre" data-node-children="hijos" ng-click="cargarArchivos(abc.currentNode.ruta)">
+    </div>
+    <!--Fin del Tree node-->
 </div>

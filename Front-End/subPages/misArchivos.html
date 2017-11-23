@@ -1,6 +1,7 @@
 <div class="aCentro">
     <div class=" f30 marginArribaSuper marginAbajo aCentro cAzulOscuro">Archivos Personales</div>
     <div class=" f16 marginArriba marginAbajoSuper aIzq cAzulOscuro">Ruta Actual: {{rutaActual}}</div>
+    <div class=" f16 marginArriba marginAbajoSuper aIzq cAzulOscuro">Tamaño del Directorio: {{tamanhoDirectorioActual}}</div>
     <div class="flexFila">
         <div class="contenedorCrear pointer marginDer" ng-click="varAgregarArchivo()">
             <div class="title fullPadding"></div>
@@ -16,7 +17,6 @@
         <div class="contenido ">
             <div class="inline aFlexCentro fullPadding"><i class="fa fa-file-text-o f50" aria-hidden="true" ng-show="archivo.tipo == 'ARCHIVO'"></i><i class="fa fa-folder-o f50" aria-hidden="true" ng-show="archivo.tipo == 'CARPETA'"></i> </div>
             <div class="inline fullPadding aIzq">
-                <div class="f16">Tipo: {{archivo.tipo}}</div>
                 <div class="f16">Fecha de creación: {{archivo.fecha_creado}}</div>
                 <div class="f16">Fecha de modificación: {{archivo.fecha_modificado}}</div>
                 <div class="f16">Tamaño: {{archivo.tamanho}}</div>
@@ -111,13 +111,13 @@
                 <form ng-submit="actualizarArchivo(Archivo)">
                     <div class="flexColumna aFlexCentro aIzq">
                         <span class="fullWidth fullPadding f16 sombra marginArriba"><a class="cCeleste">Copiando el archivo:</a> {{Archivo.nombre}}</span>
-                        <span class="fullWidth fullPadding f16 sombra marginArriba"><a class="cCeleste">Localización:</a> {{abc.currentNode.label}}</span>
+                        <span class="fullWidth fullPadding f16 sombra marginArriba"><a class="cCeleste">Localización:</a> {{abc.currentNode.ruta}}</span>
                     </div>
                     <div class="aCentro marginArriba fullPadding">
                         <span>Seleccione la ruta donde desea copiar el archivo/carpeta..</span>
                     </div>
                     <!--Tree node-->
-                    <div class="initial marginArriba" data-angular-treeview="true" data-tree-id="abc" data-tree-model="treedata" data-node-id="id" data-node-label="label" data-node-children="children">
+                    <div class="initial marginArriba" data-angular-treeview="true" data-tree-id="abc" data-tree-model="treedata" data-node-id="Nombre" data-node-label="Nombre" data-node-children="hijos">
                     </div>
                     <!--Fin del Tree node-->
 

@@ -365,7 +365,7 @@ app.controller("misArchivos", function ($scope, $rootScope, $location, $http, $c
         $scope.controlCopiar = false;
         $scope.Archivo = {};
         $scope.Carpeta = {};
-        $scope.rutaActual = "";
+        $scope.tamanhoDirectorioActual = 0;
         
         /*----------------- Controles para los Popups -----------------*/
         $scope.varAgregarArchivo = function (Archivo) {
@@ -427,14 +427,20 @@ app.controller("misArchivos", function ($scope, $rootScope, $location, $http, $c
                 Archivo.chkReemplazar = false;
             }
             if(Archivo.nombre && Archivo.extension && Archivo.contenido){
-                $http.get(host + "Archivo/crear_archivo?usuario="+$rootScope.nombreUsuarioActivo+"&ruta="+$scope.rutaActual+"&nombre="+Archivo.nombre+"&extension="+Archivo.extension+"&contenido="+Archivo.contenido).then(function (data)  { 
+                /*FALTA AGREGAR EL PARAMETRO DE REEMPLAZAR*/
+                /*FALTA AGREGAR EL PARAMETRO DE REEMPLAZAR*/
+                /*FALTA AGREGAR EL PARAMETRO DE REEMPLAZAR*/
+                var x = host + "Archivo/crear_archivo?usuario="+$rootScope.nombreUsuarioActivo+"&ruta="+$rootScope.rutaActual+"&nombre="+Archivo.nombre+"&extension="+Archivo.extension+"&contenido="+Archivo.contenido;
+                $log.log(x);
+                
+                $http.get(host + "Archivo/crear_archivo?usuario="+$rootScope.nombreUsuarioActivo+"&ruta="+$rootScope.rutaActual+"&nombre="+Archivo.nombre+"&extension="+Archivo.extension+"&contenido="+Archivo.contenido).then(function (data)  { 
                     var data = data.data;
                     $log.log(data);
                     if (data.mensaje == "OK") {
                         $log.log("Archivo Creado con éxito");
-                        $scope.verArchivosRaiz();
+                        $rootScope.verArchivosRaiz($rootScope.rutaActual);
+                        $scope.varAgregarArchivo();
                     } else {
-                        
                         $log.log("Archivo no creado "+data.mensaje);
                         alert(data.mensaje);
                     }
@@ -443,13 +449,34 @@ app.controller("misArchivos", function ($scope, $rootScope, $location, $http, $c
                 });    
             }else{
                 $log.log("Parámetros incompletos");
+                alert("Parámetros incompletos, intente de nuevo");
             }
             
         }
         
         $scope.crearCarpeta = function(Carpeta){
             $log.log("Creando una carpeta");
-            $log.log(Carpeta);
+            $log.log(Carpeta.nombre);
+            
+            if(Carpeta.nombre){
+                $http.get(host + "Archivo/crear_carpeta?usuario="+$rootScope.nombreUsuarioActivo+"&ruta="+$rootScope.rutaActual+"&nombre="+Carpeta.nombre).then(function (data)  { 
+                    var data = data.data;
+                    $log.log(data);
+                    if (data.mensaje == "OK") {
+                        $log.log("Carpeta Creada con éxito");
+                        $rootScope.verArchivosRaiz($rootScope.rutaActual);
+                        $scope.varAgregarCarpeta();
+                    } else {
+                        $log.log("Carpeta no creado "+data.mensaje);
+                        alert(data.mensaje);
+                    }
+                }).catch(function (data) {
+                    $log.log("Error de conexion, intente de nuevo");
+                });    
+            }else{
+                $log.log("Parámetros incompletos");
+                alert("Parámetros incompletos, intente de nuevo");
+            }
         }
         
         
@@ -502,8 +529,13 @@ app.controller("misArchivos", function ($scope, $rootScope, $location, $http, $c
         }
         
         /*----------------- Función para ver la carpeta -----------------*/
-        $scope.verCarpeta = function(CarpetaID){
-            $log.log("Viendo la carpeta "+ CarpetaID)
+        $scope.verCarpeta = function(Carpeta){
+            $log.log("Viendo la carpeta ");
+            $log.log(Carpeta);
+            
+            $rootScope.rutaActual = Carpeta.ruta;
+            $scope.arrayArchivos = Carpeta.hijos;
+            $scope.tamanhoDirectorioActual = Carpeta.tamanho;
         }
         
         
@@ -518,16 +550,17 @@ app.controller("misArchivos", function ($scope, $rootScope, $location, $http, $c
             
         }
         
-        
         /*----------------- Función para ver todos los archivos en una ruta específica -----------------*/
-        $scope.verArchivosRaiz = function () {
-            $http.get(host + "Archivo/buscar_directorio?usuario="+$rootScope.nombreUsuarioActivo+"&ruta="+$rootScope.nombreUsuarioActivo).then(function (data)  {
+        $rootScope.verArchivosRaiz = function (ruta) {
+            $http.get(host + "Archivo/buscar_directorio?usuario="+$rootScope.nombreUsuarioActivo+"&ruta="+ruta).then(function (data)  {
                 var data = data.data;
                 $log.log(data);
                 if (data.mensaje == "OK") {
-                    $scope.arrayArchivos = data.result;
-                    $scope.treedata = data.result;
-                    $scope.rutaActual = $rootScope.nombreUsuarioActivo;
+                    var result = data.result[0];
+                    $scope.arrayArchivos = result.hijos;
+                    $rootScope.rutaActual = result.ruta;
+                    $scope.tamanhoDirectorioActual = result.tamanho;
+                    $rootScope.treedata = result.hijos;
                 } else {
                     $log.log(data.mensaje);
                     alert(data.mensaje);
@@ -537,24 +570,13 @@ app.controller("misArchivos", function ($scope, $rootScope, $location, $http, $c
             });
         };
         
-        /*
-        $scope.treedata = 
-        [
-            { "label" : "User", "id" : "role1", "children" : [
-                { "label" : "subUser1", "id" : "role11", "children" : [] },
-                { "label" : "subUser2", "id" : "role12", "children" : [
-                    { "label" : "subUser2-1", "id" : "role121", "children" : [
-                        { "label" : "subUser2-1-1", "id" : "role1211", "children" : [] },
-                        { "label" : "subUser2-1-2", "id" : "role1212", "children" : [] }
-                    ]}
-                ]}
-            ]},
-            { "label" : "Admin", "id" : "role2", "children" : [] },
-            { "label" : "Guest", "id" : "role3", "children" : [] }
-        ];*/
-        
-        
-        $scope.verArchivosRaiz();
+        /*----------------------------------------------------------------*/
+        if($rootScope.controlCargarDirectorioEspecifico){
+            $rootScope.verArchivosRaiz($rootScope.rutaActual);
+            $rootScope.controlCargarDirectorioEspecifico = false;
+        }else{
+            $rootScope.verArchivosRaiz($rootScope.nombreUsuarioActivo);    
+        }
     }
 });
 
@@ -603,45 +625,15 @@ app.controller("busqueda", function ($scope, $rootScope, $location, $http, $cook
         $location.path("login");
     }
     else {
-        $scope.buscarArchivos = function (obj) {
-            $log.log("Buscando Archivos");
-            /*$log.log(obj);
-            var fd = new FormData();
-            fd.append("obj", JSON.stringify(obj));
-            $http.post(host + "api/buscarUsuario.php", fd, {
-                headers: {
-                    "Content-Type": undefined
-                }
-            }).then(function (respuesta) {
-                var data = respuesta.data;
-                $log.log("Datos");
-                $log.log(data);
-                if (data.message == "OK") {
-                    $scope.usuariosEncontrados = data.PersonasEncontradas;
-                } else {
-                    $log.log(data.message);
-                }
-            }).catch(function (data) {
-                $log.log("Error de conexion, intente de nuevo");
-            })*/
-            var json = {
-                "archivos": [
-                    {
-                        "nombre": "Archivo1"
-                        , "id": 1
-                    }
-                    , {
-                        "nombre": "Archivo2"
-                        , "id": 2
-                    }
-                    , {
-                        "nombre": "Archivo3"
-                        , "id": 3
-                    }
-                            ]
-            };
-            $scope.archivosEncontrados = json;
-        }
+        $rootScope.verArchivosRaiz($rootScope.nombreUsuarioActivo);
+        
+        $scope.cargarArchivos = function(ruta){
+            $log.log("Cargando archivos de la ruta: "+ruta);
+            $rootScope.rutaActual = ruta;
+            $rootScope.controlCargarDirectorioEspecifico = true;
+            $location.path("#!/verArchivos");
+        };
+        
     }
 });
 
