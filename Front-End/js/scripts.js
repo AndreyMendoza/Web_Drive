@@ -365,6 +365,7 @@ app.controller("misArchivos", function ($scope, $rootScope, $location, $http, $c
         $scope.controlCopiar = false;
         $scope.Archivo = {};
         $scope.Carpeta = {};
+        $scope.rutaActual = "";
         
         /*----------------- Controles para los Popups -----------------*/
         $scope.varAgregarArchivo = function (Archivo) {
@@ -421,6 +422,29 @@ app.controller("misArchivos", function ($scope, $rootScope, $location, $http, $c
         $scope.crearArchivo = function(Archivo){
             $log.log("Creando un archivo");
             $log.log(Archivo);
+            
+            if(!Archivo.chkReemplazar){
+                Archivo.chkReemplazar = false;
+            }
+            if(Archivo.nombre && Archivo.extension && Archivo.contenido){
+                $http.get(host + "Archivo/crear_archivo?usuario="+$rootScope.nombreUsuarioActivo+"&ruta="+$scope.rutaActual+"&nombre="+Archivo.nombre+"&extension="+Archivo.extension+"&contenido="+Archivo.contenido).then(function (data)  { 
+                    var data = data.data;
+                    $log.log(data);
+                    if (data.mensaje == "OK") {
+                        $log.log("Archivo Creado con éxito");
+                        $scope.verArchivosRaiz();
+                    } else {
+                        
+                        $log.log("Archivo no creado "+data.mensaje);
+                        alert(data.mensaje);
+                    }
+                }).catch(function (data) {
+                    $log.log("Error de conexion, intente de nuevo");
+                });    
+            }else{
+                $log.log("Parámetros incompletos");
+            }
+            
         }
         
         $scope.crearCarpeta = function(Carpeta){
@@ -496,76 +520,24 @@ app.controller("misArchivos", function ($scope, $rootScope, $location, $http, $c
         
         
         /*----------------- Función para ver todos los archivos en una ruta específica -----------------*/
-        $scope.verArchivos = function () {
-            
-            $scope.arrayArchivos = [
-                {
-                    "nombre": "Los Bandoleros",
-                    "fechaCreado": "10/11/2018",
-                    "fechaModificado": "20/11/2019",
-                    "tamanho": 600,
-                    "extension": "C:/Users/Armando/Dropbox/TEC",
-                    "tipo": 0,
-                    "id": 1,
-                    "contenido": ""
-                },
-                {
-                    "nombre": "Harry Potter",
-                    "fechaCreado": "20/11/2016",
-                    "fechaModificado": "22/12/2016",
-                    "tamanho": 500,
-                    "extension": "C:/Users/Armando/Dropbox/TEC",
-                    "tipo": 0,
-                    "id": 2,
-                    "contenido": ""
-                },
-                {
-                    "nombre": "Outer Space",
-                    "fechaCreado": "21/08/2015",
-                    "fechaModificado": "02/11/2016",
-                    "tamanho": 400,
-                    "extension": "C:/Users/Armando/Dropbox/TEC",
-                    "tipo": 1,
-                    "id": 3,
-                    "contenido": "Usualmente los artículos son breves y poco accesibles a los no especialistas. La introducción no suele explicar en detalle ciertos asuntos técnicos y en su lugar se remite a otras referencias que sí contienen dichos detalles. En general, un lector que no conozca lo esencial de las referencias puede tener dificultades de comprensión, ya que los artículos científicos no son obras de divulgación y están destinados a un público con conocimientos específicos, con el objeto de ser escritos breves."
-                },
-                {
-                    "nombre": "Tego Calderon",
-                    "fechaCreado": "10/11/2018",
-                    "fechaModificado": "22/10/2019",
-                    "tamanho": 300,
-                    "extension": "C:/Users/Armando/Dropbox/TEC",
-                    "tipo": 1,
-                    "id": 4,
-                    "contenido": "Cuando un trabajo no está aún publicado, pero ya ha sido aceptado por el comité editorial para su publicación, se dice que está «en prensa». Para el principios del siglo XXI se estimó que el número de artículos científicos publicados en el mundo tenía un crecimiento exponencial, duplicándose el número total de artículos publicados cada 9 años2​1​ Hacia 2012 el número de artículos publicados al años se estimaba en 1,8 millones (algo más de 1/3 de los mismos pertenecían a publicaciones sobre ciencias naturales). Además los datos muestran que el desempeño científico internacional está fuertemente correlacionado en el PIB, debido a que los países con mayor ingreso nacional destinan una mayor cantidad de recursos a la investigación científica."
-                },
-                {
-                    "nombre": "Don Omar",
-                    "fechaCreado": "21/11/2015",
-                    "fechaModificado": "03/10/2016",
-                    "tamanho": 200,
-                    "extension": "C:/Users/Armando/Dropbox/TEC",
-                    "tipo": 1,
-                    "id": 5,
-                    "contenido": "En ocasiones los artículos científicos son síntesis de informes o tesis de mayor envergadura, que orientan los esfuerzos de quienes puedan estar interesados en consultar la obra original. A veces la palabra inglesa paper posee una acepción ligeramente más amplia, pues incluye también a las ponencias."
-                },
-                {
-                    "nombre": "Manhattan Streets",
-                    "fechaCreado": "19/11/2017",
-                    "fechaModificado": "20/11/2019",
-                    "tamanho": 100,
-                    "extension": "C:/Users/Armando/Dropbox/TEC",
-                    "tipo": 1,
-                    "id": 6,
-                    "contenido": "Los artículos científicos deben estar cuidadosamente redactados para expresar de un modo claro y sintético lo que se pretende comunicar, e incluir las citas y referencias bibliográficas indispensables para contextualizar, justificar y verificar los antecedentes e ideas o datos previos contenidos en el trabajo. El contenido debe exponer además toda la información necesaria para poder reproducir los resultados originales que se dan a conocer en el mismo"
+        $scope.verArchivosRaiz = function () {
+            $http.get(host + "Archivo/buscar_directorio?usuario="+$rootScope.nombreUsuarioActivo+"&ruta="+$rootScope.nombreUsuarioActivo).then(function (data)  {
+                var data = data.data;
+                $log.log(data);
+                if (data.mensaje == "OK") {
+                    $scope.arrayArchivos = data.result;
+                    $scope.treedata = data.result;
+                    $scope.rutaActual = $rootScope.nombreUsuarioActivo;
+                } else {
+                    $log.log(data.mensaje);
+                    alert(data.mensaje);
                 }
-                
-        ];
-            
+            }).catch(function (data) {
+                $log.log("Error de conexion, intente de nuevo");
+            });
         };
         
-        $scope.verArchivos();
-        
+        /*
         $scope.treedata = 
         [
             { "label" : "User", "id" : "role1", "children" : [
@@ -579,7 +551,10 @@ app.controller("misArchivos", function ($scope, $rootScope, $location, $http, $c
             ]},
             { "label" : "Admin", "id" : "role2", "children" : [] },
             { "label" : "Guest", "id" : "role3", "children" : [] }
-        ];
+        ];*/
+        
+        
+        $scope.verArchivosRaiz();
     }
 });
 
