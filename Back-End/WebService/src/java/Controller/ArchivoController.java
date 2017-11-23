@@ -91,4 +91,30 @@ public class ArchivoController {
     }
     
 // -----------------------------------------------------------------------------
+    
+    @Path("ver_archivo")
+    @GET
+    public Response ver_archivo(
+            @QueryParam("ruta") String ruta,
+            @QueryParam("nombre") String nombre)
+    {
+        MensajeModel mensaje = new MensajeModel();
+        try {
+            String contenido = Herramientas.leer_archivo(ruta, nombre);
+            if (contenido != null)
+            {
+                mensaje.setMensaje("OK");
+                mensaje.addObjeto(contenido);
+            }
+            else
+                mensaje.setMensaje("Directorio no encontrado.");
+        } catch (Exception ex) {
+            mensaje.setMensaje("ERROR");
+        }        
+        String output = Herramientas.crear_json(mensaje);
+        return Response.ok(output).header("Access-Control-Allow-Origin", "*").build();
+    }
+
+// -----------------------------------------------------------------------------
+    
 }

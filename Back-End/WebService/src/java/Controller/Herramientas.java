@@ -28,8 +28,8 @@ public class Herramientas {
 // -----------------------------------------------------------------------------
 
     private final static String drive_path = 
-            "C:/xampp/htdocs/Web_Drive/Back-End/WebService/Drive";
-            //"C:\\Users\\Andrey\\Documents\\Git\\Web_Drive\\Back-End\\WebService\\Drive";
+            //"C:/xampp/htdocs/Web_Drive/Back-End/WebService/Drive";
+            "C:\\Users\\Andrey\\Documents\\Git\\Web_Drive\\Back-End\\WebService\\Drive";
     
 // -----------------------------------------------------------------------------
     
@@ -252,9 +252,11 @@ public class Herramientas {
 
 // -----------------------------------------------------------------------------
     
-    public static String leer_archivo(String ruta) throws IOException 
+    public static String leer_archivo(String ruta, String nombre) throws IOException 
     {
-        File file = new File(ruta);
+        
+        String ruta_completa = drive_path + "/" + ruta + "/" + nombre + ".txt";
+        File file = new File(ruta_completa);
         String contenido = new Scanner(file).useDelimiter("\\Z").next();
         return contenido;
 }
