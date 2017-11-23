@@ -538,7 +538,7 @@ app.controller("misArchivos", function ($scope, $rootScope, $location, $http, $c
             $log.log("Actualizando el archivo: ");
             $log.log(Archivo);
             
-            $http.get(host + "Archivo/modificar_archivo?usuario="+$rootScope.nombreUsuarioActivo+"ruta="+Archivo.ruta+"&nombre="+Archivo.Nombre+"&contenido="+Archivo.contenido).then(function (data)  {
+            $http.get(host + "Archivo/modificar_archivo?usuario="+$rootScope.nombreUsuarioActivo+"&ruta="+Archivo.ruta+"&nombre="+Archivo.Nombre+"&contenido="+Archivo.contenido).then(function (data)  {
                 var data = data.data;
                 $log.log(data);
                 if (data.mensaje == "OK") {

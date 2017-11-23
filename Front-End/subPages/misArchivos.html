@@ -38,6 +38,9 @@
             </div>
         </div>
     </div>
+    <!--Contenedor para mensaje si la carpeta está vacía-->
+    <div ng-show="!arrayArchivos.length" class=" f16 marginArriba marginAbajoSuper aCentro cAzulOscuro"><i class="fa fa-frown-o" aria-hidden="true"></i> El directorio actual no cuenta con ningún archivo/carpeta <i class="fa fa-exclamation" aria-hidden="true"></i></div>
+    
     <!--Contenedor para Agregar un nuevo archivo-->
     <div class="contenedorFlotante" ng-show="controlAgregarArchivo">
         <div>
