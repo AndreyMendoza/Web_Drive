@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -120,6 +121,68 @@ public class Herramientas {
         }
         return false;
     }
+
+// -----------------------------------------------------------------------------
+    
+    public static boolean modificar_archivo(String usuario, String ruta, 
+                                           String nombre,String contenido) throws Exception
+    {
+        try {
+            float tamanho = modificar_archivo_aux(usuario, drive_path + "/" + ruta + "/", nombre + ".txt", contenido);
+            if (tamanho != -999)
+            {
+                Carpeta directorio = cargar_file_system(usuario);
+                
+                if (directorio.modificar_peso_archivo(ruta, nombre, tamanho))
+                    directorio.atualizar_pesos();
+                
+                guardar_file_system(usuario, directorio);
+
+                return true;
+            }
+            return false;
+        } catch (Exception ex) {
+            throw new Exception("Error");
+        }
+    }    
+
+// -----------------------------------------------------------------------------
+    
+    private static float modificar_archivo_aux(String usuario, String ruta,
+                                        String nombre, String contenido) throws IOException, Exception
+    {
+        FileOutputStream fos = null;
+        try {
+            String tmp = ruta + "tmp-" + nombre;
+            String ruta_nombre = ruta + nombre;
+            File archivo = new File(ruta_nombre);
+            long tamanho_actual = archivo.length();  
+            
+            // Verificar espacio
+            File temporal = new File(tmp);
+            fos = new FileOutputStream(temporal);
+            BufferedWriter handler = new BufferedWriter(new OutputStreamWriter(fos));
+            handler.write(contenido);
+            handler.close();
+            fos.close();
+            
+            if (espacio_disponible(usuario, temporal.length(), tamanho_actual))
+            {
+                Files.delete(Paths.get(tmp));
+                FileOutputStream fileoutput = new FileOutputStream(archivo);
+                BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fileoutput));
+                
+                bw.write(contenido);
+                bw.close();
+                fos.close();
+                return archivo.length();
+            }   
+            Files.delete(Paths.get(ruta_nombre));
+        } catch (FileNotFoundException ex) {
+            throw new Exception("Error");
+        } 
+        return -999;
+    }
     
 // -----------------------------------------------------------------------------
     
@@ -128,7 +191,6 @@ public class Herramientas {
                                            String contenido, boolean reemplazar) throws Exception
     {
         try {
-            // Tamanho en megabytes
             long tamanho = crear_archivo_os(usuario, drive_path + "/" + ruta + "/", nombre + extension,contenido, reemplazar);
             if (tamanho != -999)
             {
@@ -223,11 +285,7 @@ public class Herramientas {
             {
                 float disponible = u.getTamanho_drive() - directorio.getTamanho() + actual;
                 if (disponible - espacio >= 0)
-                {
-//                    directorio.setTamanho(directorio.getTamanho() + actual);
-//                    guardar_file_system(usuario, directorio);
                     return true;
-                }
                 break;
             }
         return false;

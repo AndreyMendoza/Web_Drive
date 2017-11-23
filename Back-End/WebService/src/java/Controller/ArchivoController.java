@@ -117,4 +117,30 @@ public class ArchivoController {
 
 // -----------------------------------------------------------------------------
     
+    @Path("modificar_archivo")
+    @GET
+    public Response modificar_archivo(
+            @QueryParam("usuario") String usuario,
+            @QueryParam("ruta") String ruta,
+            @QueryParam("nombre") String nombre,
+            @QueryParam("contenido") String contenido)
+    {
+        MensajeModel mensaje = new MensajeModel();
+        try {
+            if (Herramientas.modificar_archivo(usuario, ruta, nombre, contenido))
+            {
+                mensaje.setMensaje("OK");
+                mensaje.addObjeto(Herramientas.buscar_directorio(usuario, ruta));
+            }
+            else
+                mensaje.setMensaje("No fue posible modificar el archivo.");
+        } catch (Exception ex) {
+            mensaje.setMensaje("ERROR");
+        }        
+        String output = Herramientas.crear_json(mensaje);
+        return Response.ok(output).header("Access-Control-Allow-Origin", "*").build();
+    }
+
+// -----------------------------------------------------------------------------
+    
 }

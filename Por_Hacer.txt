@@ -47,15 +47,15 @@ Back-end
 			- Extension																X
 			
 			
-		- Ver contenido del archivo 
+		- Ver contenido del archivo 												
 		
 		- Copias de archivos 
 			- Subir de pc a drive 
 			- Descargar de drive a pc 
 			- Copiar de drive a drive  
 		
-		- Modificar Archivos 
-			- Cambiar el contenido 
+		- Modificar Archivos 														X
+			- Cambiar el contenido 													X
 		
 		- Mover un archivo 
 		- Eliminar archivos 
