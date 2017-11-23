@@ -476,10 +476,7 @@ app.controller("misArchivos", function ($scope, $rootScope, $location, $http, $c
         
         
         /*----------------- Ver y Editar Contenido de un archivo -----------------*/
-        $scope.verContenido = function(Archivo){
-            $scope.varVerArchivo();
-            $scope.Archivo = Archivo;
-            
+        $scope.cargarContenido = function(Archivo){
             $http.get(host + "Archivo/ver_archivo?ruta="+Archivo.ruta+"&nombre="+Archivo.Nombre).then(function (data)  {
                 var data = data.data;
                 $log.log(data);
@@ -492,15 +489,20 @@ app.controller("misArchivos", function ($scope, $rootScope, $location, $http, $c
             }).catch(function (data) {
                 $log.log("Error de conexion, intente de nuevo");
             });
-            
-        }
-        $scope.editarContenido = function(Archivo){
-            $scope.varEditarArchivo();
-            $scope.verContenido(Archivo);
-            
-            
         }
         
+        $scope.verContenido = function(Archivo){
+            $scope.varVerArchivo();
+            $scope.Archivo = Archivo;
+            $scope.cargarContenido(Archivo);
+        }
+        
+        $scope.editarContenido = function(Archivo){
+            $scope.varEditarArchivo();
+            $scope.Archivo = Archivo;
+            $scope.cargarContenido(Archivo);
+            
+        }
         
         /*----------------- Funciones de eliminación -----------------*/
         $scope.eliminarArchivo = function(ArchivoID, Nombre){
@@ -533,8 +535,21 @@ app.controller("misArchivos", function ($scope, $rootScope, $location, $http, $c
         
         /*----------------- Función para actualizar el contenido del archivo -----------------*/
         $scope.actualizarArchivo = function(Archivo){
-            $log.log("Actualizando el archivo: "+ Archivo.nombre);
+            $log.log("Actualizando el archivo: ");
+            $log.log(Archivo);
             
+            $http.get(host + "Archivo/modificar_archivo?usuario="+$rootScope.nombreUsuarioActivo+"ruta="+Archivo.ruta+"&nombre="+Archivo.Nombre+"&contenido="+Archivo.contenido).then(function (data)  {
+                var data = data.data;
+                $log.log(data);
+                if (data.mensaje == "OK") {
+                    $scope.varEditarArchivo();
+                } else {
+                    $log.log(data.mensaje);
+                    alert(data.mensaje);
+                }
+            }).catch(function (data) {
+                $log.log("Error de conexion, intente de nuevo");
+            });
         }
         
         /*----------------- Función para ver la carpeta -----------------*/
