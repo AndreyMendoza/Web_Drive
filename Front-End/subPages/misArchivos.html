@@ -36,7 +36,7 @@
                     <boton><i class="fa fa-files-o" aria-hidden="true" title="Copiar" ng-click="copiar(archivo)"></i></boton>
                     <boton><i class="fa fa-share" aria-hidden="true" title="Compartir" ng-click="compartir(archivo)"></i></boton>
                     <boton><i class="fa fa-arrows-alt" aria-hidden="true" title="Mover" ng-click="mover(archivo)"></i></boton>
-                    <boton><i class="fa fa-trash" aria-hidden="true" title="Eliminar" ng-click="eliminarCarpeta(archivo)"></i></boton>
+                    <boton><i class="fa fa-trash" aria-hidden="true" title="Eliminar" ng-click="eliminarCarpeta(archivo)" ng-hide="archivo.Nombre == 'Archivos Compartidos'"></i></boton>
                 </div>
             </div>
         </div>
