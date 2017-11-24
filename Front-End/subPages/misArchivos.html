@@ -24,7 +24,7 @@
                 <!--Botones en caso de ser archivo-->
                 <div class="botones" ng-show="archivo.tipo == 'ARCHIVO'">
                     <boton><i class="fa fa-eye" aria-hidden="true" title="Contenido" ng-click="verContenido(archivo)"></i></boton>
-                    <boton><i class="fa fa-clipboard" aria-hidden="true" title="Copiar" ng-click="copiar(archivo)"></i></boton>
+                    <boton><i class="fa fa-files-o" aria-hidden="true" title="Copiar" ng-click="copiar(archivo)"></i></boton>
                     <boton><i class="fa fa-share" aria-hidden="true" title="Compartir" ng-click="compartirArchivo(archivo)"></i></boton>
                     <boton><i class="fa fa-pencil" aria-hidden="true" title="Editar" ng-click="editarContenido(archivo)"></i></boton>
                     <boton><i class="fa fa-trash" aria-hidden="true" title="Eliminar" ng-click="eliminarArchivo(archivo)"></i></boton>
@@ -32,7 +32,7 @@
                 <!--Botones en caso de ser carpeta-->
                 <div class="botones" ng-show="archivo.tipo == 'CARPETA'">
                     <boton><i class="fa fa-eye" aria-hidden="true" title="Abrir" ng-click="verCarpeta(archivo)"></i></boton>
-                    <boton><i class="fa fa-clipboard" aria-hidden="true" title="Copiar" ng-click="copiar(archivo)"></i></boton>
+                    <boton><i class="fa fa-files-o" aria-hidden="true" title="Copiar" ng-click="copiar(archivo)"></i></boton>
                     <boton><i class="fa fa-trash" aria-hidden="true" title="Eliminar" ng-click="eliminarCarpeta(archivo)"></i></boton>
                 </div>
             </div>
@@ -105,15 +105,15 @@
         </div>
     </div>
 
-    <!--Contenedor para Copiar o Mover un Archivo-->
+    <!--Contenedor para Copiar un Archivo/Carpeta-->
     <div class="contenedorFlotante" ng-show="controlCopiar">
         <div class="width50p">
             <div class="fondo" ng-click="varCopiar()"></div>
             <div class="title">Función de Copiado<span ng-click="varCopiar()">X</span></div>
             <div class="cuerpo fullPadding">
-                <form ng-submit="actualizarArchivo(Archivo)">
+                <form ng-submit="copiarVV(Archivo, abc.currentNode.ruta)">
                     <div class="flexColumna aFlexCentro aIzq">
-                        <span class="fullWidth fullPadding f16 sombra marginArriba"><a class="cCeleste">Copiando el archivo:</a> {{Archivo.nombre}}</span>
+                        <span class="fullWidth fullPadding f16 sombra marginArriba"><a class="cCeleste" ng-show="Archivo.tipo=='ARCHIVO'">Copiando el archivo:</a> <a class="cCeleste" ng-show="Archivo.tipo=='CARPETA'">Copiando la carpeta:</a> {{Archivo.Nombre}}</span>
                         <span class="fullWidth fullPadding f16 sombra marginArriba"><a class="cCeleste">Localización:</a> {{abc.currentNode.ruta}}</span>
                     </div>
                     <div class="aCentro marginArriba fullPadding">
@@ -131,4 +131,32 @@
             </div>
         </div>
     </div>
+    
+    <!--Contenedor para Mover un Archivo/Carpeta-->
+    <div class="contenedorFlotante" ng-show="controlCopiar">
+        <div class="width50p">
+            <div class="fondo" ng-click="varCopiar()"></div>
+            <div class="title">Mover archivo/carpeta<span ng-click="varCopiar()">X</span></div>
+            <div class="cuerpo fullPadding">
+                <form ng-submit="moverElemento(Archivo, abc.currentNode.ruta)">
+                    <div class="flexColumna aFlexCentro aIzq">
+                        <span class="fullWidth fullPadding f16 sombra marginArriba"><a class="cCeleste" ng-show="Archivo.tipo=='ARCHIVO'">Moviendo el archivo:</a> <a class="cCeleste" ng-show="Archivo.tipo=='CARPETA'">Moviendo la carpeta:</a> {{Archivo.Nombre}}</span>
+                        <span class="fullWidth fullPadding f16 sombra marginArriba"><a class="cCeleste">Localización:</a> {{abc.currentNode.ruta}}</span>
+                    </div>
+                    <div class="aCentro marginArriba fullPadding">
+                        <span>Seleccione la ruta donde desea mover el archivo/carpeta..</span>
+                    </div>
+                    <!--Tree node-->
+                    <div class="initial marginArriba" data-angular-treeview="true" data-tree-id="abc" data-tree-model="treedata" data-node-id="Nombre" data-node-label="Nombre" data-node-children="hijos">
+                    </div>
+                    <!--Fin del Tree node-->
+
+                    <div class="aDer">
+                        <button class="fullPadding f20 marginArriba" type="submit">Mover</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
 </div>

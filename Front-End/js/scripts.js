@@ -419,6 +419,7 @@ app.controller("misArchivos", function ($scope, $rootScope, $location, $http, $c
         }
         
         /*----------------- Funciones de crear archivos y carpetas -----------------*/
+        
         $scope.crearArchivo = function(Archivo){
             $log.log("Creando un archivo");
             $log.log(Archivo);
@@ -505,36 +506,41 @@ app.controller("misArchivos", function ($scope, $rootScope, $location, $http, $c
         }
         
         /*----------------- Funciones de eliminación -----------------*/
+        
+        $scope.eliminar = function(Archivo){
+            
+            $http.get(host + "Archivo/eliminar_archivo?usuario="+$rootScope.nombreUsuarioActivo+ "&ruta="+Archivo.ruta+"&nombre="+Archivo.Nombre+"&tipo="+Archivo.tipo).then(function (data)  {
+                var data = data.data;
+                $log.log(data);
+                if (data.mensaje == "OK") {
+                    $rootScope.verArchivosRaiz($rootScope.rutaActual);
+                } else {
+                    $log.log(data.mensaje);
+                    alert(data.mensaje);
+                }
+            }).catch(function (data) {
+                $log.log("Error de conexion, intente de nuevo");
+            });
+        }
+        
         $scope.eliminarArchivo = function(Archivo){
             $log.log("Eliminando el archivo: ");
             $log.log(Archivo);
             if (confirm('Seguro que desea eliminar el archivo: '+Archivo.Nombre)) {
-                $log.log("Confirmado.. Borrando");
-                
-                $http.get(host + "Archivo/eliminar_archivo?usuario="+$rootScope.nombreUsuarioActivo+"&ruta="+Archivo.ruta+"&nombre="+Archivo.Nombre+"&tipo="+Archivo.tipo).then(function (data)  {
-                    var data = data.data;
-                    $log.log(data);
-                    if (data.mensaje == "OK") {
-                        $rootScope.verArchivosRaiz($rootScope.rutaActual);
-                    } else {
-                        $log.log(data.mensaje);
-                        alert(data.mensaje);
-                    }
-                }).catch(function (data) {
-                    $log.log("Error de conexion, intente de nuevo");
-                });
-                
+                $log.log("Confirmado.. Borrando archivo");
+                $scope.eliminar(Archivo);
             } else {
                 $log.log("Cancelado");
             }
             
         }
         
-        $scope.eliminarCarpeta = function(CarpetaID, Nombre){
+        $scope.eliminarCarpeta = function(Carpeta){
             $log.log("Eliminando la carpeta: ");
-            $log.log(CarpetaID);
-            if (confirm('Seguro que desea eliminar la carpeta: '+Nombre)) {
-                $log.log("Confirmado.. Borrada");
+            $log.log(Carpeta);
+            if (confirm('Seguro que desea eliminar la carpeta: '+Carpeta.Nombre)) {
+                $log.log("Confirmado.. Borrando carpeta");
+                $scope.eliminar(Carpeta);
             } else {
                 $log.log("Cancelado");
             }
@@ -580,12 +586,51 @@ app.controller("misArchivos", function ($scope, $rootScope, $location, $http, $c
         
         /*----------------- Función para copiar un archivo o carpeta -----------------*/
         $scope.copiar = function(Archivo){
-            $log.log("Copiando el archivo: ")
-            $log.log(Archivo);
-            
             $scope.varCopiar();
-            $scope.Archivo = $scope.arrayArchivos [4];
+            $scope.Archivo = Archivo;
+        }
+        
+        $scope.moverArchivo = function(Archivo, ruta){
+            if(Archivo.Nombre && Archivo.contenido){
+                $http.get(host + "Archivo/crear_archivo?usuario="+$rootScope.nombreUsuarioActivo+"&ruta="+ruta+"&nombre="+Archivo.Nombre+"&extension=.txt"+"&contenido="+Archivo.contenido+"&reemplazar=false").then(function (data)  { 
+                    var data = data.data;
+                    $log.log(data);
+                    if (data.mensaje == "OK") {
+                        $log.log("Archivo Copiado con éxito");
+                    } else {
+                        $log.log("Archivo no copiado "+data.mensaje);
+                        alert(data.mensaje);
+                    }
+                }).catch(function (data) {
+                    $log.log("Error de conexion, intente de nuevo");
+                });    
+            }else{
+                $log.log("Parámetros incompletos");
+                alert("Parámetros incompletos, intente de nuevo");
+            }
             
+        }
+        
+        $scope.copiarVV = function(Archivo, ruta){
+            if(Archivo.tipo =="ARCHIVO"){
+                if(ruta){
+                    $scope.cargarContenido(Archivo);
+                    $log.log("Copiando el archivo: ");
+                    $log.log(Archivo);
+                    $log.log("En el directorio: ");
+                    $log.log(ruta);
+                    
+                    $scope.moverArchivo(Archivo, ruta);
+                    
+                    $rootScope.verArchivosRaiz($rootScope.rutaActual);
+                    $scope.varCopiar();
+
+                }else{
+                    alert("Debe de seleccionar una ruta destino");
+                }    
+            }else{
+                
+            }
             
         }
         
