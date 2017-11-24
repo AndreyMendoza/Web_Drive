@@ -505,14 +505,29 @@ app.controller("misArchivos", function ($scope, $rootScope, $location, $http, $c
         }
         
         /*----------------- Funciones de eliminación -----------------*/
-        $scope.eliminarArchivo = function(ArchivoID, Nombre){
+        $scope.eliminarArchivo = function(Archivo){
             $log.log("Eliminando el archivo: ");
-            $log.log(ArchivoID);
-            if (confirm('Seguro que desea eliminar el archivo: '+Nombre)) {
-                $log.log("Confirmado.. Borrado");
+            $log.log(Archivo);
+            if (confirm('Seguro que desea eliminar el archivo: '+Archivo.Nombre)) {
+                $log.log("Confirmado.. Borrando");
+                
+                $http.get(host + "Archivo/eliminar_archivo?usuario="+$rootScope.nombreUsuarioActivo+"&ruta="+Archivo.ruta+"&nombre="+Archivo.Nombre+"&tipo="+Archivo.tipo).then(function (data)  {
+                    var data = data.data;
+                    $log.log(data);
+                    if (data.mensaje == "OK") {
+                        $rootScope.verArchivosRaiz($rootScope.rutaActual);
+                    } else {
+                        $log.log(data.mensaje);
+                        alert(data.mensaje);
+                    }
+                }).catch(function (data) {
+                    $log.log("Error de conexion, intente de nuevo");
+                });
+                
             } else {
                 $log.log("Cancelado");
             }
+            
         }
         
         $scope.eliminarCarpeta = function(CarpetaID, Nombre){
