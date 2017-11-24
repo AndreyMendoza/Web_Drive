@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -48,6 +49,20 @@ public class Herramientas {
             Logger.getLogger(Herramientas.class.getName()).log(Level.SEVERE, null, ex);
         }
         return usuarios;
+    }
+   
+// -----------------------------------------------------------------------------
+
+    public static ArrayList<String> ver_usuarios(String usuario)
+    {
+        ListaUsuarios usuarios = leer_usuarios();
+        ArrayList<String> result = new ArrayList<>();
+        for (Usuario u : usuarios.getUsuarios())
+        {
+            if (!u.getUsuario().equals(usuario))
+                result.add(u.getUsuario());
+        }
+        return result;
     }
     
 // -----------------------------------------------------------------------------

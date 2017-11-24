@@ -63,4 +63,26 @@ public class UsuarioController {
         output = Herramientas.crear_json(mensaje);
         return Response.ok(output).header("Access-Control-Allow-Origin", "*").build();
     }
+    
+// -----------------------------------------------------------------------------
+    
+    @Path("cargar_usuarios")
+    @GET
+    public Response cargar_usuarios(
+        @QueryParam("usuario") String usuario)
+    {
+        MensajeModel mensaje = new MensajeModel();
+        String output = "";
+        try {
+            mensaje.setMensaje("OK");
+            mensaje.addObjeto(Herramientas.ver_usuarios(usuario));
+        } catch (Exception ex) {
+            mensaje.setMensaje("ERROR");
+        }        
+        output = Herramientas.crear_json(mensaje);
+        return Response.ok(output).header("Access-Control-Allow-Origin", "*").build();
+    }
+    
+// -----------------------------------------------------------------------------
+    
 }
