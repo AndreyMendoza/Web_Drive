@@ -133,8 +133,8 @@ public class Herramientas {
             {
                 Carpeta directorio = cargar_file_system(usuario);
                 
-                if (directorio.modificar_peso_archivo(ruta, nombre, tamanho))
-                    directorio.atualizar_pesos();
+                directorio.modificar_peso_archivo(ruta, nombre, tamanho);
+                directorio.atualizar_pesos();
                 
                 guardar_file_system(usuario, directorio);
 
@@ -199,8 +199,8 @@ public class Herramientas {
                 
                 directorio.agregar_hijo(ruta, archivo);
                 
-                if (directorio.modificar_peso_archivo(ruta, nombre, tamanho))
-                    directorio.atualizar_pesos();
+                directorio.modificar_peso_archivo(ruta, nombre, tamanho);
+                directorio.atualizar_pesos();
                 
                 guardar_file_system(usuario, directorio);
 
@@ -286,7 +286,15 @@ public class Herramientas {
                directorio.atualizar_pesos();
                return guardar_file_system(usuario, directorio);
            }
-        }        
+        }   
+        else
+        {
+            if (directorio.eliminar_carpeta(ruta, nombre))
+            {
+               directorio.atualizar_pesos();
+               return guardar_file_system(usuario, directorio);
+            }
+        }
         return false;
     }
     

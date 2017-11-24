@@ -161,26 +161,25 @@ public class Carpeta extends Directorio{
     
 // -----------------------------------------------------------------------------
     
-        public boolean eliminar_carpeta(String ruta, Directorio hijo)
+        public boolean eliminar_carpeta(String ruta, String nombre)
     {
-        if (ruta.equals(this.ruta))
-            return agregar_hijo_aux(hijo);
-        else 
+        Iterator itr = hijos.iterator();
+        while (itr.hasNext())
         {
-            for (Directorio d : hijos)
+            Directorio d = (Directorio)itr.next();
+            if (d.getTipo() == Almacenamiento.CARPETA)
             {
-                if (d.getTipo() == Almacenamiento.CARPETA)
+                if (d.getRuta().equals(ruta) && d.getNombre().equals(nombre))
                 {
-                     if (((Carpeta) d).agregar_hijo(ruta, hijo))
-                     {
-                         d.setTamanho(d.getTamanho() + hijo.getTamanho());
-                         return true;
-                     }
-                     
+                    itr.remove();
+                    return true;
                 }
+                else
+                    if (((Carpeta) d).eliminar_archivo(ruta, nombre))
+                        return true;                    
             }
-            return false;
         }
+        return false;
     }
     
 // -----------------------------------------------------------------------------
