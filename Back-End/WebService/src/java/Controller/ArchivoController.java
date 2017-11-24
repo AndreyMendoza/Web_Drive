@@ -154,7 +154,7 @@ public class ArchivoController {
     {
         MensajeModel mensaje = new MensajeModel();
         try {
-            if (Herramientas.eliminar_archivo(usuario, ruta, nombre, tipo))
+            if (Herramientas.eliminar_archivo_fs(usuario, ruta, nombre, tipo))
             {
                 mensaje.setMensaje("OK");
                 mensaje.addObjeto(Herramientas.buscar_directorio(usuario, ruta));

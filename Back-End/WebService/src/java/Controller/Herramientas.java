@@ -30,8 +30,8 @@ public class Herramientas {
 // -----------------------------------------------------------------------------
 
     private final static String drive_path = 
-            "C:/xampp/htdocs/Web_Drive/Back-End/WebService/Drive";
-            //"C:\\Users\\Andrey\\Documents\\Git\\Web_Drive\\Back-End\\WebService\\Drive";
+            //"C:/xampp/htdocs/Web_Drive/Back-End/WebService/Drive";
+            "C:\\Users\\Andrey\\Documents\\Git\\Web_Drive\\Back-End\\WebService\\Drive";
     
 // -----------------------------------------------------------------------------
     
@@ -290,7 +290,7 @@ public class Herramientas {
     
 // -----------------------------------------------------------------------------
     
-    public static boolean eliminar_archivo(String usuario, String ruta,
+    public static boolean eliminar_archivo_fs(String usuario, String ruta,
                                             String nombre, Almacenamiento tipo) throws Exception
     {
         Carpeta directorio = cargar_file_system(usuario);
@@ -311,6 +311,51 @@ public class Herramientas {
             }
         }
         return false;
+    }
+    
+// -----------------------------------------------------------------------------
+    
+    public static boolean eliminar_archivo_os(String ruta, String nombre, String extension) throws Exception
+    {
+        try {
+            String ruta_nombre = drive_path + "/" + ruta + "/" + nombre + extension;
+            Files.delete(Paths.get(ruta_nombre));
+            return true;
+        } catch (IOException ex) {
+            throw new Exception("Error");
+        }
+    }
+    
+// -----------------------------------------------------------------------------
+    
+    public static boolean eliminar_carpeta_os(String ruta, boolean usar_drive) throws Exception
+    {
+        if (usar_drive)
+            ruta = drive_path + "/" + ruta;
+        
+        File file = new File(ruta);
+        
+        if(file.isDirectory()){
+            if(file.list().length == 0)
+            {
+               file.delete();
+               return true;
+            }
+            else
+            {
+               String files[] = file.list();
+
+               for (String temp : files) {
+                  File fileDelete = new File(file, temp);
+                eliminar_carpeta_os(fileDelete.getAbsolutePath(), false);
+               }
+               if(file.list().length == 0)
+                 file.delete();
+            }
+        }
+        else
+            file.delete();
+        return true;
     }
     
 // -----------------------------------------------------------------------------

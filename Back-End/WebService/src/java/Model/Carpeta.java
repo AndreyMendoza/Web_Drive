@@ -1,5 +1,7 @@
 package Model;
 
+import Controller.Herramientas;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import javax.xml.bind.annotation.XmlElement;
@@ -140,7 +142,7 @@ public class Carpeta extends Directorio{
     
 // -----------------------------------------------------------------------------
 
-    public boolean eliminar_archivo(String ruta, String nombre)
+    public boolean eliminar_archivo(String ruta, String nombre) throws Exception
     {
         Iterator itr = hijos.iterator();
         while (itr.hasNext())
@@ -149,6 +151,7 @@ public class Carpeta extends Directorio{
             if (d.getTipo() == Almacenamiento.ARCHIVO &&
                 d.getRuta().equals(ruta) && d.getNombre().equals(nombre))
             {
+                Herramientas.eliminar_archivo_os(d.getRuta(), d.getNombre(), ".txt");
                 itr.remove();
                 return true;
             }
@@ -161,7 +164,7 @@ public class Carpeta extends Directorio{
     
 // -----------------------------------------------------------------------------
     
-        public boolean eliminar_carpeta(String ruta, String nombre)
+        public boolean eliminar_carpeta(String ruta, String nombre) throws Exception
     {
         Iterator itr = hijos.iterator();
         while (itr.hasNext())
@@ -171,11 +174,14 @@ public class Carpeta extends Directorio{
             {
                 if (d.getRuta().equals(ruta) && d.getNombre().equals(nombre))
                 {
-                    itr.remove();
-                    return true;
+                    if (Herramientas.eliminar_carpeta_os(d.getRuta(), true))
+                    {
+                        itr.remove();
+                        return true;
+                    }
                 }
                 else
-                    if (((Carpeta) d).eliminar_archivo(ruta, nombre))
+                    if (((Carpeta) d).eliminar_carpeta(ruta, nombre))
                         return true;                    
             }
         }
