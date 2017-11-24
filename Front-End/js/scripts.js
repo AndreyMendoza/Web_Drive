@@ -364,8 +364,10 @@ app.controller("misArchivos", function ($scope, $rootScope, $location, $http, $c
         $scope.controlEditarArchivo = false;
         $scope.controlCopiar = false;
         $scope.controlMover = false;
+        $scope.controlCompartir = false;
         $scope.Archivo = {};
         $scope.Carpeta = {};
+        $scope.usuarios = {};
         $scope.tamanhoDirectorioActual = 0;
         
         /*----------------- Controles para los Popups -----------------*/
@@ -428,6 +430,17 @@ app.controller("misArchivos", function ($scope, $rootScope, $location, $http, $c
                 $scope.Archivo = {};
             }
         }
+        /***********************/
+        $scope.varCompartir = function(){
+            if ($scope.controlCompartir) {
+                $scope.controlCompartir = false;
+            }
+            else {
+                $scope.controlCompartir = true;
+                $scope.Archivo = {};
+            }
+        }
+        
         /*----------------- Funciones de crear archivos y carpetas -----------------*/
         
         $scope.crearArchivo = function(Archivo){
@@ -590,6 +603,9 @@ app.controller("misArchivos", function ($scope, $rootScope, $location, $http, $c
         /*----------------- Función para copiar un archivo o carpeta -----------------*/
         $scope.copiar = function(Archivo){
             $scope.varCopiar();
+            if(Archivo.tipo == "ARCHIVO"){
+                $scope.cargarContenido(Archivo);
+            }
             $scope.Archivo = Archivo;
         }
         
@@ -621,7 +637,7 @@ app.controller("misArchivos", function ($scope, $rootScope, $location, $http, $c
         $scope.copiarVV = function(Archivo, ruta){
             if(Archivo.tipo =="ARCHIVO"){
                 if(ruta){
-                    $scope.cargarContenido(Archivo);
+                    //$scope.cargarContenido(Archivo);
                     $log.log("Copiando el archivo: ");
                     $log.log(Archivo);
                     $log.log("En el directorio: ");
@@ -629,7 +645,6 @@ app.controller("misArchivos", function ($scope, $rootScope, $location, $http, $c
                     
                     $scope.moverArchivo(Archivo, ruta, false);
                     
-                    $rootScope.verArchivosRaiz($rootScope.rutaActual);
                     $scope.varCopiar();
 
                 }else{
@@ -641,9 +656,77 @@ app.controller("misArchivos", function ($scope, $rootScope, $location, $http, $c
         }
         
         /*----------------- Función de compartir un archivo/carpeta con otro usuario -----------------*/
-        $scope.compartirArchivo = function(ArchivoID, Nombre){
-            $log.log("Compartiendo el archivo: "+ Nombre);
-            $log.log(ArchivoID);
+        $scope.cargarUsuarios = function(){
+            $http.get(host + "Usuario/cargar_usuarios?usuario="+$rootScope.nombreUsuarioActivo).then(function (data)  { 
+                var data = data.data;
+                $log.log(data);
+                if (data.mensaje == "OK") {
+                    $log.log("Usuarios cargados correctamente");
+                    $scope.usuarios = data.result[0];
+                } else {
+                    $log.log("Usuarios no cargados "+data.mensaje);
+                    alert(data.mensaje);
+                }
+            }).catch(function (data) {
+                $log.log("Error de conexion, intente de nuevo");
+            });    
+        }
+        
+        $scope.compartir = function(Archivo){
+            $scope.varCompartir();
+            if(Archivo.tipo == "ARCHIVO"){
+                $scope.cargarContenido(Archivo);
+            }
+            $scope.Archivo = Archivo;
+            $scope.cargarUsuarios();
+        }
+        $scope.cambiarUsuario = function(usuario){
+            $scope.usuarioSeleccionado = usuario;
+        }
+        
+        $scope.compartirArchivo = function(Archivo, usuario, ruta, compartir){
+            if(Archivo.Nombre && Archivo.contenido){
+                $http.get(host + "Archivo/crear_archivo?usuario="+usuario+"&ruta="+ruta+"&nombre="+Archivo.Nombre+"&extension=.txt"+"&contenido="+Archivo.contenido+"&reemplazar=true").then(function (data)  { 
+                    var data = data.data;
+                    $log.log(data);
+                    if (data.mensaje == "OK") {
+                        $log.log("Archivo Compartido con éxito");
+                        if(compartir){
+                            $scope.varCompartir();
+                        }
+                    } else {
+                        $log.log("Archivo no Compartido "+data.mensaje);
+                        alert(data.mensaje);
+                    }
+                }).catch(function (data) {
+                    $log.log("Error de conexion, intente de nuevo");
+                });    
+            }else{
+                $log.log("Parámetros incompletos");
+                alert("Parámetros incompletos, intente de nuevo");
+            }
+            
+        }
+        
+        $scope.compartirElemento = function(Archivo, ruta){
+            $log.log("Compartiendo el archivo: ");
+            $log.log(Archivo);
+            if(Archivo.tipo =="ARCHIVO"){
+                if(ruta){
+                    $scope.cargarContenido(Archivo);
+                    $log.log("Compartiendo el archivo: ");
+                    $log.log(Archivo);
+                    var rutaFinal = ruta + "/Archivos Compartidos";
+                    $log.log("Con el usuario: ");
+                    $log.log(rutaFinal);
+                    
+                    $scope.compartirArchivo(Archivo, ruta, rutaFinal, true);
+                }else{
+                    alert("Debe de seleccionar un usuario de destino");
+                }
+            }else{
+                
+            }
             
         }
         

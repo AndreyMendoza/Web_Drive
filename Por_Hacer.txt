@@ -1,15 +1,15 @@
 Pagina Web		
-	- Tree Node
-		- Ir a cualquier directorio
-	- Navegar carpetas
-	- Mostrar Ruta actual en todo momento
-	- Avisar si el usuario llegó al máximo de almacenamiento
-	- Permitir modificar un archivo 
-	- Mostrar archivos y directorios de la carpeta actual 
-	- Ver propiedades de un archivo 
-	- Mostrar contenido del archivo 
-	- Copiar archivos 
+	- Tree Node																		X	
+		- Ir a cualquier directorio 												X
+	- Navegar carpetas																X
+	- Mostrar Ruta actual en todo momento											X
+	- Permitir modificar un archivo 												X
+	- Mostrar archivos y directorios de la carpeta actual 							X
+	- Ver propiedades de un archivo 												X
+	- Mostrar contenido del archivo 												X
+	- Copiar archivos 																	
 	- Mover un archivo 
+	- Avisar si el usuario llegó al máximo de almacenamiento						
 
 	
 Back-end
