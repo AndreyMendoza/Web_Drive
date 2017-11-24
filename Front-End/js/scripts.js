@@ -363,6 +363,7 @@ app.controller("misArchivos", function ($scope, $rootScope, $location, $http, $c
         $scope.controlVerArchivo = false;
         $scope.controlEditarArchivo = false;
         $scope.controlCopiar = false;
+        $scope.controlMover = false;
         $scope.Archivo = {};
         $scope.Carpeta = {};
         $scope.tamanhoDirectorioActual = 0;
@@ -417,7 +418,16 @@ app.controller("misArchivos", function ($scope, $rootScope, $location, $http, $c
                 $scope.Archivo = {};
             }
         }
-        
+        /***********************/
+        $scope.varMover = function(){
+            if ($scope.controlMover) {
+                $scope.controlMover = false;
+            }
+            else {
+                $scope.controlMover = true;
+                $scope.Archivo = {};
+            }
+        }
         /*----------------- Funciones de crear archivos y carpetas -----------------*/
         
         $scope.crearArchivo = function(Archivo){
@@ -546,13 +556,6 @@ app.controller("misArchivos", function ($scope, $rootScope, $location, $http, $c
             }
         }
         
-        /*----------------- Función de compartir un archivo con otro usuario -----------------*/
-        $scope.compartirArchivo = function(ArchivoID, Nombre){
-            $log.log("Compartiendo el archivo: "+ Nombre);
-            $log.log(ArchivoID);
-            
-        }
-        
         
         /*----------------- Función para actualizar el contenido del archivo -----------------*/
         $scope.actualizarArchivo = function(Archivo){
@@ -590,13 +593,17 @@ app.controller("misArchivos", function ($scope, $rootScope, $location, $http, $c
             $scope.Archivo = Archivo;
         }
         
-        $scope.moverArchivo = function(Archivo, ruta){
+        $scope.moverArchivo = function(Archivo, ruta, eliminar){
             if(Archivo.Nombre && Archivo.contenido){
-                $http.get(host + "Archivo/crear_archivo?usuario="+$rootScope.nombreUsuarioActivo+"&ruta="+ruta+"&nombre="+Archivo.Nombre+"&extension=.txt"+"&contenido="+Archivo.contenido+"&reemplazar=false").then(function (data)  { 
+                $http.get(host + "Archivo/crear_archivo?usuario="+$rootScope.nombreUsuarioActivo+"&ruta="+ruta+"&nombre="+Archivo.Nombre+"&extension=.txt"+"&contenido="+Archivo.contenido+"&reemplazar=true").then(function (data)  { 
                     var data = data.data;
                     $log.log(data);
                     if (data.mensaje == "OK") {
                         $log.log("Archivo Copiado con éxito");
+                        if(eliminar){
+                            $scope.eliminar(Archivo);
+                            $scope.varMover();
+                        }
                     } else {
                         $log.log("Archivo no copiado "+data.mensaje);
                         alert(data.mensaje);
@@ -620,7 +627,7 @@ app.controller("misArchivos", function ($scope, $rootScope, $location, $http, $c
                     $log.log("En el directorio: ");
                     $log.log(ruta);
                     
-                    $scope.moverArchivo(Archivo, ruta);
+                    $scope.moverArchivo(Archivo, ruta, false);
                     
                     $rootScope.verArchivosRaiz($rootScope.rutaActual);
                     $scope.varCopiar();
@@ -631,7 +638,41 @@ app.controller("misArchivos", function ($scope, $rootScope, $location, $http, $c
             }else{
                 
             }
+        }
+        
+        /*----------------- Función de compartir un archivo/carpeta con otro usuario -----------------*/
+        $scope.compartirArchivo = function(ArchivoID, Nombre){
+            $log.log("Compartiendo el archivo: "+ Nombre);
+            $log.log(ArchivoID);
             
+        }
+        
+        /*----------------- Función de mover un archivo/carpeta -----------------*/
+        $scope.mover = function(Archivo){
+            $scope.varMover();
+            if(Archivo.tipo == "ARCHIVO"){
+                $scope.cargarContenido(Archivo);
+            }
+            $scope.Archivo = Archivo;
+        }
+        
+        $scope.moverElemento = function(Archivo, ruta){
+            if(Archivo.tipo =="ARCHIVO"){
+                if(ruta){
+                    var archivoDelete = Archivo;
+                    $log.log("Moviendo el archivo: ");
+                    $log.log(Archivo);
+                    $log.log("En el directorio: ");
+                    $log.log(ruta);
+
+                    $scope.moverArchivo(Archivo, ruta, true);
+                    $scope.verArchivosRaiz($rootScope.rutaActual);    
+                }else{
+                    alert("Debe de seleccionar una ruta destino");
+                }
+            }else{
+                
+            }
         }
         
         /*----------------- Función para ver todos los archivos en una ruta específica -----------------*/
